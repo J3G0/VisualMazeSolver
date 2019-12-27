@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +48,9 @@ public class AlgorithmModel
     
     //Endnode (end point)
     private AStarVertice endNode;
+    
+    //Node that is currently being calculated
+    private AStarVertice currentNode;
      
     public AlgorithmModel() 
     {
@@ -65,9 +69,8 @@ public class AlgorithmModel
         
         startNode = null;
         endNode = null;
-        updateBeginPoints();
+        updateBeginPoints();       
         findPath(startNode, endNode);
-        
     } 
 
     public AStarVertice[][] getNodes()
@@ -113,28 +116,59 @@ public class AlgorithmModel
         openSet.clear();
         closedSet.clear();
         calculatedPath.clear();
-        
         openSet.add(start);
         
-        neighbourNodes = getNeighbourVertices(start);
-        AStarVertice currentNode = openSet.get(0);
-        //Loop over neighbours to set each cost
-        for (AStarVertice n : neighbourNodes)
+        System.out.println(openSet.size());
+        
+        while ( openSet.size() > 0)
         {
-            n.setVerticeType(VerticeType.SOLID);
+            currentNode = openSet.get(0);
             
-            if (!closedSet.contains(neighbourNodes))
+            for(int i = 1; i < openSet.size(); i++)
             {
-                getTravelCost(n, currentNode);
+                System.out.println(openSet.get(i).getFCost());
+                if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
+                {
+                    if (openSet.get(i).getHCost() < currentNode.getHCost())
+                    {
+                        currentNode = openSet.get(i);
+                    }
+                }               
             }
-                
-        }
-        
-        //Get costs from all neighbours
-        
-        
-        //Set lowest cost node as currentNode
-        
+            openSet.remove(currentNode);
+            closedSet.add(currentNode);   
+            
+            if(currentNode == end)
+            {
+                return;
+            }
+            
+                    
+            neighbourNodes = getNeighbourVertices(currentNode);
+            //Loop over neighbours to set each cost
+            for (AStarVertice n : neighbourNodes)
+            {
+
+                if (!closedSet.contains(neighbourNodes))
+                {
+                    double cost = getTravelCost(n, currentNode);
+                    double currentNodeCost = currentNode.getGCost();
+                    double newCost = cost + currentNodeCost;
+                    if (newCost < n.getGCost() || !openSet.contains(n))
+                    {
+                        n.setGCost(currentNodeCost + cost);
+                        n.setHCost(getTravelCost(n, end));   
+                        n.setParent(currentNode);
+                    }
+
+                    if(!openSet.contains(n))
+                    {
+                        openSet.add(n);
+                    }
+                }
+
+            }
+        }   
     }
     
     //Returns the neighbours surrounding the current node (except the current node itself)
@@ -219,7 +253,6 @@ public class AlgorithmModel
             travelCost = absoluteDifferenceX *  tileTravelCost;
         }
         
-        System.out.println(travelCost);
         return travelCost;
         
     }

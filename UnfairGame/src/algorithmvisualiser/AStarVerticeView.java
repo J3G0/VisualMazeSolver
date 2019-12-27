@@ -9,6 +9,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -17,7 +19,7 @@ import javafx.scene.shape.Rectangle;
 public class AStarVerticeView extends Region
 {
     final private AStarVertice node;
-    final private int SIZE = 15;
+    final private int SIZE = 35;
     final private int OFFSET = 5;
     
     public AStarVerticeView(AStarVertice node) 
@@ -49,6 +51,10 @@ public class AStarVerticeView extends Region
                 kleur = Color.CHOCOLATE;
                 break;
                 
+            case TRAVERSED:
+                kleur = Color.GREEN;
+                break;
+                
             default:
                 kleur = Color.WHITE;
                 break;
@@ -56,10 +62,13 @@ public class AStarVerticeView extends Region
         
         final double x = node.getPositionX() * SIZE + node.getPositionX() * OFFSET;
         final double y = node.getPositionY() * SIZE + node.getPositionY() * OFFSET;
-        
+        Text t = new Text( x + OFFSET , y + (SIZE / 2), Integer.toString((int) node.getHCost() ));
+        t.setFill(Color.RED);
+        t.setFont(new Font(15));
         Rectangle nodeRect = createRectangle(x, y, kleur);
         
         getChildren().add(nodeRect);
+        getChildren().add(t);
     }
     
     public Vertice getModel()

@@ -33,6 +33,9 @@ public class AStarVertice extends Vertice
         super(positionX, positionY);
         this.parent = null;
         this.type = VerticeType.BASIC;
+        this.gCost = 0;
+        this.hCost = 0;
+        this.fCost = 0;
     }
     
     public VerticeType getVerticeType() { return type; }
@@ -48,4 +51,7 @@ public class AStarVertice extends Vertice
 
     public void setHCost(double hCost) {this.hCost = hCost; }
     public void setGCost(double gCost) {this.gCost = gCost; }
+    
+    public AStarVertice getParent() { return parent; }
+    public void setParent(AStarVertice parent) { this.parent = parent; }
 }
