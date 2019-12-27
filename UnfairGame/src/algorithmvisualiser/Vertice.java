@@ -23,4 +23,7 @@ public class Vertice
     
     public double getPositionX() { return positionX; }
     public double getPositionY() { return positionY; }
+    
+    public void setPositionX(double positionX) {this.positionX = positionX; }
+    public void setPositionY(double positionY) {this.positionY = positionY; }
 }
