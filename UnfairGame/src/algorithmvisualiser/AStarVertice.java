@@ -13,10 +13,10 @@ package algorithmvisualiser;
 
 public class AStarVertice extends Vertice
 {
-    //Distance to start node
+    //Distance to start node cost
     private double gCost;
     
-    //Distance to end node
+    //Distance to end node cost
     private double hCost;
     
     //This is total cost (gCost + hCost)
@@ -44,6 +44,11 @@ public class AStarVertice extends Vertice
     public double getFCost()
     {
         return gCost + hCost;
+    }
+    
+    public void setFCost(double fCost)
+    {
+        this.fCost = fCost;
     }
     
     public double getHCost() { return hCost; }

@@ -1,11 +1,13 @@
 package algorithmvisualiser;
 
+import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class FXMLAlgorithmController implements Initializable
@@ -27,6 +29,9 @@ public class FXMLAlgorithmController implements Initializable
     {
         this.model = model;
         view = new AlgorithmView(model);
+        view.setOnKeyPressed(this::iterate);
+        view.setOnMouseClicked(this::handleClick);
+        view.setFocusTraversable(true);
         anchorPane.getChildren().add(view);
         update();
     }
@@ -46,13 +51,29 @@ public class FXMLAlgorithmController implements Initializable
         anchorPane.getChildren().add(view);
     }
     
-    public void addCirkel()
-    {
-        update();
-    }
-    
     public void update()
     {
         view.update();
+    }
+    
+    private void iterate(KeyEvent e) 
+    {
+        switch(e.getCode())
+        {
+            case UP:
+                model.findPath();
+                update();
+                break;
+        }
+    }
+    
+    private void handleClick(MouseEvent e )
+    {
+        int clickedX = (int) e.getX();
+        int clickedY = (int) e.getY();
+        
+        Point p = view.getCoordPointFromClick(clickedX,clickedY);
+        model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.SOLID);
+        update();
     }
 }

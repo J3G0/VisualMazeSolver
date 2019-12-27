@@ -5,6 +5,7 @@
  */
 package algorithmvisualiser;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -40,5 +41,18 @@ public class AlgorithmView extends Region
                 getChildren().add(vv);
             }
         }
+    }
+    
+    
+    public Point getCoordPointFromClick(int x, int y)
+    {
+        System.out.println("I should get circle under: " +  x + " , " + y);
+        
+        //Todo: make dynamic
+        int nodeX = Math.min( (int) (x / (35 + 2.5)) , model.ROWS_X );
+        int nodeY = Math.min( (int) (y / (35 + 2.5)) , model.ROWS_Y );
+        
+        System.out.println("Returning node at location:" + nodeX + " , " + nodeY);
+        return new Point(nodeX, nodeY);
     }
 }

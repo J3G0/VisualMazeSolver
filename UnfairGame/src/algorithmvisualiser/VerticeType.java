@@ -11,5 +11,5 @@ package algorithmvisualiser;
  */
 public enum VerticeType 
 {
-    START, END, BASIC, SOLID, TRAVERSED
+    START, END, BASIC, SOLID, TRAVERSED, NEIGHBOUR;
 }

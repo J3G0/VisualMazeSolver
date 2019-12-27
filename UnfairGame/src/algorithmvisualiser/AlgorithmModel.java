@@ -18,15 +18,16 @@ import java.util.stream.Collectors;
  * @author Sebastiaan
  */
 
-//Pseudo code from https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode was used for thinking purposes
+// Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
+// Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
 
 public class AlgorithmModel
 {
     //Amount of nodes in x direction
-    final private int ROWS_X = 25;
+    final protected int ROWS_X = 25;
     
     //Amount of nodes in y direction
-    final private int ROWS_Y = 15;
+    final protected int ROWS_Y = 15;
     
     //Model has a list of nodes, each node representing a rectangle in the view.  
     private AStarVertice[][] nodes = new AStarVertice[ROWS_X][ROWS_Y];
@@ -54,6 +55,9 @@ public class AlgorithmModel
      
     public AlgorithmModel() 
     {
+        openSet.clear();
+        closedSet.clear();
+        calculatedPath.clear();
         for (int i = 0; i < ROWS_X ; i++)
         {
             for (int j = 0; j < ROWS_Y ;j++)
@@ -61,16 +65,20 @@ public class AlgorithmModel
                 nodes[i][j] = new AStarVertice(i,j);
             }
         }
-        nodes[5][5].setVerticeType(VerticeType.START);
+        nodes[0][0].setVerticeType(VerticeType.START);
         nodes[ROWS_X - 1][ROWS_Y - 1].setVerticeType(VerticeType.END);
         
+        nodes[2][1].setVerticeType(VerticeType.SOLID);
         nodes[2][2].setVerticeType(VerticeType.SOLID);
         nodes[2][3].setVerticeType(VerticeType.SOLID);
+        nodes[2][4].setVerticeType(VerticeType.SOLID);
+        nodes[2][5].setVerticeType(VerticeType.SOLID);
         
         startNode = null;
         endNode = null;
-        updateBeginPoints();       
-        findPath(startNode, endNode);
+        updateSets();    
+        openSet.add(startNode);
+        System.out.println(getTravelCost(startNode, endNode));
     } 
 
     public AStarVertice[][] getNodes()
@@ -79,12 +87,17 @@ public class AlgorithmModel
         return nodes;
     }
     
+    public AStarVertice getNodeAtLocation(int x, int y)
+    {
+        return nodes[x][y];
+    }
+    
     public AStarVertice getStartNode() { return startNode; }
     public AStarVertice getEndNode() { return endNode; }
     
     // Function to determine who is start node and endnode
     // If no found, throw error?
-    public void updateBeginPoints()
+    public void updateSets()
     {
         List <AStarVertice> nodesList = Arrays.stream(nodes).flatMap(Arrays::stream).collect(Collectors.toList()); 
         for(int i = 0; i < nodesList.size(); i++)
@@ -97,6 +110,9 @@ public class AlgorithmModel
                 case END:
                     endNode = nodesList.get(i);
                     break;
+                case SOLID:
+                    closedSet.add(nodesList.get(i));
+                
                 default:
                     break;
             }      
@@ -109,66 +125,71 @@ public class AlgorithmModel
     }
     
     
-    public void findPath(AStarVertice startNode, AStarVertice endNode)
+    public void findPath()
     {
+        neighbourNodes.clear();
         AStarVertice start = startNode;
         AStarVertice end = endNode;
-        openSet.clear();
-        closedSet.clear();
-        calculatedPath.clear();
-        openSet.add(start);
         
         System.out.println(openSet.size());
         
-        while ( openSet.size() > 0)
+        if(currentNode == end)
         {
-            currentNode = openSet.get(0);
-            
-            for(int i = 1; i < openSet.size(); i++)
-            {
-                System.out.println(openSet.get(i).getFCost());
-                if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
-                {
-                    if (openSet.get(i).getHCost() < currentNode.getHCost())
-                    {
-                        currentNode = openSet.get(i);
-                    }
-                }               
-            }
-            openSet.remove(currentNode);
-            closedSet.add(currentNode);   
-            
-            if(currentNode == end)
-            {
-                return;
-            }
-            
-                    
-            neighbourNodes = getNeighbourVertices(currentNode);
-            //Loop over neighbours to set each cost
-            for (AStarVertice n : neighbourNodes)
-            {
+            return;
+        }
+        currentNode = openSet.get(0);
 
-                if (!closedSet.contains(neighbourNodes))
+        for(int i = 1; i < openSet.size(); i++)
+        {
+            if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
+            {
+                if (openSet.get(i).getHCost() < currentNode.getHCost())
                 {
-                    double cost = getTravelCost(n, currentNode);
-                    double currentNodeCost = currentNode.getGCost();
-                    double newCost = cost + currentNodeCost;
-                    if (newCost < n.getGCost() || !openSet.contains(n))
-                    {
-                        n.setGCost(currentNodeCost + cost);
-                        n.setHCost(getTravelCost(n, end));   
-                        n.setParent(currentNode);
-                    }
+                    currentNode = openSet.get(i);
+                }
+            }               
+        }
+        openSet.remove(currentNode);
+        closedSet.add(currentNode);
+        
+        for(AStarVertice v : closedSet)
+        {
+            if(v.getVerticeType() != VerticeType.SOLID)
+            {
+                v.setVerticeType(VerticeType.TRAVERSED);
+            }
+        }
 
-                    if(!openSet.contains(n))
-                    {
-                        openSet.add(n);
-                    }
+        neighbourNodes = getNeighbourVertices(currentNode);
+        //Loop over neighbours to set each cost
+        for (AStarVertice n : neighbourNodes)
+        {
+            //n.setVerticeType(VerticeType.NEIGHBOUR);
+            if (!closedSet.contains(n))
+            {
+                double cost = getTravelCost(n, currentNode);
+                double currentNodeCost = currentNode.getGCost();
+                double newCost = cost + currentNodeCost;
+                if (newCost < n.getGCost() || !openSet.contains(n))
+                {
+                    n.setGCost(currentNodeCost + cost);
+                    System.out.println(getTravelCost(n, endNode));
+                    n.setHCost(getTravelCost(n, endNode)); 
+                    n.setFCost(n.getGCost() + n.getHCost());
+                    n.setParent(currentNode);
                 }
 
+                if(!openSet.contains(n))
+                {
+                    openSet.add(n);
+                }
             }
-        }   
+            else
+            {
+                continue;
+            }
+
+        } 
     }
     
     //Returns the neighbours surrounding the current node (except the current node itself)
@@ -188,8 +209,8 @@ public class AlgorithmModel
                 AStarVertice neighbourNode = new AStarVertice(xCoord, yCoord);
                 
                 //Correction needed for currentNode offset loop
-                neighbourNode.setPositionX(xCorrection - xCoord);
-                neighbourNode.setPositionY(yCorrection - yCoord);
+                neighbourNode.setPositionX(Math.min( xCorrection - xCoord, ROWS_X- 1));
+                neighbourNode.setPositionY(Math.min( yCorrection - yCoord, ROWS_Y- 1));
                 //System.out.println(neighbourNode.getPositionX() + " , " + neighbourNode.getPositionY());
                 
                 if (!isNodeOnSameCoord(currentNode, neighbourNode))
@@ -201,7 +222,10 @@ public class AlgorithmModel
                         // neighbours.add(neighbourNode);
                         int posX = (int)neighbourNode.getPositionX();
                         int posY = (int)neighbourNode.getPositionY();
-                        neighbours.add(nodes[posX][posY]);
+                        if((nodes[posX][posY].getVerticeType() != VerticeType.SOLID))
+                        {
+                            neighbours.add(nodes[posX][posY]);
+                        }
                     }
 
                 }
@@ -221,7 +245,7 @@ public class AlgorithmModel
     public double getTravelCost(AStarVertice nodeA, AStarVertice nodeB)
     {
         double travelCost = 0;
-        final double tileTravelCost = 1;
+        final double tileTravelCost = 10;
         // Say nodeA is at (0,0) and nodeB is at (2,2);
         // NodeA has to travel two diameters of distance (Pythagoras) or 2 horizontal and two vertical
         // let one distance be 1, a vertical distance would be sqtr(1^2 + 1^2) = 1.41
@@ -236,24 +260,16 @@ public class AlgorithmModel
         double absoluteDifferenceX = Math.abs(nodeA.getPositionX() - nodeB.getPositionX() );
         double absoluteDifferenceY = Math.abs(nodeA.getPositionY() - nodeB.getPositionY() );
         
-        if(absoluteDifferenceX > 0 && absoluteDifferenceY > 0)
-        {
-            double diagonalCost = absoluteDifferenceY * Math.sqrt(Math.pow(tileTravelCost, 2) + Math.pow(tileTravelCost, 2));
-            double horizontalCost = (Math.abs (absoluteDifferenceX - absoluteDifferenceY)) * 1; 
-            travelCost = diagonalCost + horizontalCost;
-        }
+        double xBigger = (Math.sqrt(Math.pow(tileTravelCost, 2) + Math.pow(tileTravelCost, 2)) * absoluteDifferenceY  + tileTravelCost * (absoluteDifferenceX - absoluteDifferenceY));
+        double yBigger = (Math.sqrt(Math.pow(tileTravelCost, 2) + Math.pow(tileTravelCost, 2)) * absoluteDifferenceX  + tileTravelCost * (absoluteDifferenceY - absoluteDifferenceX));
         
-        if(absoluteDifferenceX == 0)
-        {
-            travelCost = absoluteDifferenceY *  tileTravelCost;
-        }
-        
-        if(absoluteDifferenceY == 0)
-        {
-            travelCost = absoluteDifferenceX *  tileTravelCost;
-        }
-        
+        travelCost = absoluteDifferenceX > absoluteDifferenceY ? xBigger : yBigger;
         return travelCost;
         
+    }
+    
+    public AStarVertice getCurrentNode()
+    {
+        return currentNode;
     }
 }

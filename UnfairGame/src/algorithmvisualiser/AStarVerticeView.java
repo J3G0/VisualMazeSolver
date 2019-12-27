@@ -5,6 +5,7 @@
  */
 package algorithmvisualiser;
 
+import java.text.DecimalFormat;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -19,8 +20,8 @@ import javafx.scene.text.Text;
 public class AStarVerticeView extends Region
 {
     final private AStarVertice node;
-    final private int SIZE = 35;
-    final private int OFFSET = 5;
+    final protected int SIZE = 35;
+    final protected int OFFSET = 5;
     
     public AStarVerticeView(AStarVertice node) 
     {
@@ -55,6 +56,10 @@ public class AStarVerticeView extends Region
                 kleur = Color.GREEN;
                 break;
                 
+            case NEIGHBOUR:
+                kleur = Color.PINK;
+                break;
+                
             default:
                 kleur = Color.WHITE;
                 break;
@@ -62,8 +67,10 @@ public class AStarVerticeView extends Region
         
         final double x = node.getPositionX() * SIZE + node.getPositionX() * OFFSET;
         final double y = node.getPositionY() * SIZE + node.getPositionY() * OFFSET;
-        Text t = new Text( x + OFFSET , y + (SIZE / 2), Integer.toString((int) node.getHCost() ));
-        t.setFill(Color.RED);
+        DecimalFormat df = new DecimalFormat("#.0");
+        double cost = node.getFCost();
+        Text t = new Text( x + OFFSET , y + (SIZE / 2), df.format(cost));
+        t.setFill(Color.BLACK);
         t.setFont(new Font(15));
         Rectangle nodeRect = createRectangle(x, y, kleur);
         
