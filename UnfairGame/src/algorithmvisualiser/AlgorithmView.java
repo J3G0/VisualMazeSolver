@@ -19,7 +19,7 @@ import javafx.scene.text.Text;
 public class AlgorithmView extends Region
 {
     private AlgorithmModel model;
-    private VerticeView view;
+    private AStarVerticeView view;
     
     public AlgorithmView(AlgorithmModel model) 
     {
@@ -30,13 +30,13 @@ public class AlgorithmView extends Region
     public void update()
     {
         getChildren().clear();
-        Vertice[][] nodeList = model.getNodes();
+        AStarVertice[][] nodeList = model.getNodes();
         
         for (int i = 0; i < nodeList.length; i++)
         {
             for (int j = 0; j < nodeList[i].length ; j++)
             {
-                VerticeView vv = new VerticeView(nodeList[i][j]);
+                AStarVerticeView vv = new AStarVerticeView(nodeList[i][j]);
                 getChildren().add(vv);
             }
         }

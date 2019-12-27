@@ -14,13 +14,13 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Sebastiaan
  */
-public class VerticeView extends Region
+public class AStarVerticeView extends Region
 {
-    final private Vertice node;
+    final private AStarVertice node;
     final private int SIZE = 15;
     final private int OFFSET = 5;
     
-    public VerticeView(Vertice node) 
+    public AStarVerticeView(AStarVertice node) 
     {
         this.node = node;
         update();
@@ -30,7 +30,29 @@ public class VerticeView extends Region
     {
         getChildren().clear();
         Paint kleur;
-        kleur = Color.CHOCOLATE;
+        
+        switch(node.getVerticeType())
+        {
+            case SOLID:
+                kleur = Color.BLACK;
+                break;
+                
+            case START:
+                kleur = Color.RED;
+                break;
+                
+            case END:
+                kleur = Color.CYAN;
+                break;
+                
+            case BASIC:
+                kleur = Color.CHOCOLATE;
+                break;
+                
+            default:
+                kleur = Color.WHITE;
+                break;
+        }
         
         final double x = node.getPositionX() * SIZE + node.getPositionX() * OFFSET;
         final double y = node.getPositionY() * SIZE + node.getPositionY() * OFFSET;
@@ -52,5 +74,5 @@ public class VerticeView extends Region
         r.setFill(kleur);
         
         return r;
-    }
+    }    
 }

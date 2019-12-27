@@ -14,18 +14,13 @@ public class Vertice
 {
     private double positionX;
     private double positionY;
-    private boolean solid;
     
-    public Vertice(double positionX, double positionY, boolean solid) 
+    public Vertice(double positionX, double positionY) 
     {
-        this.solid = solid;
         this.positionX = positionX;
         this.positionY = positionY;
     }
     
     public double getPositionX() { return positionX; }
     public double getPositionY() { return positionY; }
-    
-    public boolean isSolid() { return solid; }
-    public void setSolid(boolean solid) { this.solid = solid; }
 }

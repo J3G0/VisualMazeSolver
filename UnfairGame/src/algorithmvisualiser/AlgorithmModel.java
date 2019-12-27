@@ -11,11 +11,13 @@ package algorithmvisualiser;
  */
 public class AlgorithmModel
 {
-    final private int ROWS_X = 5;
-    final private int ROWS_Y = 5;
+    final private int ROWS_X = 25;
+    final private int ROWS_Y = 15;
     
     //Model has a list of nodes, each node representing a rectangle in the view.  
-    private Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
+    private AStarVertice[][] nodes = new AStarVertice[ROWS_X][ROWS_Y];
+    private AStarVertice startNode;
+    private AStarVertice endNode;
      
     public AlgorithmModel() 
     {
@@ -23,19 +25,24 @@ public class AlgorithmModel
         {
             for (int j = 0; j < ROWS_Y ;j++)
             {
-                nodes[i][j] = new Vertice(i,j, false);
+                nodes[i][j] = new AStarVertice(i,j, false);
             }
         }
+        nodes[0][0].setVerticeType(VerticeType.START);
+        nodes[ROWS_X - 1][ROWS_Y - 1].setVerticeType(VerticeType.END);
         
-        nodes[2][2].setSolid(true);
-        nodes[2][3].setSolid(true);
+        nodes[2][2].setVerticeType(VerticeType.SOLID);
+        nodes[2][3].setVerticeType(VerticeType.SOLID);
         
     } 
 
-    public Vertice[][] getNodes()
+    public AStarVertice[][] getNodes()
     {
         //return nodes[0][0];
         return nodes;
     }
+    
+    public AStarVertice getStartNode() { return startNode; }
+    public AStarVertice getEndNode() { return endNode; }
     
 }
