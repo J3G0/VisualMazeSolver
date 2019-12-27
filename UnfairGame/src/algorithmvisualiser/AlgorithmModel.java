@@ -66,7 +66,7 @@ public class AlgorithmModel
             }
         }
         nodes[0][0].setVerticeType(VerticeType.START);
-        nodes[ROWS_X - 1][ROWS_Y - 1].setVerticeType(VerticeType.END);
+        nodes[5][5].setVerticeType(VerticeType.END);
         
         nodes[2][1].setVerticeType(VerticeType.SOLID);
         nodes[2][2].setVerticeType(VerticeType.SOLID);
@@ -135,6 +135,8 @@ public class AlgorithmModel
         
         if(currentNode == end)
         {
+            System.out.println("Found solution!");
+            drawTakenPath();
             return;
         }
         currentNode = openSet.get(0);
@@ -271,5 +273,16 @@ public class AlgorithmModel
     public AStarVertice getCurrentNode()
     {
         return currentNode;
+    }
+    
+    
+    public void drawTakenPath()
+    {
+        while(currentNode != startNode)
+        {
+            currentNode.setVerticeType(VerticeType.PARENT);
+            currentNode = currentNode.getParent();
+        }
+        currentNode.setVerticeType(VerticeType.PARENT);
     }
 }

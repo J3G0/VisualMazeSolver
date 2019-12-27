@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -21,6 +22,9 @@ public class FXMLAlgorithmController implements Initializable
 
     @FXML
     private AnchorPane anchorPane;
+    
+    @FXML
+    private Button next;
     
     private AlgorithmModel model;
     private AlgorithmView view;
@@ -39,8 +43,7 @@ public class FXMLAlgorithmController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        //startKnop.setOnAction(evt -> herstart());
-        //addKnop.setOnAction(evt -> addCirkel());
+        next.setOnAction(evt -> iterate());
     }    
     
     public void herstart()
@@ -54,6 +57,12 @@ public class FXMLAlgorithmController implements Initializable
     public void update()
     {
         view.update();
+    }
+    
+    private void iterate()
+    {
+        model.findPath();
+        update();      
     }
     
     private void iterate(KeyEvent e) 

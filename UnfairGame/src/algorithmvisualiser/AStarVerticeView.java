@@ -60,6 +60,10 @@ public class AStarVerticeView extends Region
                 kleur = Color.PINK;
                 break;
                 
+            case PARENT:
+                kleur = Color.YELLOW;
+                break;
+                
             default:
                 kleur = Color.WHITE;
                 break;
