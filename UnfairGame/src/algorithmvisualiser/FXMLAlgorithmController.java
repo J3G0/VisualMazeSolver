@@ -7,6 +7,7 @@ import java.util.Timer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,9 @@ public class FXMLAlgorithmController implements Initializable
     @FXML
     private Button next;
     
+    @FXML
+    private ComboBox<String> comboBox;
+    
     private AlgorithmModel model;
     private AlgorithmView view;
     
@@ -34,15 +38,25 @@ public class FXMLAlgorithmController implements Initializable
         this.model = model;
         view = new AlgorithmView(model);
         view.setOnKeyPressed(this::iterate);
-        view.setOnMouseClicked(this::handleClick);
+        anchorPane.setOnMouseDragged(this::handleClick);
         view.setFocusTraversable(true);
         anchorPane.getChildren().add(view);
         update();
     }
     
+    public void updateComboBox()
+    {
+        // Initialize own comboBox items
+        // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
+        comboBox.getItems().removeAll(comboBox.getItems());
+        comboBox.getItems().addAll("Start node", "End node", "Solid node");
+        comboBox.getSelectionModel().select("Option B");      
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        updateComboBox();
         next.setOnAction(evt -> iterate());
     }    
     
@@ -76,7 +90,7 @@ public class FXMLAlgorithmController implements Initializable
         }
     }
     
-    private void handleClick(MouseEvent e )
+    private void handleClick(MouseEvent e)
     {
         int clickedX = (int) e.getX();
         int clickedY = (int) e.getY();

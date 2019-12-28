@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 // Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
 // Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
+// Source: https://github.com/SebLague/Pathfinding/blob/master/Episode%2003%20-%20astar/Assets/Scripts/Pathfinding.cs
 
 public class AlgorithmModel
 {
@@ -30,19 +31,19 @@ public class AlgorithmModel
     final protected int ROWS_Y = 15;
     
     //Model has a list of nodes, each node representing a rectangle in the view.  
-    private AStarVertice[][] nodes = new AStarVertice[ROWS_X][ROWS_Y];
+    final private AStarVertice[][] nodes = new AStarVertice[ROWS_X][ROWS_Y];
     
     //Nodes that are still open to discover
-    private List<AStarVertice> openSet = new ArrayList<>();
+    final private List<AStarVertice> openSet = new ArrayList<>();
     
     //Nodes that are no longer a valid option
-    private List<AStarVertice> closedSet = new ArrayList<>();
+    final private List<AStarVertice> closedSet = new ArrayList<>();
     
     //Nodes that are a neightbour to the current node
     private List<AStarVertice>neighbourNodes = new ArrayList<>();
     
     //Nodes that are the path that the algorithm chose
-    private List<AStarVertice> calculatedPath = new ArrayList<>();
+    final private List<AStarVertice> calculatedPath = new ArrayList<>();
     
     //Startnode (begin point)
     private AStarVertice startNode;

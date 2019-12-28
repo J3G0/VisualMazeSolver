@@ -23,6 +23,7 @@ public class AStarVerticeView extends Region
     final protected int SIZE = 35;
     final protected int OFFSET = 5;
     
+    
     public AStarVerticeView(AStarVertice node) 
     {
         this.node = node;
@@ -69,8 +70,8 @@ public class AStarVerticeView extends Region
                 break;
         }
         
-        final double x = node.getPositionX() * SIZE + node.getPositionX() * OFFSET;
-        final double y = node.getPositionY() * SIZE + node.getPositionY() * OFFSET;
+        final double x = node.getPositionX() * SIZE + (node.getPositionX() + 1) * OFFSET;
+        final double y = node.getPositionY() * SIZE + (node.getPositionY() + 1) * OFFSET;
         DecimalFormat df = new DecimalFormat("#.0");
         double cost = node.getFCost();
         Text t = new Text( x + OFFSET , y + (SIZE / 2), df.format(cost));

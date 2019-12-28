@@ -20,7 +20,6 @@ import javafx.scene.text.Text;
 public class AlgorithmView extends Region
 {
     private AlgorithmModel model;
-    private AStarVerticeView view;
     
     public AlgorithmView(AlgorithmModel model) 
     {
@@ -44,13 +43,19 @@ public class AlgorithmView extends Region
     }
     
     
-    public Point getCoordPointFromClick(int x, int y)
-    {
-        System.out.println("I should get circle under: " +  x + " , " + y);
+    public Point getCoordPointFromClick(int clickedAtX, int clickedAtY)
+    {   
+            
+        //Make a view to call for getCoordPointFromClick()
+        AStarVerticeView view = new AStarVerticeView(new AStarVertice(-50,-50));
+        // Todo: make dynamic
+        // Take a click on (200.0, 78.0)
+        // We know each node has view.OFFSET offset from eachother, and the size is view.SIZE;
         
-        //Todo: make dynamic
-        int nodeX = Math.min( (int) (x / (35 + 2.5)) , model.ROWS_X );
-        int nodeY = Math.min( (int) (y / (35 + 2.5)) , model.ROWS_Y );
+        double rasterFormula = view.OFFSET + view.SIZE;
+        
+        int nodeX = Math.min( (int) (clickedAtX / rasterFormula) , model.ROWS_X - 1 );
+        int nodeY = Math.min( (int) (clickedAtY / rasterFormula), model.ROWS_Y - 1);
         
         System.out.println("Returning node at location:" + nodeX + " , " + nodeY);
         return new Point(nodeX, nodeY);
