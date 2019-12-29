@@ -7,10 +7,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1080" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="algorithmvisualiser.FXMLAlgorithmController">
    <children>
-      <Button fx:id="next" layoutX="37.0" layoutY="27.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="next" layoutX="37.0" layoutY="27.0" mnemonicParsing="false" text="NEXT" />
       <AnchorPane fx:id="anchorPane" layoutX="37.0" layoutY="59.0" prefHeight="620.0" prefWidth="1000.0" />
       <ComboBox fx:id="comboBox" layoutX="137.0" layoutY="27.0" prefWidth="150.0" />
       <Text layoutX="137.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tile type" wrappingWidth="150.0" />
       <Text layoutX="37.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterate" />
+      <Button fx:id="rst" layoutX="812.0" layoutY="27.0" mnemonicParsing="false" text="RESET" />
+      <Text layoutX="812.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset" />
    </children>
 </AnchorPane>
