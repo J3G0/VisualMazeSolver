@@ -53,9 +53,14 @@ public class AlgorithmModel
     
     //Node that is currently being calculated
     private AStarVertice currentNode;
+    
+    private boolean endNodeReached;
+    
+    protected ArrayList<AStarVertice> solidNodes = new ArrayList<>();
      
     public AlgorithmModel() 
     {
+        solidNodes.clear();
         openSet.clear();
         closedSet.clear();
         calculatedPath.clear();
@@ -69,17 +74,10 @@ public class AlgorithmModel
         nodes[0][0].setVerticeType(VerticeType.START);
         nodes[5][5].setVerticeType(VerticeType.END);
         
-        nodes[2][1].setVerticeType(VerticeType.SOLID);
-        nodes[2][2].setVerticeType(VerticeType.SOLID);
-        nodes[2][3].setVerticeType(VerticeType.SOLID);
-        nodes[2][4].setVerticeType(VerticeType.SOLID);
-        nodes[2][5].setVerticeType(VerticeType.SOLID);
-        
         startNode = null;
         endNode = null;
-        updateSets();    
-        openSet.add(startNode);
-        System.out.println(getTravelCost(startNode, endNode));
+        endNodeReached = false;
+        updateSets();  
     } 
 
     public AStarVertice[][] getNodes()
@@ -106,7 +104,14 @@ public class AlgorithmModel
             switch(nodesList.get(i).getVerticeType())
             {
                 case START:
-                    startNode = nodesList.get(i);
+                    System.out.println("Setting start node");
+                    startNode = nodesList.get(i);                      
+                    if(startNode != null)
+                    {
+                        openSet.clear();
+                        openSet.add(startNode);
+                    }
+                    
                     break;
                 case END:
                     endNode = nodesList.get(i);
@@ -126,73 +131,70 @@ public class AlgorithmModel
     }
     
     
+    
     public void findPath()
     {
-        neighbourNodes.clear();
-        AStarVertice start = startNode;
-        AStarVertice end = endNode;
-        
-        System.out.println(openSet.size());
-        
-        if(currentNode == end)
+        //todo: needs a better way to detect final node reached
+        if(currentNode == endNode || endNodeReached)
         {
-            System.out.println("Found solution!");
+            endNodeReached = true;
             drawTakenPath();
-            return;
+            System.out.println("Do something here");
         }
-        currentNode = openSet.get(0);
-
-        for(int i = 1; i < openSet.size(); i++)
-        {
-            if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
-            {
-                if (openSet.get(i).getHCost() < currentNode.getHCost())
-                {
-                    currentNode = openSet.get(i);
-                }
-            }               
-        }
-        openSet.remove(currentNode);
-        closedSet.add(currentNode);
         
-        for(AStarVertice v : closedSet)
+        else
         {
-            if(v.getVerticeType() != VerticeType.SOLID)
+            System.out.println("ey");
+            neighbourNodes.clear();
+
+            currentNode = openSet.get(0);
+
+            for(int i = 1; i < openSet.size(); i++)
             {
-                v.setVerticeType(VerticeType.TRAVERSED);
+                if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
+                {
+                    if (openSet.get(i).getHCost() < currentNode.getHCost())
+                    {
+                        currentNode = openSet.get(i);
+                    }
+                }               
             }
+            openSet.remove(currentNode);
+            closedSet.add(currentNode);
+
+            for(AStarVertice v : closedSet)
+            {
+                if(v.getVerticeType() != VerticeType.SOLID)
+                {
+                    v.setVerticeType(VerticeType.TRAVERSED);
+                }
+            }
+
+            neighbourNodes = getNeighbourVertices(currentNode);
+            //Loop over neighbours to set each cost
+            for (AStarVertice n : neighbourNodes)
+            {
+                //n.setVerticeType(VerticeType.NEIGHBOUR);
+                if (!closedSet.contains(n))
+                {
+                    double cost = getTravelCost(n, currentNode);
+                    double currentNodeCost = currentNode.getGCost();
+                    double newCost = cost + currentNodeCost;
+                    if (newCost < n.getGCost() || !openSet.contains(n))
+                    {
+                        n.setGCost(currentNodeCost + cost);
+                        n.setHCost(getTravelCost(n, endNode)); 
+                        n.setFCost(n.getGCost() + n.getHCost());
+                        n.setParent(currentNode);
+                    }
+
+                    if(!openSet.contains(n))
+                    {
+                        openSet.add(n);
+                    }
+                }
+            } 
         }
-
-        neighbourNodes = getNeighbourVertices(currentNode);
-        //Loop over neighbours to set each cost
-        for (AStarVertice n : neighbourNodes)
-        {
-            //n.setVerticeType(VerticeType.NEIGHBOUR);
-            if (!closedSet.contains(n))
-            {
-                double cost = getTravelCost(n, currentNode);
-                double currentNodeCost = currentNode.getGCost();
-                double newCost = cost + currentNodeCost;
-                if (newCost < n.getGCost() || !openSet.contains(n))
-                {
-                    n.setGCost(currentNodeCost + cost);
-                    System.out.println(getTravelCost(n, endNode));
-                    n.setHCost(getTravelCost(n, endNode)); 
-                    n.setFCost(n.getGCost() + n.getHCost());
-                    n.setParent(currentNode);
-                }
-
-                if(!openSet.contains(n))
-                {
-                    openSet.add(n);
-                }
-            }
-            else
-            {
-                continue;
-            }
-
-        } 
     }
     
     //Returns the neighbours surrounding the current node (except the current node itself)

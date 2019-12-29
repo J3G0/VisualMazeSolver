@@ -57,7 +57,7 @@ public class AlgorithmView extends Region
         int nodeX = Math.min( (int) (clickedAtX / rasterFormula) , model.ROWS_X - 1 );
         int nodeY = Math.min( (int) (clickedAtY / rasterFormula), model.ROWS_Y - 1);
         
-        System.out.println("Returning node at location:" + nodeX + " , " + nodeY);
+        //System.out.println("Returning node at location:" + nodeX + " , " + nodeY);
         return new Point(nodeX, nodeY);
     }
 }
