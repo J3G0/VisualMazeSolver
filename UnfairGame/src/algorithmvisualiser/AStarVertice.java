@@ -28,11 +28,15 @@ public class AStarVertice extends Vertice
     //What type is this AStarVertice
     private VerticeType type;
     
+    //What type was is previously? used for control + z
+    private VerticeType previousType;
+    
     public AStarVertice(int positionX, int positionY)
     {
         super(positionX, positionY);
         this.parent = null;
         this.type = VerticeType.BASIC;
+        this.previousType = null;
         this.gCost = 0;
         this.hCost = 0;
         this.fCost = 0;
@@ -40,6 +44,9 @@ public class AStarVertice extends Vertice
     
     public VerticeType getVerticeType() { return type; }
     public void setVerticeType(VerticeType type) { this.type = type;}
+    
+    public VerticeType getPreviousVerticeType() { return previousType; }
+    public void setPreviousVerticeType(VerticeType previousType) { this.previousType = previousType; }
     
     public double getFCost()
     {

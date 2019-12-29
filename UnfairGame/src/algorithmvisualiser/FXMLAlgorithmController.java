@@ -96,10 +96,11 @@ public class FXMLAlgorithmController implements Initializable
                 
             case Z:
                 System.out.println("Z pressed");
-                if( e.isControlDown()  && model.solidNodes.size() > 0)
+                if( e.isControlDown()  && model.edittedNodes.size() > 0)
                 {
-                    AStarVertice lastSolid = model.solidNodes.get(model.solidNodes.size() - 1);
-                    model.solidNodes.remove(lastSolid);
+                    AStarVertice lastSolid = model.edittedNodes.get(model.edittedNodes.size() - 1);
+                    model.edittedNodes.remove(lastSolid);
+                    lastSolid.setVerticeType(null);
                     
                     int lastSolidX = (int) lastSolid.getPositionX();
                     int lastSolidY = (int) lastSolid.getPositionY();
@@ -122,16 +123,30 @@ public class FXMLAlgorithmController implements Initializable
         
         switch(comboBox.getValue())
         {
+            //Todo: rewrite this to fit better (function?)
             case "Start node":
                 AStarVertice previousStart= model.getStartNode();
+                
+                previousStart.setPreviousVerticeType(VerticeType.START);
+                model.edittedNodes.add(previousStart);
+                
                 previousStart.setVerticeType(VerticeType.BASIC);
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.START);
+                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
+                model.edittedNodes.add(model.getNodeAtLocation(p.x,p.y));
                 break;
                 
             case "End node":
                 AStarVertice previousEnd = model.getEndNode();
-                previousEnd.setVerticeType(VerticeType.BASIC);
+                
+                previousEnd.setPreviousVerticeType(VerticeType.END);
+                
+                model.edittedNodes.add(previousEnd);
+                
+                previousEnd.setVerticeType(VerticeType.BASIC);               
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.END);
+                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
+                model.edittedNodes.add(model.getNodeAtLocation(p.x,p.y));
                 break;      
                 
             case "Solid node":
@@ -139,8 +154,9 @@ public class FXMLAlgorithmController implements Initializable
                 //Don't overwrite start or end nodes
                 if (!(n.getVerticeType() == VerticeType.START || n.getVerticeType() == VerticeType.END) )
                 {
+                    model.edittedNodes.add(model.getNodeAtLocation(p.x,p.y));
+                    model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
                     model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.SOLID);
-                    model.solidNodes.add(model.getNodeAtLocation(p.x,p.y));
                 }
                 break;   
         }

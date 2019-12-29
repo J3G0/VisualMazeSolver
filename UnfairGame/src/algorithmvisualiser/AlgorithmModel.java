@@ -56,11 +56,11 @@ public class AlgorithmModel
     
     private boolean endNodeReached;
     
-    protected ArrayList<AStarVertice> solidNodes = new ArrayList<>();
+    protected ArrayList<AStarVertice> edittedNodes = new ArrayList<>();
      
     public AlgorithmModel() 
     {
-        solidNodes.clear();
+        edittedNodes.clear();
         openSet.clear();
         closedSet.clear();
         calculatedPath.clear();
