@@ -26,4 +26,6 @@ public class Vertice
     
     public void setPositionX(double positionX) {this.positionX = positionX; }
     public void setPositionY(double positionY) {this.positionY = positionY; }
+    
+    public String getLocation() { return "x location: " + positionX + " y location: "  + positionY;}
 }

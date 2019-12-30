@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -79,6 +80,33 @@ public class AStarModel
         endNodeReached = false;
         updateSets();  
     } 
+    
+    public AStarModel(int numberOfSolids) 
+    {
+        this();
+        Random r = new Random();
+        //Reset regular nodes
+        nodes[0][0].setVerticeType(VerticeType.BASIC);
+        nodes[5][5].setVerticeType(VerticeType.BASIC); 
+        //Set new start, end
+        nodes[r.nextInt(ROWS_X - 1)][r.nextInt(ROWS_Y - 1)].setVerticeType(VerticeType.START);
+        nodes[r.nextInt(ROWS_X - 1)][r.nextInt(ROWS_Y - 1)].setVerticeType(VerticeType.END);
+        
+        for (int i = 0 ; i < numberOfSolids ; i++)
+        {
+            AStarVertice randomNode = nodes[r.nextInt(ROWS_X - 1)][r.nextInt(ROWS_Y - 1)];
+            if (randomNode.getVerticeType() == VerticeType.BASIC)
+            {
+                randomNode.setVerticeType(VerticeType.SOLID);
+                randomNode.setPreviousVerticeType(VerticeType.BASIC);
+            }
+            else
+            {
+                i--;
+            }
+        }
+        updateSets(); 
+    }
 
     public AStarVertice[][] getNodes()
     {
@@ -104,7 +132,7 @@ public class AStarModel
             switch(nodesList.get(i).getVerticeType())
             {
                 case START:
-                    System.out.println("Setting start node");
+                    //System.out.println("Setting start node");
                     startNode = nodesList.get(i);                      
                     if(startNode != null)
                     {

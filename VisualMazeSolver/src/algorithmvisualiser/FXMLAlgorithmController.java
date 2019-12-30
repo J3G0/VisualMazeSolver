@@ -2,6 +2,7 @@ package algorithmvisualiser;
 
 import java.awt.Point;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.fxml.FXML;
@@ -29,6 +30,9 @@ public class FXMLAlgorithmController implements Initializable
     private Button next;
     
     @FXML
+    private Button rst;
+    
+    @FXML
     private ComboBox<String> comboBox;
     
     private AStarModel model;
@@ -42,6 +46,7 @@ public class FXMLAlgorithmController implements Initializable
         view.setFocusTraversable(true);
         view.setOnMouseDragged(this::handleMouseEvent);
         view.setOnMouseClicked(this::handleMouseEvent);
+        anchorPane.getChildren().clear();
         anchorPane.getChildren().add(view);
         update();
     }
@@ -60,7 +65,17 @@ public class FXMLAlgorithmController implements Initializable
     {
         updateComboBox();
         next.setOnAction(evt -> iterate());
+        rst.setOnAction(evt -> randomize());
     }    
+    
+    public void randomize()
+    {
+        Random r = new Random();
+        this.model = new AStarModel(r.nextInt(150));
+        setModel(model);
+        System.out.println("Start: " + model.getStartNode().getLocation());
+        System.out.println("End: " + model.getEndNode().getLocation());
+    }
     
     public void herstart()
     {
@@ -77,11 +92,8 @@ public class FXMLAlgorithmController implements Initializable
     
     private void iterate()
     {
-        for(int i = 0 ; i < 5 ; i++)
-        {
-            model.findPath();
-            update();   
-        }   
+        model.findPath();
+        update();     
     }
     
     private void iterate(KeyEvent e) 
