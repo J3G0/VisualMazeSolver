@@ -31,13 +31,13 @@ public class FXMLAlgorithmController implements Initializable
     @FXML
     private ComboBox<String> comboBox;
     
-    private AlgorithmModel model;
-    private AlgorithmView view;
+    private AStarModel model;
+    private AStarView view;
     
-    public void setModel(AlgorithmModel model) 
+    public void setModel(AStarModel model) 
     {
         this.model = model;
-        view = new AlgorithmView(model);
+        view = new AStarView(model);
         view.setOnKeyPressed(this::iterate);
         view.setFocusTraversable(true);
         view.setOnMouseDragged(this::handleMouseEvent);
@@ -64,8 +64,8 @@ public class FXMLAlgorithmController implements Initializable
     
     public void herstart()
     {
-        model = new AlgorithmModel();
-        view = new AlgorithmView(model);
+        model = new AStarModel();
+        view = new AStarView(model);
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(view);
     }
