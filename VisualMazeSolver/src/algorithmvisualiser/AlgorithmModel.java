@@ -69,8 +69,8 @@ public class AlgorithmModel
                 nodes[i][j] = new Vertice(i,j);
             }
         } 
-        startNode = nodes[0][0];
-        nodes[0][0].setVerticeType(VerticeType.START);
+        startNode = nodes[10][10];
+        nodes[10][10].setVerticeType(VerticeType.START);
         
         currentNode = startNode;
         
@@ -83,8 +83,8 @@ public class AlgorithmModel
         return nodes;
     }
     
-       //Returns the neighbours surrounding the current node (except the current node itself)
-    public List<Vertice> getNeighbourVertices (Vertice currentNode)
+    //Returns the neighbours surrounding the current node (except the current node itself)
+    public List<Vertice> getNeighbourVertices (Vertice currentNode, boolean allowDiagonal)
     {
         List<Vertice> neighbours = new ArrayList<>();
         
@@ -113,16 +113,46 @@ public class AlgorithmModel
                         // neighbours.add(neighbourNode);
                         int posX = (int)neighbourNode.getPositionX();
                         int posY = (int)neighbourNode.getPositionY();
-                        if((nodes[posX][posY].getVerticeType() != VerticeType.SOLID))
+                        
+                        if ( (nodes[posX][posY].getVerticeType() != VerticeType.SOLID) || ( nodes[posX][posY].getVerticeType() != VerticeType.TRAVERSED) )
                         {
                             neighbours.add(nodes[posX][posY]);
                         }
                     }
 
                 }
-            }
-            
+            }       
         }   
+        
+        //Check for diagonals (not the cleanest code but it works)
+        if(!allowDiagonal)
+        {
+            List<Vertice> neighboursToRemove = new ArrayList<>();
+            int posX = (int)currentNode.getPositionX();
+            int posY = (int)currentNode.getPositionY();
+            for(Vertice n : neighbours)
+            {
+                int nX = (int) n.getPositionX();
+                int nY = (int) n.getPositionY();
+                
+                //check top left
+                boolean topLeftNeighbour = posX >= 1 && posY >= 1 && (posX - 1 == nX) && (posY - 1 == nY);
+                //Check top right
+                boolean topRightNeighbour = posX >= 1 && posY >= 1 && (posX + 1 == nX) && (posY - 1 == nY);
+                //Check bottom right
+                boolean bottomRightNeighbour = posX < ROWS_X && posY < ROWS_Y && (posX + 1 == nX) && (posY + 1 == nY);
+                //Check bottom left
+                boolean bottomLeftNeighbour = posX < ROWS_X && posY < ROWS_Y && (posX - 1 == nX) && (posY + 1 == nY);
+                
+                
+                if(topLeftNeighbour || topRightNeighbour  || bottomRightNeighbour || bottomLeftNeighbour)
+                {
+                    neighboursToRemove.add(n);
+                }    
+            }
+            // https://stackoverflow.com/questions/10431981/remove-elements-from-collection-while-iterating
+            neighbours.removeAll(neighboursToRemove);
+        }
         return neighbours;
     }   
     

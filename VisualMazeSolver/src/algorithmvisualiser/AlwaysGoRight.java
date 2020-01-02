@@ -5,7 +5,7 @@
  */
 package algorithmvisualiser;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  *
@@ -13,9 +13,6 @@ import java.util.Set;
  */
 public class AlwaysGoRight extends AlgorithmModel
 {  
-    
-    @Override 
-    public Vertice[][] getNodes() { return nodes; }
     
     public AlwaysGoRight()
     {
@@ -27,7 +24,20 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void iterate()
     {
-        neighbours = getNeighbourVertices(currentNode);
+        neighbours = getNeighbourVertices(currentNode, false);
+        
+        for(Vertice n : neighbours)
+        {
+            n.setVerticeType(VerticeType.NEIGHBOUR);
+        }
+        
+        //Get possible movement directions from neighbours, if nothing possible, set currentnode to parent
+        
+        //createDirectionList(neighbours);
+        
+        //Move to next direction
+        
+        //Repeat
         
     }
 }

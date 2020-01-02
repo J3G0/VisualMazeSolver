@@ -18,12 +18,14 @@ public class Vertice
     private double positionX;
     private double positionY;
     private VerticeType type;
+    private Vertice parent;
     
     public Vertice(double positionX, double positionY) 
     {
         this.positionX = positionX;
         this.positionY = positionY;
         this.type = VerticeType.BASIC;
+        this.parent = null;
     }
     
     
