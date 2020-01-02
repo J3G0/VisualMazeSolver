@@ -167,12 +167,12 @@ public class AStarModel
         {
             endNodeReached = true;
             drawTakenPath();
-            System.out.println("Do something here");
+            System.out.println("Endpoint found!");
         }
         
         else
         {
-            System.out.println("ey");
+            System.out.println("Next iteration...");
             neighbourNodes.clear();
 
             currentNode = openSet.get(0);
@@ -224,6 +224,16 @@ public class AStarModel
             } 
         }
     }
+    
+    
+    public void fastPath(){
+        while(currentNode != endNode){
+        findPath();
+        }
+        //one more to highlight yellow
+        findPath();
+    }
+            
     
     //Returns the neighbours surrounding the current node (except the current node itself)
     public List<AStarVertice> getNeighbourVertices (AStarVertice currentNode)

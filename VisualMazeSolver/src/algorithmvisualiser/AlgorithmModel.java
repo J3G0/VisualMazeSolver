@@ -139,12 +139,12 @@ public class AlgorithmModel
         {
             endNodeReached = true;
             drawTakenPath();
-            System.out.println("Do something here");
+            System.out.println("Found the path!");
         }
         
         else
         {
-            System.out.println("ey");
+            System.out.println("Next iteration...");
             neighbourNodes.clear();
 
             currentNode = openSet.get(0);

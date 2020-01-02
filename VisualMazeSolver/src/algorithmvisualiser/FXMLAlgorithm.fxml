@@ -14,5 +14,7 @@
       <Text layoutX="37.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterate" />
       <Button fx:id="rst" layoutX="812.0" layoutY="27.0" mnemonicParsing="false" text="RESET" />
       <Text layoutX="812.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset" />
+      <Button fx:id="finnish" layoutX="330.0" layoutY="27.0" mnemonicParsing="false" text="Finnish" />
+      <Text layoutX="330.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterate" />
    </children>
 </AnchorPane>
