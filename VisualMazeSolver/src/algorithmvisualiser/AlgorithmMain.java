@@ -23,7 +23,7 @@ public class AlgorithmMain extends Application
         Parent root = lader.load();
         FXMLAlgorithmController controller = lader.getController();
         
-        AStarModel model = new AStarModel();
+        AlgorithmModel model = new AlgorithmModel();
         controller.setModel(model);
         
         Scene scene = new Scene(root);

@@ -3,24 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.AStar;
 
+import algorithmvisualiser.Vertice;
+import java.text.DecimalFormat;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 /**
  *
  * @author Sebastiaan
  */
-public class VerticeView extends Region
+public class AStarVerticeView extends Region
 {
-    final private Vertice node;
+    final private AStarVertice node;
     final protected int SIZE = 35;
     final protected int OFFSET = 5;
     
-    public VerticeView(Vertice node) 
+    
+    public AStarVerticeView(AStarVertice node) 
     {
         this.node = node;
         update();
@@ -66,12 +71,17 @@ public class VerticeView extends Region
                 break;
         }
         
-        final double x = node.getPositionX() * SIZE + node.getPositionX() * OFFSET;
-        final double y = node.getPositionY() * SIZE + node.getPositionY() * OFFSET;
-        
+        final double x = node.getPositionX() * SIZE + (node.getPositionX() + 1) * OFFSET;
+        final double y = node.getPositionY() * SIZE + (node.getPositionY() + 1) * OFFSET;
+        DecimalFormat df = new DecimalFormat("#.0");
+        double cost = node.getFCost();
+        Text t = new Text( x + OFFSET , y + (SIZE / 2), df.format(cost));
+        t.setFill(Color.BLACK);
+        t.setFont(new Font(15));
         Rectangle nodeRect = createRectangle(x, y, kleur);
         
         getChildren().add(nodeRect);
+        getChildren().add(t);
     }
     
     public Vertice getModel()
@@ -86,5 +96,5 @@ public class VerticeView extends Region
         r.setFill(kleur);
         
         return r;
-    }
+    }    
 }
