@@ -29,7 +29,6 @@ public class AlgorithmModel
     //Amount of nodes in y direction (same for each algorithm)
     final protected int ROWS_Y = 15;
     
-    
     //Startnode of the algorithm
     final protected Vertice startNode; 
     
@@ -37,21 +36,31 @@ public class AlgorithmModel
     final protected Vertice endNode;
     
     //current node that is looping
-    final protected Vertice currentNode;
+    protected Vertice currentNode;
     
     //A list of nodes that was already considered
-    final protected List<Vertice> closedSet = new ArrayList<>();
+    protected List<Vertice> closedSet;
     
     //A list of nodes that was not considered
-    final protected List<Vertice> openSet = new ArrayList<>();
+    protected List<Vertice> openSet;
+    
+    //A list of neighbour nodes surrounding the current node
+    protected List<Vertice> neighbours;
     
     //Model has a list of nodes, each node representing a rectangle in the view.  
     final protected Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
     
+    protected String algorithmName;
+    
     public AlgorithmModel()
     {
-        closedSet.clear();
-        openSet.clear();
+        
+        algorithmName = "BASE_CLASS";
+        //Bad practice to do new ArrayList? is .clear() better?
+        
+        closedSet = new ArrayList<>();
+        openSet = new ArrayList<>();
+        neighbours = new ArrayList<>();
         
         for (int i = 0; i < ROWS_X ; i++)
         {
@@ -69,9 +78,63 @@ public class AlgorithmModel
         nodes[5][5].setVerticeType(VerticeType.END);
     }
     
-    protected Vertice[][] getNodes()
+    public Vertice[][] getNodes()
     {
         return nodes;
     }
     
+       //Returns the neighbours surrounding the current node (except the current node itself)
+    public List<Vertice> getNeighbourVertices (Vertice currentNode)
+    {
+        List<Vertice> neighbours = new ArrayList<>();
+        
+        //Offset coords surrounding the current  node
+        
+        double xCorrection = currentNode.getPositionX();
+        double yCorrection = currentNode.getPositionY();
+        
+        for (int xCoord = -1; xCoord <= 1; xCoord++)
+        {
+            for (int yCoord = -1; yCoord <= 1; yCoord++)
+            {
+                Vertice neighbourNode = new Vertice(xCoord, yCoord);
+                
+                //Correction needed for currentNode offset loop
+                neighbourNode.setPositionX(Math.min( xCorrection - xCoord, ROWS_X- 1));
+                neighbourNode.setPositionY(Math.min( yCorrection - yCoord, ROWS_Y- 1));
+                //System.out.println(neighbourNode.getPositionX() + " , " + neighbourNode.getPositionY());
+                
+                if (!isNodeOnSameCoord(currentNode, neighbourNode))
+                {
+
+                    if(neighbourNode.getPositionX() >= 0 && neighbourNode.getPositionY() >= 0)
+                    {
+                        //Idea: Add actual node instead of neighbournode?
+                        // neighbours.add(neighbourNode);
+                        int posX = (int)neighbourNode.getPositionX();
+                        int posY = (int)neighbourNode.getPositionY();
+                        if((nodes[posX][posY].getVerticeType() != VerticeType.SOLID))
+                        {
+                            neighbours.add(nodes[posX][posY]);
+                        }
+                    }
+
+                }
+            }
+            
+        }   
+        return neighbours;
+    }   
+    
+    public boolean isNodeOnSameCoord(Vertice nodeA, Vertice nodeB)
+    {
+        return (nodeA.getPositionX() == nodeB.getPositionX() && nodeA.getPositionY() == nodeB.getPositionY());
+    }  
+    
+    
+    //Override this method in subclasses, this is what progresses algorithms.
+    public void iterate()
+    {
+        
+    }
 }

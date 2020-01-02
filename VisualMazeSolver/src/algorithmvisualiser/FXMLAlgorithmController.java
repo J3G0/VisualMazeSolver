@@ -65,6 +65,7 @@ public class FXMLAlgorithmController implements Initializable
     {
         updateComboBox();
         rst.setOnAction(evt -> changeModel());
+        next.setOnAction(evt -> model.iterate());
     }    
     
     public void update()
@@ -74,6 +75,8 @@ public class FXMLAlgorithmController implements Initializable
     
     public void changeModel()
     {
-        setModel(new AlgorithmTest());
+        System.out.println("test");
+        setModel(new AlwaysGoRight());
+        update();
     }
 }
