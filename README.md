@@ -33,7 +33,7 @@ When pressing iterate it is possible to see the selected algorithm work its way 
 
 ## Authors
 
-* *Wouter Groeneveld*       - Lecturer  - [GitHub](https://github.com/krisaerts)
+* *Kris Aerts*       - Lecturer  - [GitHub](https://github.com/krisaerts)
 * *Jeffrey Gorissen*        - Student   - [GitHub](https://github.com/J3G0)
 * *Sebastiaan Vanspauwen*   - Student   - [GitHub](https://github.com/SebastiaanVanspauwen)
 
