@@ -3,7 +3,7 @@
 
 ## Assignment for Graphical applications in Java
 
-This This project is part of the Software design C/C++ and QT class.
+This This project is part of the Graphical applications in Java class.
 It is lectured by [Kris Aerts](https://github.com/krisaerts). The goal of this project
 is to create a graphical and interactive application. 
 A game is allowed but is not required. Simulations, procesvisualisations,... are perfectly allowed.
