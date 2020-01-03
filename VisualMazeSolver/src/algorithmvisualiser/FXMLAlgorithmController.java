@@ -48,6 +48,8 @@ public class FXMLAlgorithmController implements Initializable
         view.setFocusTraversable(true);
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(view);
+        view.setOnMouseDragged(this::handleMouseEvent);
+        view.setOnMouseClicked(this::handleMouseEvent);
         update();
     }
     
@@ -83,6 +85,55 @@ public class FXMLAlgorithmController implements Initializable
     {
         System.out.println("test");
         setModel(new AlwaysGoRight());
+        update();
+    }
+    
+    private void handleMouseEvent(MouseEvent e)
+    {
+        int clickedX = (int) e.getX();
+        int clickedY = (int) e.getY();
+        
+        Point p = view.getCoordPointFromClick(clickedX,clickedY);
+        
+        switch(comboBox.getValue())
+        {
+            //Todo: rewrite this to fit better (function?)
+            case "Start node":
+                Vertice previousStart = model.getStartNode();
+                
+                previousStart.setPreviousVerticeType(VerticeType.START);
+                previousStart.setVerticeType(VerticeType.BASIC);
+                
+                model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.START);
+                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
+                model.startNode = model.getNodeAtLocation(p.x,p.y);
+                break;
+                
+            case "End node":
+                Vertice previousEnd = model.getEndNode();
+                
+                previousEnd.setPreviousVerticeType(VerticeType.END);
+
+                
+                previousEnd.setVerticeType(VerticeType.BASIC);               
+                model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.END);
+                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
+                model.endNode = model.getNodeAtLocation(p.x,p.y);
+                break;      
+                
+            case "Solid node":
+                Vertice n = model.getNodeAtLocation(p.x,p.y);
+                //Don't overwrite start or end nodes
+                
+                if (!(n.getVerticeType() == VerticeType.START || n.getVerticeType() == VerticeType.END) )
+                {
+                    model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
+                    model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.SOLID);
+                }
+                break;   
+        }
+        
+        model.updateSets();
         update();
     }
 }

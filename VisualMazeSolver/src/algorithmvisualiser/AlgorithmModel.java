@@ -6,7 +6,9 @@
 package algorithmvisualiser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -30,10 +32,10 @@ public class AlgorithmModel
     final protected int ROWS_Y = 15;
     
     //Startnode of the algorithm
-    final protected Vertice startNode; 
+    protected Vertice startNode; 
     
     //Endnode of the algorithm
-    final protected Vertice endNode;
+    protected Vertice endNode;
     
     //current node that is looping
     protected Vertice currentNode;
@@ -54,7 +56,9 @@ public class AlgorithmModel
     
     public AlgorithmModel()
     {
-        
+        startNode = null;
+        endNode = null;
+        currentNode = null;
         algorithmName = "BASE_CLASS";
         //Bad practice to do new ArrayList? is .clear() better?
         
@@ -69,13 +73,10 @@ public class AlgorithmModel
                 nodes[i][j] = new Vertice(i,j);
             }
         } 
-        startNode = nodes[10][10];
-        nodes[10][10].setVerticeType(VerticeType.START);
-        
-        currentNode = startNode;
-        
-        endNode = nodes[5][5];
+        nodes[0][0].setVerticeType(VerticeType.START);
         nodes[5][5].setVerticeType(VerticeType.END);
+        updateSets();  
+        currentNode = startNode;
     }
     
     public Vertice[][] getNodes()
@@ -114,7 +115,7 @@ public class AlgorithmModel
                         int posX = (int)neighbourNode.getPositionX();
                         int posY = (int)neighbourNode.getPositionY();
                         
-                        if ( (nodes[posX][posY].getVerticeType() != VerticeType.SOLID) || ( nodes[posX][posY].getVerticeType() != VerticeType.TRAVERSED) )
+                        if ( (nodes[posX][posY].getVerticeType() == VerticeType.BASIC))
                         {
                             neighbours.add(nodes[posX][posY]);
                         }
@@ -167,4 +168,43 @@ public class AlgorithmModel
     {
         
     }
+    
+    public void updateSets()
+    {
+        List <Vertice> nodesList = Arrays.stream(nodes).flatMap(Arrays::stream).collect(Collectors.toList()); 
+        for(int i = 0; i < nodesList.size(); i++)
+        {
+            switch(nodesList.get(i).getVerticeType())
+            {
+                case START:
+                    //System.out.println("Setting start node");
+                    startNode = nodesList.get(i);                                     
+                    break;
+                case END:
+                    endNode = nodesList.get(i);
+                    break;
+                case SOLID:
+                    closedSet.add(nodesList.get(i));
+                
+                default:
+                    break;
+            }      
+        }
+        
+        if(startNode == null || endNode == null)
+        {
+            throw new NullPointerException("NPE WARNING: Startnode or endnode is zero!");
+        }
+    }
+        
+    public Vertice getNodeAtLocation(int x, int y)
+    {
+        x = Math.min(x, ROWS_X - 1);
+        y = Math.min(y, ROWS_Y - 1);
+        
+        return nodes[x][y];
+    }
+    
+    public Vertice getStartNode() { return startNode; }
+    public Vertice getEndNode() { return endNode; }
 }

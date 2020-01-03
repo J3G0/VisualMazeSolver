@@ -5,6 +5,7 @@
  */
 package algorithmvisualiser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,8 @@ import java.util.List;
  */
 public class AlwaysGoRight extends AlgorithmModel
 {  
-    
+    List<MovementDirection> possibleDirections = new ArrayList<>();
+    MovementDirection currentDirection = null;
     public AlwaysGoRight()
     {
         this.algorithmName = "AlwaysGoRight";    
@@ -24,20 +26,111 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void iterate()
     {
+        currentNode.setVerticeType(VerticeType.TRAVERSED);
         neighbours = getNeighbourVertices(currentNode, false);
-        
         for(Vertice n : neighbours)
         {
-            n.setVerticeType(VerticeType.NEIGHBOUR);
+            //System.out.println(n.getLocation() + n.getVerticeType());
         }
         
-        //Get possible movement directions from neighbours, if nothing possible, set currentnode to parent
+        possibleDirections = createDirectionList();
+        for(MovementDirection d: possibleDirections)
+        {
+            //System.out.println(d);
+        }
+        //System.out.println("/////");
         
-        //createDirectionList(neighbours);
+        //Get 
+        if(!possibleDirections.isEmpty())
+        {
+            currentDirection = possibleDirections.get(0);
+            //System.out.println("Chose direction: " + currentDirection);
+        }
+        else
+        {
+            currentDirection = null;
+        }   
         
-        //Move to next direction
+        currentNode = getNodeAtDirection(currentDirection);
         
-        //Repeat
-        
+    }
+    
+    public Vertice getNodeAtDirection(MovementDirection currentDirection)
+    {
+        Vertice nodeAtDirection = null;
+        if(currentDirection == null)
+        {
+            nodeAtDirection = currentNode.getParent();
+            return nodeAtDirection;
+        }
+        else
+        {
+            int posX = (int) currentNode.getPositionX();
+            int posY = (int) currentNode.getPositionY();
+            
+            switch(currentDirection)
+            {
+                case UP:
+                    nodeAtDirection = getNodeAtLocation(posX, posY - 1);
+                    break;
+                    
+                case DOWN:
+                    nodeAtDirection = getNodeAtLocation(posX, posY + 1);
+                    break;
+                    
+                case LEFT:
+                    nodeAtDirection = getNodeAtLocation(posX - 1, posY);
+                    break;
+                    
+                case RIGHT:
+                    nodeAtDirection = getNodeAtLocation(posX + 1, posY);
+                    break;
+                    
+            }
+        }
+        nodeAtDirection.setParent(currentNode);
+        return nodeAtDirection;
+    }
+    
+    public List<MovementDirection> createDirectionList()
+    {
+        possibleDirections.clear();
+        int posX = (int) currentNode.getPositionX();
+        int posY = (int) currentNode.getPositionY();
+
+        for(Vertice n : neighbours)
+        {
+            int nX = (int) n.getPositionX();
+            int nY = (int) n.getPositionY();
+            
+            //System.out.println("Checking neighbour at : " + n.getLocation() );
+
+            //check top left
+            boolean topNeighbour = (posX == nX) && (posY - 1 == nY);
+            //Check top right
+            boolean rightNeighbour =  (posX + 1 == nX) && (posY == nY);
+            //Check bottom right
+            boolean bottomNeighbour =  (posX == nX) && (posY + 1 == nY);
+            //Check bottom left
+            boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
+
+            if(topNeighbour)
+            {
+                possibleDirections.add(MovementDirection.UP);
+            }
+            else if(rightNeighbour)
+            {
+                possibleDirections.add(MovementDirection.RIGHT);
+            }
+            else if(bottomNeighbour)
+            {
+                possibleDirections.add(MovementDirection.DOWN);
+            }
+            else if(leftNeighbour)
+            {
+                possibleDirections.add(MovementDirection.LEFT);
+            }
+        }
+        return possibleDirections;
     }
 }
