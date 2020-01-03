@@ -39,7 +39,7 @@ When pressing iterate it is possible to see the selected algorithm work its way 
 <details>
 <summary>Click to see start and end node in the view</summary>
 
-![view1](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/view1.png)
+![view1](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/View1.png)
 
 </details>
 
