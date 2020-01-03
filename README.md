@@ -31,19 +31,19 @@ When pressing iterate it is possible to see the selected algorithm work its way 
  
 <details>
 <summary>Click to see tile selection</summary>
-![img](msc/tileType.png)
+![Tiletypes](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/tileType.png)
 </details>
 
 <details>
 <summary>Click to see start and end node in the view</summary>
-![img](msc/view1.png)
+![view1](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/view1.png)
 </details>
 
 <details>
 <summary>Click to see an example maze (fastest route)</summary>
-![img](msc/maze1.png)
-![img](msc/maze2.png)
-![img](msc/maze3.png)
+![maze1](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/maze1.png)
+![maze2](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/maze2.png)
+![maze3](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/maze3.png)
 </details>
 
 
