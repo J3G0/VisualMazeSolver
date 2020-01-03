@@ -115,7 +115,7 @@ public class AlgorithmModel
                         int posX = (int)neighbourNode.getPositionX();
                         int posY = (int)neighbourNode.getPositionY();
                         
-                        if ( (nodes[posX][posY].getVerticeType() == VerticeType.BASIC))
+                        if ( (nodes[posX][posY].getVerticeType() == VerticeType.BASIC) || nodes[posX][posY]  == endNode)
                         {
                             neighbours.add(nodes[posX][posY]);
                         }
@@ -165,6 +165,12 @@ public class AlgorithmModel
     
     //Override this method in subclasses, this is what progresses algorithms.
     public void iterate()
+    {
+        
+    }
+    
+    //Override in subclass to finish
+    public void finish()
     {
         
     }

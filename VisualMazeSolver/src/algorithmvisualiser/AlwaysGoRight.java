@@ -55,6 +55,15 @@ public class AlwaysGoRight extends AlgorithmModel
         
     }
     
+    @Override
+    public void finish()
+    {
+        while(currentNode != endNode)
+        {
+            iterate();
+        }
+    }
+    
     public Vertice getNodeAtDirection(MovementDirection currentDirection)
     {
         Vertice nodeAtDirection = null;
