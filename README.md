@@ -26,14 +26,30 @@ A game is allowed but is not required. Simulations, procesvisualisations,... are
 
 ## VisualMazeSolver
 
-This application allows the user to select a startpoint and an endpoint. Futhermore, it is possible to select solid blocks, creating a Maze.
+This application allows the user to select a start node and an end node. Futhermore, it is possible to select a solid node, creating a Maze.
 When pressing iterate it is possible to see the selected algorithm work its way to the endpoint (keep clicking). For a fast way of seeing the result, just press finish.
  
+<details>
+<summary>Click to see tile selection</summary>
+![img](msc/tileType.png)
+</details>
+
+<details>
+<summary>Click to see start and end node in the view</summary>
+![img](msc/view1.png)
+</details>
+
+<details>
+<summary>Click to see an example maze (fastest route)</summary>
+![img](msc/maze1.png)
+![img](msc/maze2.png)
+![img](msc/maze3.png)
+</details>
 
 
 ## Authors
 
-* *Kris Aerts*       - Lecturer  - [GitHub](https://github.com/krisaerts)
+* *Kris Aerts*   	    - Lecturer  - [GitHub](https://github.com/krisaerts)
 * *Jeffrey Gorissen*        - Student   - [GitHub](https://github.com/J3G0)
 * *Sebastiaan Vanspauwen*   - Student   - [GitHub](https://github.com/SebastiaanVanspauwen)
 
