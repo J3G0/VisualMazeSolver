@@ -58,6 +58,9 @@ public class AlgorithmModel
     //Amount of iterations that the algorithm took
     private int amountOfIterations;
     
+    //What state is the algorithm in?
+    private AlgorithmState algorithmState;
+    
     public AlgorithmModel()
     {
         startNode = null;
@@ -82,6 +85,7 @@ public class AlgorithmModel
         updateSets();  
         currentNode = startNode;      
         amountOfIterations = 0;
+        algorithmState = AlgorithmState.SOLVING;
     }
     
     public Vertice[][] getNodes()
@@ -226,4 +230,11 @@ public class AlgorithmModel
     public int getAmountOfIterations() { return amountOfIterations; }
     public void setAmountOfIterations(int amountOfIterations) { this.amountOfIterations = amountOfIterations; }
     public void increaseIterations() { amountOfIterations++; }
+    
+    public AlgorithmState getAlgorithmState()  { return algorithmState; }
+    public void setAlgorithmState(AlgorithmState algorithmState) { this.algorithmState = algorithmState; }
+    
+    public boolean hasReachedEnd() { return currentNode == endNode; }
+    public boolean isStuck() { return (currentNode == startNode); } 
+    
 }

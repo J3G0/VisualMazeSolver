@@ -47,6 +47,8 @@ public class FXMLAlgorithmController implements Initializable
     
     private AlgorithmModel model;
     private AlgorithmView view;
+    private AlgorithmProgressor progrssor;
+    private Timer timer;
     
     public void setModel(AlgorithmModel model) 
     {
@@ -57,6 +59,8 @@ public class FXMLAlgorithmController implements Initializable
         anchorPane.getChildren().add(view);
         view.setOnMouseDragged(this::handleMouseEvent);
         view.setOnMouseClicked(this::handleMouseEvent);
+        progrssor = new AlgorithmProgressor(model, this);
+        timer = new Timer(true);
         update();
     }
     
@@ -95,7 +99,8 @@ public class FXMLAlgorithmController implements Initializable
     
     public void iterate()
     {
-        model.iterate();
+        timer.scheduleAtFixedRate(progrssor, 50, 50);
+        //model.iterate();
         update();
     }
     

@@ -50,9 +50,10 @@ public class AlwaysGoRight extends AlgorithmModel
         
         currentNode = getNodeAtDirection(currentDirection);
         
-        if(currentNode == startNode)
+        //If currentnode is null that means currentNode is the startnode (startnode has no parent)
+        if(currentNode == null)
         {
-            System.out.println("No solution found!");
+             setAlgorithmState(AlgorithmState.UNSOLVABLE);
         }
         
     }
@@ -60,7 +61,7 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void finish()
     {
-        while(currentNode != endNode)
+        while(!hasReachedEnd() && getAlgorithmState() != AlgorithmState.UNSOLVABLE)
         {
             iterate();
         }
@@ -69,10 +70,19 @@ public class AlwaysGoRight extends AlgorithmModel
     public Vertice getNodeAtDirection(MovementDirection currentDirection)
     {
         Vertice nodeAtDirection = null;
+        
         if(currentDirection == null)
         {
-            nodeAtDirection = currentNode.getParent();
-            return nodeAtDirection;
+            Vertice parentNode = currentNode.getParent();
+            
+            if(parentNode == null)
+            {
+                return null;
+            }
+            else
+            {
+                return parentNode;
+            }
         }
         else
         {
