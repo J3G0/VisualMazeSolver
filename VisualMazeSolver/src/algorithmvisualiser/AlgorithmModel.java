@@ -52,7 +52,13 @@ public class AlgorithmModel
     //Model has a list of nodes, each node representing a rectangle in the view.  
     final protected Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
     
+    //The name of the current Algorithm
     protected String algorithmName;
+    
+    //Amount of iterations that the algorithm took
+    protected int amountOfIterations;
+    
+    
     
     public AlgorithmModel()
     {
@@ -76,7 +82,8 @@ public class AlgorithmModel
         nodes[0][0].setVerticeType(VerticeType.START);
         nodes[5][5].setVerticeType(VerticeType.END);
         updateSets();  
-        currentNode = startNode;
+        currentNode = startNode;      
+        amountOfIterations = 0;
     }
     
     public Vertice[][] getNodes()
@@ -184,7 +191,8 @@ public class AlgorithmModel
             {
                 case START:
                     //System.out.println("Setting start node");
-                    startNode = nodesList.get(i);                                     
+                    startNode = nodesList.get(i);   
+                    currentNode = startNode;
                     break;
                 case END:
                     endNode = nodesList.get(i);
@@ -212,5 +220,8 @@ public class AlgorithmModel
     }
     
     public Vertice getStartNode() { return startNode; }
+    public void setStartNode(Vertice startNode) { this.startNode = startNode; }
+    
     public Vertice getEndNode() { return endNode; }
+    public void setEndNode(Vertice endNode) { this.endNode = endNode; }
 }

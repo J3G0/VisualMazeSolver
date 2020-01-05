@@ -113,7 +113,7 @@ public class FXMLAlgorithmController implements Initializable
                 
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.START);
                 model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                model.startNode = model.getNodeAtLocation(p.x,p.y);
+                model.setStartNode(model.getNodeAtLocation(p.x,p.y));
                 break;
                 
             case "End node":
@@ -125,7 +125,7 @@ public class FXMLAlgorithmController implements Initializable
                 previousEnd.setVerticeType(VerticeType.BASIC);               
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.END);
                 model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                model.endNode = model.getNodeAtLocation(p.x,p.y);
+                model.setEndNode(model.getNodeAtLocation(p.x,p.y));
                 break;      
                 
             case "Solid node":

@@ -26,32 +26,34 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void iterate()
     {
+        amountOfIterations++;
+        System.out.println(amountOfIterations);
+        this.algorithmName = "AlwaysGoRight " + amountOfIterations; 
         currentNode.setVerticeType(VerticeType.TRAVERSED);
         neighbours = getNeighbourVertices(currentNode, false);
-        for(Vertice n : neighbours)
-        {
-            //System.out.println(n.getLocation() + n.getVerticeType());
-        }
         
         possibleDirections = createDirectionList();
-        for(MovementDirection d: possibleDirections)
-        {
-            //System.out.println(d);
-        }
+        
         //System.out.println("/////");
         
-        //Get 
+        //Get first possible direction if not empty
         if(!possibleDirections.isEmpty())
         {
             currentDirection = possibleDirections.get(0);
             //System.out.println("Chose direction: " + currentDirection);
         }
+        //If possible directions is empty, set currentnode to null (so it goes to parent)
         else
         {
             currentDirection = null;
         }   
         
         currentNode = getNodeAtDirection(currentDirection);
+        
+        if(currentNode == startNode)
+        {
+            System.out.println("No solution found!");
+        }
         
     }
     
