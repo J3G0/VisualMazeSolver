@@ -26,9 +26,9 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void iterate()
     {
-        amountOfIterations++;
-        System.out.println(amountOfIterations);
-        this.algorithmName = "AlwaysGoRight " + amountOfIterations; 
+        increaseIterations();
+        System.out.println(getAmountOfIterations());
+        this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
         currentNode.setVerticeType(VerticeType.TRAVERSED);
         neighbours = getNeighbourVertices(currentNode, false);
         

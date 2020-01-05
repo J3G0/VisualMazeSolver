@@ -56,9 +56,7 @@ public class AlgorithmModel
     protected String algorithmName;
     
     //Amount of iterations that the algorithm took
-    protected int amountOfIterations;
-    
-    
+    private int amountOfIterations;
     
     public AlgorithmModel()
     {
@@ -224,4 +222,8 @@ public class AlgorithmModel
     
     public Vertice getEndNode() { return endNode; }
     public void setEndNode(Vertice endNode) { this.endNode = endNode; }
+    
+    public int getAmountOfIterations() { return amountOfIterations; }
+    public void setAmountOfIterations(int amountOfIterations) { this.amountOfIterations = amountOfIterations; }
+    public void increaseIterations() { amountOfIterations++; }
 }

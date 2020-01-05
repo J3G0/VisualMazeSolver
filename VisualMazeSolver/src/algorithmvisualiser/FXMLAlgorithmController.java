@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +38,9 @@ public class FXMLAlgorithmController implements Initializable
     
     @FXML
     private ComboBox<String> comboBox;
+    
+    @FXML
+    private TextField iterateField;
     
     @FXML
     private ComboBox<String> comboBox2;
@@ -80,7 +84,6 @@ public class FXMLAlgorithmController implements Initializable
         updateComboBox();
         rst.setOnAction(evt -> changeModel());
         next.setOnAction(evt -> iterate());
-        rst.setOnAction(evt -> randomize());
         finish.setOnAction(evt -> finish());
     }    
     
@@ -99,6 +102,7 @@ public class FXMLAlgorithmController implements Initializable
     public void update()
     {
         view.update();
+        iterateField.setText(Integer.toString(model.getAmountOfIterations()));
     }
     
     public void changeModel()
