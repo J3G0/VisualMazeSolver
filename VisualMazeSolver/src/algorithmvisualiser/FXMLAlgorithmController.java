@@ -33,7 +33,7 @@ public class FXMLAlgorithmController implements Initializable
     private Button rst;
     
     @FXML
-    private Button finnish;
+    private Button finish;
     
     @FXML
     private ComboBox<String> comboBox;
@@ -68,7 +68,8 @@ public class FXMLAlgorithmController implements Initializable
         updateComboBox();
         rst.setOnAction(evt -> changeModel());
         next.setOnAction(evt -> iterate());
-        finnish.setOnAction(evt -> finish());
+        rst.setOnAction(evt -> randomize());
+        finish.setOnAction(evt -> finish());
     }    
     
     public void finish()
