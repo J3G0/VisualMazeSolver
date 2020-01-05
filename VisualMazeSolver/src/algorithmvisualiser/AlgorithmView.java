@@ -5,12 +5,16 @@
  */
 package algorithmvisualiser;
 
+import algorithmvisualiser.AStar.AStarVertice;
+import algorithmvisualiser.AStar.AStarVerticeView;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Stream;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -30,24 +34,27 @@ public class AlgorithmView extends Region
     public void update()
     {
         getChildren().clear();
-        AStarVertice[][] nodeList = model.getNodes();
+        Vertice[][] nodeList = model.getNodes();
+        Text t =  new Text(820,0, "Current model: " + model.algorithmName);
+        t.setFill(Color.BLACK);
+        t.setFont(new Font(15));      
         
         for (int i = 0; i < nodeList.length; i++)
         {
             for (int j = 0; j < nodeList[i].length ; j++)
             {
-                AStarVerticeView vv = new AStarVerticeView(nodeList[i][j]);
+                VerticeView vv = new VerticeView(nodeList[i][j]);
                 getChildren().add(vv);
             }
         }
+        getChildren().add(t);
     }
-    
     
     public Point getCoordPointFromClick(int clickedAtX, int clickedAtY)
     {   
             
         //Make a view to call for getCoordPointFromClick()
-        AStarVerticeView view = new AStarVerticeView(new AStarVertice(-50,-50));
+        VerticeView view = new VerticeView(new Vertice(-50,-50));
         // Todo: make dynamic
         // Take a click on (200.0, 78.0)
         // We know each node has view.OFFSET offset from eachother, and the size is view.SIZE;
