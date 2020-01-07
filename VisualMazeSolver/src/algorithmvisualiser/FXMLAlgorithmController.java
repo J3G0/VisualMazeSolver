@@ -38,6 +38,9 @@ public class FXMLAlgorithmController implements Initializable
     @FXML
     private ComboBox<String> comboBox;
     
+    @FXML
+    private ComboBox<String> comboBox2;
+    
     private AlgorithmModel model;
     private AlgorithmView view;
     
@@ -60,6 +63,15 @@ public class FXMLAlgorithmController implements Initializable
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Start node", "End node", "Solid node");
         comboBox.getSelectionModel().select("Start node");      
+    }
+    
+    public void updateComboBox2()
+    {
+        // Initialize own comboBox items
+        // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
+        comboBox.getItems().removeAll(comboBox2.getItems());
+        comboBox.getItems().addAll("Always Right", "AStar", "Vertice");
+        comboBox.getSelectionModel().select("Always Right");      
     }
     
     @Override
@@ -143,5 +155,9 @@ public class FXMLAlgorithmController implements Initializable
         
         model.updateSets();
         update();
+    }
+
+    private void randomize() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

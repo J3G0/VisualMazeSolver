@@ -10,7 +10,9 @@
       <Button fx:id="next" layoutX="37.0" layoutY="27.0" mnemonicParsing="false" text="NEXT" />
       <AnchorPane fx:id="anchorPane" layoutX="37.0" layoutY="59.0" prefHeight="620.0" prefWidth="1000.0" />
       <ComboBox fx:id="comboBox" layoutX="137.0" layoutY="27.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboBox2" layoutX="400.0" layoutY="27.0" prefWidth="150.0" />
       <Text layoutX="137.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tile type" wrappingWidth="150.0" />
+      <Text layoutX="400.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algoritm type" wrappingWidth="150.0" />
       <Text layoutX="37.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterate" />
       <Button fx:id="rst" layoutX="812.0" layoutY="27.0" mnemonicParsing="false" text="RESET" />
       <Text layoutX="812.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reset" />
