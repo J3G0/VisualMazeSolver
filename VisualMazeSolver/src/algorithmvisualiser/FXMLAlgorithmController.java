@@ -4,16 +4,21 @@ import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 public class FXMLAlgorithmController implements Initializable
 {
@@ -45,6 +50,12 @@ public class FXMLAlgorithmController implements Initializable
     @FXML
     private ComboBox<String> algorithmComboBox;
     
+    @FXML
+    private Slider progressorSpeed;
+
+    @FXML
+    private Text speedIndicator;
+    
     private AlgorithmModel model;
     private AlgorithmView view;
     private AlgorithmProgressor progressor;
@@ -60,6 +71,9 @@ public class FXMLAlgorithmController implements Initializable
         view.setOnMouseDragged(this::handleMouseEvent);
         view.setOnMouseClicked(this::handleMouseEvent);
         algorithmComboBox.setOnAction(this::handleAlgorithmComboBox);
+        progressorSpeed.setOnMouseReleased(this::handleSliderDragEvent);
+
+        
         progressor = new AlgorithmProgressor(this.model, this);
         timer = new Timer(true);
         update();
@@ -78,6 +92,16 @@ public class FXMLAlgorithmController implements Initializable
                setModel(new AStarModel());
                break;
        }
+    }
+    
+    public void handleSliderDragEvent(MouseEvent event)
+    {
+        speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue());
+        timer.cancel();
+        progressor = new AlgorithmProgressor(this.model, this);
+        timer = new Timer(true);
+        timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
+        update();
     }
     
     public void updateComboBox()
@@ -113,7 +137,7 @@ public class FXMLAlgorithmController implements Initializable
         if(model.getAlgorithmState() == AlgorithmState.SOLVING)
         {
             //Fixed timertask that calls model.iterate()
-            timer.scheduleAtFixedRate(progressor, 50, 50);
+            timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
             update();
         }
     }
@@ -128,7 +152,7 @@ public class FXMLAlgorithmController implements Initializable
     {
         //Cancel timer as a new
         timer.cancel();
-        setModel(new AlwaysGoRight());
+        handleAlgorithmComboBox(new ActionEvent());
         update();
     }
     

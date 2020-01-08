@@ -25,6 +25,11 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void iterate()
     { 
+        if(getAlgorithmState() == AlgorithmState.FINISHED)
+        {
+            drawTakenPath();
+        }
+        
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
@@ -63,6 +68,7 @@ public class AlwaysGoRight extends AlgorithmModel
         {
             iterate();
         }
+        drawTakenPath();
     }
     
     public Vertice getNodeAtDirection(MovementDirection currentDirection)

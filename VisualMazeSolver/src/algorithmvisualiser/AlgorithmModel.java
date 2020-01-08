@@ -247,4 +247,21 @@ public class AlgorithmModel
             algorithmState = AlgorithmState.UNSOLVABLE;
         }    
     }
+    
+        
+    public void drawTakenPath()
+    {
+        while(currentNode != startNode)
+        {
+            System.out.println(currentNode.getLocation());
+            currentNode.setVerticeType(VerticeType.PARENT);
+            currentNode = currentNode.getParent();
+            
+            if (currentNode == null)
+            {
+                return;
+            }
+        }
+        currentNode.setVerticeType(VerticeType.PARENT);
+    }
 }

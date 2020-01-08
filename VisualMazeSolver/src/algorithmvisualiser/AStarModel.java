@@ -37,6 +37,11 @@ public class AStarModel extends AlgorithmModel
     
     public void iterate()
     {
+        if(getAlgorithmState() == AlgorithmState.SOLVING)
+        {
+            updateModelState();
+        }
+        
         //todo: needs a better way to detect final node reached
         if(getAlgorithmState() == AlgorithmState.FINISHED)
         {
@@ -45,7 +50,6 @@ public class AStarModel extends AlgorithmModel
         
         else
         {
-            updateModelState();
             System.out.println("Next iteration...");
             neighbours.clear();
 
@@ -76,7 +80,7 @@ public class AStarModel extends AlgorithmModel
             //Loop over neighbours to set each cost
             for (Vertice n : neighbours)
             {
-                //n.setVerticeType(VerticeType.NEIGHBOUR);
+                n.setVerticeType(VerticeType.NEIGHBOUR);
                 if (!closedSet.contains(n))
                 {
                     double cost = getTravelCost(n, currentNode);
@@ -123,21 +127,5 @@ public class AStarModel extends AlgorithmModel
         travelCost = absoluteDifferenceX > absoluteDifferenceY ? xBigger : yBigger;
         return travelCost;
         
-    }
-    
-    public void drawTakenPath()
-    {
-        while(currentNode != startNode)
-        {
-            currentNode.setVerticeType(VerticeType.PARENT);
-            currentNode = currentNode.getParent();
-            
-            if (currentNode == null)
-            {
-                return;
-            }
-        }
-        currentNode.setVerticeType(VerticeType.PARENT);
-        updateSets();
     }
 }
