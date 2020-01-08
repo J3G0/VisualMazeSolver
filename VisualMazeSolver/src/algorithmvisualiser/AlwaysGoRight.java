@@ -24,39 +24,42 @@ public class AlwaysGoRight extends AlgorithmModel
     
     @Override
     public void iterate()
-    {        
-        System.out.println("Calling iterate" + getAmountOfIterations());
-        increaseIterations();
-        this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
-        currentNode.setVerticeType(VerticeType.TRAVERSED);
-        neighbours = getNeighbourVertices(currentNode, false);
-        
-        possibleDirections = createDirectionList();
-        
-        //System.out.println("/////");
-        
-        //Get first possible direction if not empty
-        if(!possibleDirections.isEmpty())
+    { 
+        if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
-            currentDirection = possibleDirections.get(0);
-            //System.out.println("Chose direction: " + currentDirection);
+            updateModelState();
+            System.out.println("Calling iterate" + getAmountOfIterations());
+            increaseIterations();
+            this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
+            currentNode.setVerticeType(VerticeType.TRAVERSED);
+            neighbours = getNeighbourVertices(currentNode, false);
+
+            possibleDirections = createDirectionList();
+
+            //System.out.println("/////");
+
+            //Get first possible direction if not empty
+            if(!possibleDirections.isEmpty())
+            {
+                currentDirection = possibleDirections.get(0);
+                //System.out.println("Chose direction: " + currentDirection);
+            }
+            //If possible directions is empty, set currentnode to null (so it goes to parent)
+            else
+            {
+                currentDirection = null;
+            }   
+
+            currentNode = getNodeAtDirection(currentDirection);
+
+            //If currentnode is null that means currentNode is the startnode (startnode has no parent)   
         }
-        //If possible directions is empty, set currentnode to null (so it goes to parent)
-        else
-        {
-            currentDirection = null;
-        }   
-        
-        currentNode = getNodeAtDirection(currentDirection);
-        
-        //If currentnode is null that means currentNode is the startnode (startnode has no parent)
-      
     }
     
     @Override
     public void finish()
     {
-        while(!hasReachedEnd())
+        while(getAlgorithmState() == AlgorithmState.SOLVING)
         {
             iterate();
         }

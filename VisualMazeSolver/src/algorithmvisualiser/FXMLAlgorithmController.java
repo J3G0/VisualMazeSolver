@@ -93,24 +93,24 @@ public class FXMLAlgorithmController implements Initializable
     
     public void finish()
     {
-        if(model.getAlgorithmState() != AlgorithmState.UNSOLVABLE)
-        {
-            model.finish();
-            update();
-        }
+        model.finish();
+        update();
     }
     
     public void iterate()
     {
-        timer.scheduleAtFixedRate(progressor, 50, 50);
-        //model.iterate();
-        update();
+        if(model.getAlgorithmState() == AlgorithmState.SOLVING)
+        {
+            //Fixed timertask that calls model.iterate()
+            timer.scheduleAtFixedRate(progressor, 50, 50);
+            update();
+        }
     }
     
     public void update()
     {
         view.update();
-        iterateField.setText(Integer.toString(model.getAmountOfIterations()));
+        iterateField.setText(model.getAlgorithmState().toString());
     }
     
     public void changeModel()

@@ -234,24 +234,17 @@ public class AlgorithmModel
     public AlgorithmState getAlgorithmState()  { return algorithmState; }
     public void setAlgorithmState(AlgorithmState algorithmState) { this.algorithmState = algorithmState; }
     
-    public boolean hasReachedEnd() 
-    { 
+    public void updateModelState()
+    {
         if(currentNode == endNode)
         {
+            System.out.println("Setting state to finished");
             algorithmState = AlgorithmState.FINISHED;
-            return true;
         }
-        
-        return false;
-    }
-    public boolean isStuck() 
-    { 
-        if(currentNode == startNode)
+        else if(currentNode == startNode && amountOfIterations > 1)
         {
+            System.out.println("Setting state to unsolvable");
             algorithmState = AlgorithmState.UNSOLVABLE;
-            return true;
-        }
-        
-        return false;       
+        }    
     }
 }
