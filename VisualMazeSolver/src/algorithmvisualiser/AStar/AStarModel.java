@@ -5,6 +5,7 @@
  */
 package algorithmvisualiser.AStar;
 
+import algorithmvisualiser.AlgorithmModel;
 import algorithmvisualiser.VerticeType;
 import java.util.ArrayList;
 import java.util.Arrays;

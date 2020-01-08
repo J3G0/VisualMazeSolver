@@ -2,9 +2,9 @@ package algorithmvisualiser;
 
 import java.awt.Point;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Timer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -43,7 +43,7 @@ public class FXMLAlgorithmController implements Initializable
     private TextField iterateField;
     
     @FXML
-    private ComboBox<String> comboBox2;
+    private ComboBox<String> algorithmComboBox;
     
     private AlgorithmModel model;
     private AlgorithmView view;
@@ -59,9 +59,25 @@ public class FXMLAlgorithmController implements Initializable
         anchorPane.getChildren().add(view);
         view.setOnMouseDragged(this::handleMouseEvent);
         view.setOnMouseClicked(this::handleMouseEvent);
+        algorithmComboBox.setOnAction(this::handleAlgorithmComboBox);
         progressor = new AlgorithmProgressor(this.model, this);
         timer = new Timer(true);
         update();
+    }
+    
+    public void handleAlgorithmComboBox(ActionEvent event)
+    {
+       switch(algorithmComboBox.getValue())
+       {
+           case "Always right":
+               setModel(new AlwaysGoRight());
+               
+               break;
+               
+           case "A Star":
+               setModel(new AStarModel());
+               break;
+       }
     }
     
     public void updateComboBox()
@@ -70,16 +86,11 @@ public class FXMLAlgorithmController implements Initializable
         // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
         comboBox.getItems().removeAll(comboBox.getItems());
         comboBox.getItems().addAll("Start node", "End node", "Solid node");
-        comboBox.getSelectionModel().select("Start node");      
-    }
-    
-    public void updateComboBox2()
-    {
-        // Initialize own comboBox items
-        // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
-        comboBox.getItems().removeAll(comboBox2.getItems());
-        comboBox.getItems().addAll("Always Right", "AStar", "Vertice");
-        comboBox.getSelectionModel().select("Always Right");      
+        comboBox.getSelectionModel().select("Start node"); 
+        
+        algorithmComboBox.getItems().removeAll(algorithmComboBox.getItems());
+        algorithmComboBox.getItems().addAll("Always right", "A Star");
+        algorithmComboBox.getSelectionModel().select("Always right"); 
     }
     
     @Override

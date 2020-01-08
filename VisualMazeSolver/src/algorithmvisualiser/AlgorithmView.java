@@ -5,7 +5,6 @@
  */
 package algorithmvisualiser;
 
-import algorithmvisualiser.AStar.AStarVertice;
 import algorithmvisualiser.AStar.AStarVerticeView;
 import java.awt.Point;
 import java.util.ArrayList;

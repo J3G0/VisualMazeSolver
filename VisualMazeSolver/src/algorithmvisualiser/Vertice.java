@@ -17,9 +17,19 @@ public class Vertice
 {
     private double positionX;
     private double positionY;
-    private VerticeType type;
-    private VerticeType previousVerticeType;
-    private Vertice parent;
+    protected VerticeType type;
+    protected VerticeType previousVerticeType;
+    protected Vertice parent;
+    
+    //Distance to start node cost
+    private double gCost;
+    
+    //Distance to end node cost
+    private double hCost;
+    
+    //This is total cost (gCost + hCost)
+    private double fCost;
+    
     
     public Vertice(double positionX, double positionY) 
     {
@@ -28,6 +38,9 @@ public class Vertice
         this.type = VerticeType.BASIC;
         this.parent = null;
         this.previousVerticeType = null;
+        this.gCost = 0;
+        this.hCost = 0;
+        this.fCost = 0;
     }
     
     public void setParent(Vertice parent){this.parent = parent;}
@@ -46,4 +59,20 @@ public class Vertice
     public void setPositionY(double positionY) {this.positionY = positionY; }
     
     public String getLocation() { return "x location: " + positionX + " y location: "  + positionY;}
+    
+    public double getFCost()
+    {
+        return gCost + hCost;
+    }
+    
+    public void setFCost(double fCost)
+    {
+        this.fCost = fCost;
+    }
+    
+    public double getHCost() { return hCost; }
+    public double getGCost() { return gCost; }
+
+    public void setHCost(double hCost) {this.hCost = hCost; }
+    public void setGCost(double gCost) {this.gCost = gCost; }
 }
