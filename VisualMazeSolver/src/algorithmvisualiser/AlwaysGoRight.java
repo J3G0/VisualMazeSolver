@@ -25,7 +25,7 @@ public class AlwaysGoRight extends AlgorithmModel
     
     @Override
     public void iterate()
-    {
+    {        
         increaseIterations();
         System.out.println(getAmountOfIterations());
         this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
@@ -61,7 +61,7 @@ public class AlwaysGoRight extends AlgorithmModel
     @Override
     public void finish()
     {
-        while(!hasReachedEnd() && getAlgorithmState() != AlgorithmState.UNSOLVABLE)
+        while(!hasReachedEnd())
         {
             iterate();
         }

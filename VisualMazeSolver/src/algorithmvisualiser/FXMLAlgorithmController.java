@@ -93,8 +93,11 @@ public class FXMLAlgorithmController implements Initializable
     
     public void finish()
     {
-        model.finish();
-        update();
+        if(model.getAlgorithmState() != AlgorithmState.UNSOLVABLE)
+        {
+            model.finish();
+            update();
+        }
     }
     
     public void iterate()
