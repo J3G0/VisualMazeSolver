@@ -19,15 +19,14 @@ public class AlwaysGoRight extends AlgorithmModel
     public AlwaysGoRight()
     {
         this.algorithmName = "AlwaysGoRight";    
-        System.out.println(algorithmName);
     }
      
     
     @Override
     public void iterate()
     {        
+        System.out.println("Calling iterate" + getAmountOfIterations());
         increaseIterations();
-        System.out.println(getAmountOfIterations());
         this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
         currentNode.setVerticeType(VerticeType.TRAVERSED);
         neighbours = getNeighbourVertices(currentNode, false);
@@ -51,11 +50,7 @@ public class AlwaysGoRight extends AlgorithmModel
         currentNode = getNodeAtDirection(currentDirection);
         
         //If currentnode is null that means currentNode is the startnode (startnode has no parent)
-        if(currentNode == null)
-        {
-             setAlgorithmState(AlgorithmState.UNSOLVABLE);
-        }
-        
+      
     }
     
     @Override
