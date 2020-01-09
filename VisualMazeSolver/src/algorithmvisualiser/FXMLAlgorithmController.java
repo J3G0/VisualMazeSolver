@@ -84,8 +84,7 @@ public class FXMLAlgorithmController implements Initializable
        switch(algorithmComboBox.getValue())
        {
            case "Always right":
-               setModel(new AlwaysGoRight());
-               
+               setModel(new AlwaysGoRight());          
                break;
                
            case "A Star":
@@ -96,12 +95,15 @@ public class FXMLAlgorithmController implements Initializable
     
     public void handleSliderDragEvent(MouseEvent event)
     {
-        speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue());
-        timer.cancel();
-        progressor = new AlgorithmProgressor(this.model, this);
-        timer = new Timer(true);
-        timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
-        update();
+        if(model.getAmountOfIterations() > 1)
+        {
+            speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue());
+            timer.cancel();
+            progressor = new AlgorithmProgressor(this.model, this);
+            timer = new Timer(true);
+            timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
+            update();
+        }
     }
     
     public void updateComboBox()
