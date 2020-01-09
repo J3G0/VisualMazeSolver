@@ -145,7 +145,7 @@ public class FXMLAlgorithmController implements Initializable
     public void update()
     {
         view.update();
-        iterateField.setText(model.getAlgorithmState().toString());
+        iterateField.setText( (model.getAlgorithmState().toString()) + ":" + model.getAmountOfIterations());
     }
     
     public void changeModel()

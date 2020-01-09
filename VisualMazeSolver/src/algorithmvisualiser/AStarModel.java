@@ -48,58 +48,61 @@ public class AStarModel extends AlgorithmModel
             drawTakenPath();
         }      
         
-        else
+        if (openSet.isEmpty() && getAlgorithmState() == AlgorithmState.SOLVING)
         {
-            System.out.println("Next iteration...");
-            neighbours.clear();
-
+            System.out.println("Setting state to unsolveable");
+            setAlgorithmState(AlgorithmState.UNSOLVABLE);
+        }
+        else if (getAlgorithmState() == AlgorithmState.SOLVING)
+        {          
+            increaseIterations();
             currentNode = openSet.get(0);
+            neighbours.clear();
+               for(int i = 1; i < openSet.size(); i++)
+               {
+                   if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
+                   {
+                       if (openSet.get(i).getHCost() < currentNode.getHCost())
+                       {
+                           currentNode = openSet.get(i);
+                       }
+                   }               
+               }
+               openSet.remove(currentNode);
+               closedSet.add(currentNode);
 
-            for(int i = 1; i < openSet.size(); i++)
-            {
-                if (openSet.get(i).getFCost() < currentNode.getFCost() || openSet.get(i).getFCost() == currentNode.getFCost())
-                {
-                    if (openSet.get(i).getHCost() < currentNode.getHCost())
-                    {
-                        currentNode = openSet.get(i);
-                    }
-                }               
-            }
-            openSet.remove(currentNode);
-            closedSet.add(currentNode);
+               for(Vertice v : closedSet)
+               {
+                   if(v.getVerticeType() != VerticeType.SOLID)
+                   {
+                       v.setVerticeType(VerticeType.TRAVERSED);
+                   }
+               }
 
-            for(Vertice v : closedSet)
-            {
-                if(v.getVerticeType() != VerticeType.SOLID)
-                {
-                    v.setVerticeType(VerticeType.TRAVERSED);
-                }
-            }
+               neighbours = getNeighbourVertices(currentNode, true);
+               //Loop over neighbours to set each cost
+               for (Vertice n : neighbours)
+               {
+                   n.setVerticeType(VerticeType.NEIGHBOUR);
+                   if (!closedSet.contains(n))
+                   {
+                       double cost = getTravelCost(n, currentNode);
+                       double currentNodeCost = currentNode.getGCost();
+                       double newCost = cost + currentNodeCost;
+                       if (newCost < n.getGCost() || !openSet.contains(n))
+                       {
+                           n.setGCost(currentNodeCost + cost);
+                           n.setHCost(getTravelCost(n, endNode)); 
+                           n.setFCost(n.getGCost() + n.getHCost());
+                           n.setParent(currentNode);
+                       }
 
-            neighbours = getNeighbourVertices(currentNode, true);
-            //Loop over neighbours to set each cost
-            for (Vertice n : neighbours)
-            {
-                n.setVerticeType(VerticeType.NEIGHBOUR);
-                if (!closedSet.contains(n))
-                {
-                    double cost = getTravelCost(n, currentNode);
-                    double currentNodeCost = currentNode.getGCost();
-                    double newCost = cost + currentNodeCost;
-                    if (newCost < n.getGCost() || !openSet.contains(n))
-                    {
-                        n.setGCost(currentNodeCost + cost);
-                        n.setHCost(getTravelCost(n, endNode)); 
-                        n.setFCost(n.getGCost() + n.getHCost());
-                        n.setParent(currentNode);
-                    }
-
-                    if(!openSet.contains(n))
-                    {
-                        openSet.add(n);
-                    }
-                }
-            } 
+                       if(!openSet.contains(n))
+                       {
+                           openSet.add(n);
+                       }
+                   }
+               }    
         }
     }
 

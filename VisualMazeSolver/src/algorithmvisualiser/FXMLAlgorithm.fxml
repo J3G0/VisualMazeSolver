@@ -21,7 +21,7 @@
       <Button fx:id="finish" layoutX="330.0" layoutY="27.0" mnemonicParsing="false" text="Finish" />
       <Text layoutX="330.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iterate" />
       <Text layoutX="17.0" layoutY="692.0" strokeType="OUTSIDE" strokeWidth="0.0" text="# iterations" wrappingWidth="74.7890625" />
-      <TextField fx:id="iterateField" layoutX="93.0" layoutY="675.0" prefHeight="25.0" prefWidth="68.0" />
+      <TextField fx:id="iterateField" layoutX="93.0" layoutY="675.0" prefHeight="25.0" prefWidth="117.0" />
       <Slider fx:id="progressorSpeed" blockIncrement="5.0" layoutX="354.0" layoutY="680.0" value="50.0" />
       <Text layoutX="262.0" layoutY="692.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iteration speed" wrappingWidth="84.7890625" />
       <Text fx:id="speedIndicator" layoutX="382.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speed: " wrappingWidth="84.7890625" />
