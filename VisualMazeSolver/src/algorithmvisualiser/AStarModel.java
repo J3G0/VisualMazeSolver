@@ -34,6 +34,13 @@ public class AStarModel extends AlgorithmModel
         openSet.add(currentNode);
         
     } 
+  
+    public AStarModel(Vertice[][] map) 
+    {
+        super(map);
+        this.algorithmName = "A Star";  
+        openSet.add(currentNode);     
+    } 
     
     public void iterate()
     {

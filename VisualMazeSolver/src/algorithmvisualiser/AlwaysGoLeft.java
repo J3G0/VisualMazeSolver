@@ -27,6 +27,11 @@ public class AlwaysGoLeft extends AlgorithmModel
         this.algorithmName = "AlwaysGoLeft";    
     }
     
+    public AlwaysGoLeft(Vertice[][] map)
+    {
+        super(map);
+    }
+    
     @Override
     public void iterate()
     { 
@@ -38,9 +43,7 @@ public class AlwaysGoLeft extends AlgorithmModel
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
-            System.out.println("Alwaysgoleft :)" + getAmountOfIterations());
             increaseIterations();
-            this.algorithmName = "AlwaysGoLeft " + getAmountOfIterations(); 
             currentNode.setVerticeType(VerticeType.TRAVERSED);
             neighbours = getNeighbourVertices(currentNode, false);
 

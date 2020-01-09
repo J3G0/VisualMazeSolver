@@ -21,7 +21,12 @@ public class AlwaysGoRight extends AlgorithmModel
     {
         this.algorithmName = "AlwaysGoRight";    
     }
-     
+    
+    public AlwaysGoRight(Vertice[][] map)
+    {
+        super(map);
+        this.algorithmName = "AlwaysGoRight";  
+    }    
     
     @Override
     public void iterate()
@@ -37,7 +42,11 @@ public class AlwaysGoRight extends AlgorithmModel
             System.out.println("Calling iterate" + getAmountOfIterations());
             increaseIterations();
             this.algorithmName = "AlwaysGoRight " + getAmountOfIterations(); 
-            currentNode.setVerticeType(VerticeType.TRAVERSED);
+            
+            if(currentNode.getVerticeType() == VerticeType.BASIC)
+            {
+                currentNode.setVerticeType(VerticeType.TRAVERSED);
+            }
             neighbours = getNeighbourVertices(currentNode, false);
 
             possibleDirections = createDirectionList();

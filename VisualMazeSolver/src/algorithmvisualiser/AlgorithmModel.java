@@ -50,7 +50,7 @@ public class AlgorithmModel
     protected List<Vertice> neighbours;
     
     //Model has a list of nodes, each node representing a rectangle in the view.  
-    final protected Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
+    protected Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
     
     //The name of the current Algorithm
     protected String algorithmName;
@@ -83,9 +83,29 @@ public class AlgorithmModel
         nodes[0][0].setVerticeType(VerticeType.START);
         nodes[5][5].setVerticeType(VerticeType.END);
         updateSets();  
-        currentNode = startNode;      
+        currentNode = startNode;
         amountOfIterations = 0;
         algorithmState = AlgorithmState.SOLVING;
+    }
+    
+    public AlgorithmModel(Vertice[][] map)
+    {
+        this();
+        for (int i = 0; i < map.length ; i++)
+        {
+            for (int j = 0; j < map[i].length ;j++)
+            {
+                Vertice current = map[i][j];
+                
+                switch(current.getVerticeType())
+                {
+                    case SOLID:
+                        nodes[i][j] = current;
+                        break;
+                }
+            }
+        } 
+        
     }
     
     public Vertice[][] getNodes()
@@ -254,7 +274,12 @@ public class AlgorithmModel
         while(currentNode != startNode)
         {
             System.out.println(currentNode.getLocation());
-            currentNode.setVerticeType(VerticeType.PARENT);
+            
+            if(currentNode.getVerticeType() == VerticeType.TRAVERSED)
+            {
+                currentNode.setVerticeType(VerticeType.PARENT);
+            }
+            
             currentNode = currentNode.getParent();
             
             if (currentNode == null)
@@ -263,5 +288,13 @@ public class AlgorithmModel
             }
         }
         currentNode.setVerticeType(VerticeType.PARENT);
+    }
+    
+    public Vertice getNodeFromOther(Vertice node)
+    {
+        int vX = (int) node.getPositionX();
+        int vY = (int) node.getPositionY();
+        
+        return nodes[vX][vY];
     }
 }

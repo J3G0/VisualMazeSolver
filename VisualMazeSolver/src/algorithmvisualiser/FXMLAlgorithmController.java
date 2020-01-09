@@ -84,15 +84,15 @@ public class FXMLAlgorithmController implements Initializable
        switch(algorithmComboBox.getValue())
        {
            case "Always right":
-               setModel(new AlwaysGoRight());          
+               setModel(new AlwaysGoRight(model.getNodes()));          
                break;
                
            case "Always left":
-               setModel(new AlwaysGoLeft());          
+               setModel(new AlwaysGoLeft(model.getNodes()));          
                break;
                
            case "A Star":
-               setModel(new AStarModel());
+               setModel(new AStarModel(model.getNodes()));
                break;
        }
     }
