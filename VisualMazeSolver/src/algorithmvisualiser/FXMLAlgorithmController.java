@@ -97,6 +97,24 @@ public class FXMLAlgorithmController implements Initializable
        }
     }
     
+    public void resetCurrentModel()
+    {
+       switch(algorithmComboBox.getValue())
+       {
+           case "Always right":
+               setModel(new AlwaysGoRight());          
+               break;
+               
+           case "Always left":
+               setModel(new AlwaysGoLeft());          
+               break;
+               
+           case "A Star":
+               setModel(new AStarModel());
+               break;
+       }
+    }
+    
     public void handleSliderDragEvent(MouseEvent event)
     {
         if(model.getAmountOfIterations() > 1)
@@ -158,7 +176,7 @@ public class FXMLAlgorithmController implements Initializable
     {
         //Cancel timer as a new
         timer.cancel();
-        handleAlgorithmComboBox(new ActionEvent());
+        resetCurrentModel();
         update();
     }
     
