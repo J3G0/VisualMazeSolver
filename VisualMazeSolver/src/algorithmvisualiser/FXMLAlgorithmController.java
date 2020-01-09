@@ -139,7 +139,7 @@ public class FXMLAlgorithmController implements Initializable
     }
     
     public void iterate()
-    {
+    {     
         if(model.getAlgorithmState() == AlgorithmState.SOLVING)
         {
             //Fixed timertask that calls model.iterate()

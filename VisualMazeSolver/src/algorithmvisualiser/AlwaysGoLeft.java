@@ -6,6 +6,7 @@
 package algorithmvisualiser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,20 +38,28 @@ public class AlwaysGoLeft extends AlgorithmModel
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
-            System.out.println("Calling iterate" + getAmountOfIterations());
+            System.out.println("Alwaysgoleft :)" + getAmountOfIterations());
             increaseIterations();
             this.algorithmName = "AlwaysGoLeft " + getAmountOfIterations(); 
             currentNode.setVerticeType(VerticeType.TRAVERSED);
             neighbours = getNeighbourVertices(currentNode, false);
 
             possibleDirections = createDirectionList();
-
-            //System.out.println("/////");
+            
+            System.out.println(Arrays.toString(possibleDirections.toArray()));
 
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
-                currentDirection = possibleDirections.get(0);
+                if(possibleDirections.contains(MovementDirection.LEFT))
+                {
+                    System.out.println("Contains left!");
+                    currentDirection = MovementDirection.LEFT;
+                }
+                else
+                {
+                    currentDirection = possibleDirections.get(0);
+                }
                 //System.out.println("Chose direction: " + currentDirection);
             }
             //If possible directions is empty, set currentnode to null (so it goes to parent)
@@ -143,13 +152,13 @@ public class AlwaysGoLeft extends AlgorithmModel
             //Check bottom left
             boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
 
-            if(bottomNeighbour)
-            {
-                possibleDirections.add(MovementDirection.DOWN);
-            }
-            else if(leftNeighbour)
+            if(leftNeighbour)
             {
                 possibleDirections.add(MovementDirection.LEFT);
+            }
+            else if(bottomNeighbour)
+            {
+                possibleDirections.add(MovementDirection.DOWN);
             }
             else if(topNeighbour)
             {
@@ -160,6 +169,10 @@ public class AlwaysGoLeft extends AlgorithmModel
                possibleDirections.add(MovementDirection.RIGHT);
             }
             
+        }
+        for(MovementDirection md : possibleDirections)
+        {
+            System.out.println(md);
         }
         return possibleDirections;
     }
