@@ -87,6 +87,10 @@ public class FXMLAlgorithmController implements Initializable
                setModel(new AlwaysGoRight());          
                break;
                
+           case "Always left":
+               setModel(new AlwaysGoLeft());          
+               break;
+               
            case "A Star":
                setModel(new AStarModel());
                break;
@@ -115,7 +119,7 @@ public class FXMLAlgorithmController implements Initializable
         comboBox.getSelectionModel().select("Start node"); 
         
         algorithmComboBox.getItems().removeAll(algorithmComboBox.getItems());
-        algorithmComboBox.getItems().addAll("Always right", "A Star");
+        algorithmComboBox.getItems().addAll("Always right", "Always left", "A Star");
         algorithmComboBox.getSelectionModel().select("Always right"); 
     }
     

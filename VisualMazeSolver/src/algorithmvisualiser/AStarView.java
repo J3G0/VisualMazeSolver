@@ -30,7 +30,7 @@ public class AStarView extends Region
     public void update()
     {
         getChildren().clear();
-        AStarVertice[][] nodeList = model.getNodes();
+        AStarVertice[][] nodeList = (AStarVertice[][]) model.getNodes();
         
         for (int i = 0; i < nodeList.length; i++)
         {

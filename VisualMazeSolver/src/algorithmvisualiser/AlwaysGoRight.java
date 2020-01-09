@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author Sebastiaan
  */
+
 public class AlwaysGoRight extends AlgorithmModel
 {  
     List<MovementDirection> possibleDirections = new ArrayList<>();
