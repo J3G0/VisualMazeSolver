@@ -133,7 +133,7 @@ public class FXMLAlgorithmController implements Initializable
         // Initialize own comboBox items
         // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
         comboBox.getItems().removeAll(comboBox.getItems());
-        comboBox.getItems().addAll("Start node", "End node", "Solid node");
+        comboBox.getItems().addAll("Start node", "End node", "Solid node", "Basic node");
         comboBox.getSelectionModel().select("Start node"); 
         
         algorithmComboBox.getItems().removeAll(algorithmComboBox.getItems());
@@ -191,6 +191,10 @@ public class FXMLAlgorithmController implements Initializable
         {
             //Todo: rewrite this to fit better (function?)
             case "Start node":
+                if(model.getNodeAtLocation(p.x,p.y) == model.getEndNode())
+                {
+                    return;
+                }
                 Vertice previousStart = model.getStartNode();
                 
                 previousStart.setPreviousVerticeType(VerticeType.START);
@@ -198,33 +202,50 @@ public class FXMLAlgorithmController implements Initializable
                 
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.START);
                 model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                model.setStartNode(model.getNodeAtLocation(p.x,p.y));
+                model.setStartNode(model.getNodeAtLocation(p.x,p.y));   
+
                 break;
                 
             case "End node":
+                if(model.getNodeAtLocation(p.x,p.y) == model.getStartNode())
+                {
+                    return;
+                }
                 Vertice previousEnd = model.getEndNode();
                 
                 previousEnd.setPreviousVerticeType(VerticeType.END);
 
-                
                 previousEnd.setVerticeType(VerticeType.BASIC);               
                 model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.END);
                 model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                model.setEndNode(model.getNodeAtLocation(p.x,p.y));
+                if(model.getNodeAtLocation(p.x,p.y) != model.getStartNode())
+                {
+                    model.setEndNode(model.getNodeAtLocation(p.x,p.y));   
+                }
                 break;      
                 
             case "Solid node":
-                Vertice n = model.getNodeAtLocation(p.x,p.y);
+                Vertice s = model.getNodeAtLocation(p.x,p.y);
                 //Don't overwrite start or end nodes
                 
-                if (!(n.getVerticeType() == VerticeType.START || n.getVerticeType() == VerticeType.END) )
+                if (!(s.getVerticeType() == VerticeType.START || s.getVerticeType() == VerticeType.END) )
                 {
                     model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
                     model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.SOLID);
                 }
                 break;   
-        }
-        
+                
+            case "Basic node":
+                Vertice b = model.getNodeAtLocation(p.x,p.y);
+                //Don't overwrite start or end nodes
+                
+                if (!(b.getVerticeType() == VerticeType.START || b.getVerticeType() == VerticeType.END) )
+                {
+                    model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(model.getNodeAtLocation(p.x,p.y).getVerticeType());
+                    model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.BASIC);
+                }
+                break;                
+        }      
         model.updateSets();
         update();
     }

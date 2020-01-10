@@ -81,16 +81,24 @@ public class AlgorithmModel
             }
         } 
         nodes[0][0].setVerticeType(VerticeType.START);
-        nodes[5][5].setVerticeType(VerticeType.END);
-        updateSets();  
+        nodes[ROWS_X - 1][ROWS_Y - 1].setVerticeType(VerticeType.END);
         currentNode = startNode;
+        updateSets();
         amountOfIterations = 0;
         algorithmState = AlgorithmState.SOLVING;
     }
     
     public AlgorithmModel(Vertice[][] map)
     {
-        this();
+        startNode = null;
+        endNode = null;
+        currentNode = null;
+        algorithmName = "BASE_CLASS";
+        closedSet = new ArrayList<>();
+        openSet = new ArrayList<>();
+        neighbours = new ArrayList<>();
+        
+        nodes = map;
         for (int i = 0; i < map.length ; i++)
         {
             for (int j = 0; j < map[i].length ;j++)
@@ -102,10 +110,28 @@ public class AlgorithmModel
                     case SOLID:
                         nodes[i][j] = current;
                         break;
+                        
+                    case START:
+                        startNode = current;
+                        break;
+                    case END:                      
+                        endNode = current;
+                        break;  
+                        
+                    case PARENT:
+                    case NEIGHBOUR:
+                    case HEAD:
+                    case TRAVERSED:
+                        current.setVerticeType(VerticeType.BASIC);
+                        nodes[i][j] = current;
+                        break;
                 }
             }
         } 
-        
+        currentNode = startNode;
+        amountOfIterations = 0;
+        updateSets();
+        algorithmState = AlgorithmState.SOLVING;
     }
     
     public Vertice[][] getNodes()
@@ -212,14 +238,19 @@ public class AlgorithmModel
             switch(nodesList.get(i).getVerticeType())
             {
                 case START:
-                    //System.out.println("Setting start node");
-                    startNode = nodesList.get(i);   
-                    currentNode = startNode;
+                    System.out.println("Setting start node");
+                    if(startNode == null)
+                    {
+                        startNode = nodesList.get(i);   
+                        currentNode = startNode;
+                    }
                     break;
                 case END:
+                    System.out.println("Setting end node");
                     endNode = nodesList.get(i);
                     break;
                 case SOLID:
+                    System.out.println("Setting solid node");
                     closedSet.add(nodesList.get(i));
                 
                 default:
@@ -261,6 +292,7 @@ public class AlgorithmModel
             System.out.println("Setting state to finished");
             algorithmState = AlgorithmState.FINISHED;
         }
+        
         else if(currentNode == startNode && amountOfIterations > 1)
         {
             System.out.println("Setting state to unsolvable");
@@ -275,7 +307,7 @@ public class AlgorithmModel
         {
             System.out.println(currentNode.getLocation());
             
-            if(currentNode.getVerticeType() == VerticeType.TRAVERSED)
+            if(currentNode.getVerticeType() == VerticeType.TRAVERSED && currentNode != startNode && currentNode != endNode)
             {
                 currentNode.setVerticeType(VerticeType.PARENT);
             }
@@ -287,7 +319,6 @@ public class AlgorithmModel
                 return;
             }
         }
-        currentNode.setVerticeType(VerticeType.PARENT);
     }
     
     public Vertice getNodeFromOther(Vertice node)
@@ -296,5 +327,15 @@ public class AlgorithmModel
         int vY = (int) node.getPositionY();
         
         return nodes[vX][vY];
+    }
+    
+    public boolean containsVerticeType(Vertice node, List<VerticeType> typesToCheck)
+    {
+        //Netbeans suggested this function over for(Type t : x){}
+        if (typesToCheck.stream().anyMatch((verticeType) -> (node.getVerticeType() == verticeType))) 
+        {
+            return true;
+        }
+        return false;
     }
 }

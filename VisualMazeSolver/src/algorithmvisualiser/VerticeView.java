@@ -61,6 +61,10 @@ public class VerticeView extends Region
                 kleur = Color.YELLOW;
                 break;
                 
+            case HEAD:
+                kleur = Color.PURPLE;
+                break;
+            
             default:
                 kleur = Color.WHITE;
                 break;

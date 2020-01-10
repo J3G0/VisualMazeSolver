@@ -64,6 +64,17 @@ public class AStarModel extends AlgorithmModel
         {          
             increaseIterations();
             currentNode = openSet.get(0);
+            
+            if(currentNode.getVerticeType() == VerticeType.BASIC)
+            {
+                currentNode.setVerticeType(VerticeType.HEAD);
+                
+                if(currentNode.getParent() != null && currentNode.getParent() != startNode)
+                {
+                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                }
+            }
+            
             neighbours.clear();
                for(int i = 1; i < openSet.size(); i++)
                {
@@ -80,7 +91,7 @@ public class AStarModel extends AlgorithmModel
 
                for(Vertice v : closedSet)
                {
-                   if(v.getVerticeType() != VerticeType.SOLID)
+                   if(v.getVerticeType() == VerticeType.BASIC || v.getVerticeType() == VerticeType.NEIGHBOUR)
                    {
                        v.setVerticeType(VerticeType.TRAVERSED);
                    }
@@ -90,7 +101,10 @@ public class AStarModel extends AlgorithmModel
                //Loop over neighbours to set each cost
                for (Vertice n : neighbours)
                {
-                   n.setVerticeType(VerticeType.NEIGHBOUR);
+                   if(n.getVerticeType() == VerticeType.BASIC)
+                   {
+                        n.setVerticeType(VerticeType.NEIGHBOUR);
+                   }            
                    if (!closedSet.contains(n))
                    {
                        double cost = getTravelCost(n, currentNode);
