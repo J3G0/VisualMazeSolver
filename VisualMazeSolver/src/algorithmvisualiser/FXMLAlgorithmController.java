@@ -4,8 +4,6 @@ import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,9 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -37,6 +32,9 @@ public class FXMLAlgorithmController implements Initializable
     
     @FXML
     private Button rst;
+    
+    @FXML
+    private Button restart;   
     
     @FXML
     private Button finish;
@@ -70,7 +68,7 @@ public class FXMLAlgorithmController implements Initializable
         anchorPane.getChildren().add(view);
         view.setOnMouseDragged(this::handleMouseEvent);
         view.setOnMouseClicked(this::handleMouseEvent);
-        algorithmComboBox.setOnAction(this::handleAlgorithmComboBox);
+        algorithmComboBox.setOnAction(this::processAlgorithmComboBox);
         progressorSpeed.setOnMouseReleased(this::handleSliderDragEvent);
 
         
@@ -79,7 +77,7 @@ public class FXMLAlgorithmController implements Initializable
         update();
     }
     
-    public void handleAlgorithmComboBox(ActionEvent event)
+    public void processAlgorithmComboBox(ActionEvent event)
     {
        switch(algorithmComboBox.getValue())
        {
@@ -146,6 +144,7 @@ public class FXMLAlgorithmController implements Initializable
     {
         updateComboBox();
         rst.setOnAction(evt -> changeModel());
+        restart.setOnAction(evt -> processAlgorithmComboBox(new ActionEvent()));
         next.setOnAction(evt -> iterate());
         finish.setOnAction(evt -> finish());
     }    

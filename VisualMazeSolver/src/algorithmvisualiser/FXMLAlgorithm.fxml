@@ -25,5 +25,7 @@
       <Slider fx:id="progressorSpeed" blockIncrement="5.0" layoutX="354.0" layoutY="680.0" value="50.0" />
       <Text layoutX="262.0" layoutY="692.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Iteration speed" wrappingWidth="84.7890625" />
       <Text fx:id="speedIndicator" layoutX="382.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speed: " wrappingWidth="84.7890625" />
+      <Button fx:id="restart" layoutX="719.0" layoutY="27.0" mnemonicParsing="false" text="RESTART" />
+      <Text layoutX="719.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Restart" wrappingWidth="45.0" />
    </children>
 </AnchorPane>
