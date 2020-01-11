@@ -16,11 +16,6 @@ import java.util.stream.Collectors;
  * @author Sebastiaan
  */
 
-// Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
-// Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
-// Source: https://github.com/SebLague/Pathfinding/blob/master/Episode%2003%20-%20astar/Assets/Scripts/Pathfinding.cs
-//Base class of an Algorithm model
-
 public class AlgorithmModel
 {
     /**

@@ -124,7 +124,20 @@ public class AStarModel extends AlgorithmModel
                }    
         }
     }
-
+    
+    @Override
+    public void finish()
+    {
+        while(getAlgorithmState() == AlgorithmState.SOLVING)
+        {
+            iterate();
+        }
+        if(getAlgorithmState() == AlgorithmState.FINISHED)
+        {
+            drawTakenPath();
+        }
+    }
+    
     public double getTravelCost(Vertice nodeA, Vertice nodeB)
     {
         double travelCost = 0;
