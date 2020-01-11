@@ -19,49 +19,79 @@ import java.util.stream.Collectors;
 // Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
 // Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
 // Source: https://github.com/SebLague/Pathfinding/blob/master/Episode%2003%20-%20astar/Assets/Scripts/Pathfinding.cs
-
-
-
 //Base class of an Algorithm model
 
 public class AlgorithmModel
 {
-    //Amount of nodes in x direction (same for each algorithm)
+    /**
+     * Het aantal rijen in de X-richting
+     */
     final protected int ROWS_X = 25;
     
-    //Amount of nodes in y direction (same for each algorithm)
+    /**
+     * Het aantal rijen in de Y-richting
+     */
     final protected int ROWS_Y = 15;
     
-    //Startnode of the algorithm
+    /**
+     * De node die aangegeven wordt als de start node
+     */
     protected Vertice startNode; 
     
-    //Endnode of the algorithm
+    /**
+     * De node die aangegeven wordt als de end node
+     */
     protected Vertice endNode;
     
-    //current node that is looping
+    /**
+     * De node die aangegeven wordt als huidige node (hoofd)
+     */
     protected Vertice currentNode;
     
-    //A list of nodes that was already considered
+    /**
+     * Arraylist die alle Nodes die niet meer beschouwd moeten worden bevat (SOLIDS, TRAVERSED)
+     * Hangt van model af welke nodes hierin gestopt worden.
+     */
     protected List<Vertice> closedSet;
     
-    //A list of nodes that was not considered
+    /**
+     * Arraylist die alle mogelijke volgende stappen bevat
+     */
     protected List<Vertice> openSet;
     
-    //A list of neighbour nodes surrounding the current node
+    /**
+     * Arraylist die alle buren van currentNode bevat
+     * @see currentNode
+     */
     protected List<Vertice> neighbours;
     
-    //Model has a list of nodes, each node representing a rectangle in the view.  
+    /**
+     * 2D lijst van nodes die de map beschrijft met afmeting ROWS_X op ROWS_Y
+     * @see ROWS_X
+     * @see ROWS_Y
+     */ 
     protected Vertice[][] nodes = new Vertice[ROWS_X][ROWS_Y];
     
-    //The name of the current Algorithm
+    /**
+     * De naam van het algorithme
+     */
     protected String algorithmName;
     
-    //Amount of iterations that the algorithm took
+    /**
+     * De hoeveelheid van iteraties dat het algoritme al gedaan heeft
+     */
     private int amountOfIterations;
     
-    //What state is the algorithm in?
+    /**
+     * Geeft de status van het algorithme aan (opgelost, bezig, niet oplosbaar)
+     * @see AlgorithmState
+     */
     private AlgorithmState algorithmState;
     
+    
+    /**
+     * Construtor van het model
+     */
     public AlgorithmModel()
     {
         startNode = null;
@@ -89,6 +119,11 @@ public class AlgorithmModel
         algorithmState = AlgorithmState.SOLVING;
     }
     
+    /**
+     * Constructor van het model met map parameter
+     * Op deze manier kan de map behouden worden bij een nieuw algoritme
+     * @param map de huidige map in het spel
+     */
     public AlgorithmModel(Vertice[][] map)
     {
         startNode = null;
@@ -135,12 +170,21 @@ public class AlgorithmModel
         algorithmState = AlgorithmState.SOLVING;
     }
     
+    /**
+     * Geeft alle nodes die in de map zijn terug
+     * @return 2D array van nodes alle nodes in de map met afmeting ROWS_X op ROWS_Y
+     */
     public Vertice[][] getNodes()
     {
         return nodes;
     }
     
-    //Returns the neighbours surrounding the current node (except the current node itself)
+    /**
+     * Methode die alle buren geeft van de huidige node (currentNode)
+     * @param currentNode de huidige node
+     * @param allowDiagonal al dan niet diagonaal kijken naar buren
+     * @return List van nodes die alle buren van currentNode bevat
+     */
     public List<Vertice> getNeighbourVertices (Vertice currentNode, boolean allowDiagonal)
     {
         List<Vertice> neighbours = new ArrayList<>();
@@ -213,24 +257,38 @@ public class AlgorithmModel
         return neighbours;
     }   
     
+    /**
+     * Kijken of een node dezelfde coördinaten heeft als een andere
+     * @param nodeA de eerste node
+     * @param nodeB de tweede node
+     * @return true indien coördinaten gelijk zijn
+     */
     public boolean isNodeOnSameCoord(Vertice nodeA, Vertice nodeB)
     {
         return (nodeA.getPositionX() == nodeB.getPositionX() && nodeA.getPositionY() == nodeB.getPositionY());
     }  
     
     
-    //Override this method in subclasses, this is what progresses algorithms.
+    /**
+     * iterate methode die override wordt in subclasses
+     */
     public void iterate()
     {
         
     }
     
-    //Override in subclass to finish
+    /**
+     * finish methode die override wordt in subclasses
+     */
     public void finish()
     {
         
     }
     
+    /**
+     * Methode die de sets update aan de hand van VerticeType van de nodes
+     * @see VerticeType
+     */
     public void updateSets()
     {
         List <Vertice> nodesList = Arrays.stream(nodes).flatMap(Arrays::stream).collect(Collectors.toList()); 
@@ -271,6 +329,13 @@ public class AlgorithmModel
         }
     }
         
+    
+    /**
+     * Methode die node terug geeft op coordinaat (x,y)
+     * @param x de x coördinaat
+     * @param y de y coördinaat
+     * @return de node die op dat coördinaat aanwezig is
+     */
     public Vertice getNodeAtLocation(int x, int y)
     {
         x = Math.min(x, ROWS_X - 1);
@@ -279,6 +344,12 @@ public class AlgorithmModel
         return nodes[x][y];
     }
     
+    /**
+     * Methode die node terug geeft op Point p
+     * @param p het punt waarop gechecked wordt
+     * @return de node die op dat punt aanwezig is
+     * @see Point
+     */
     public Vertice getNodeAtPoint(Point p)
     {
          int x = Math.min(p.x, ROWS_X - 1);
@@ -287,19 +358,94 @@ public class AlgorithmModel
         return nodes[x][y];       
     }
     
-    public Vertice getStartNode() { return startNode; }
-    public void setStartNode(Vertice startNode) { this.startNode = startNode; }
+    /**
+     * Methode die startnode teruggeeft
+     * @return startNode de node waar het algoritme begint
+     */
+    public Vertice getStartNode() 
+    { 
+        return startNode; 
+    }
     
-    public Vertice getEndNode() { return endNode; }
-    public void setEndNode(Vertice endNode) { this.endNode = endNode; }
+    /**
+     * Methode voor het setten van de startNode
+     * @param startNode de node waarop het algorithme moet beginnen
+     */
+    public void setStartNode(Vertice startNode) 
+    { 
+        this.startNode = startNode; 
+    }
     
-    public int getAmountOfIterations() { return amountOfIterations; }
-    public void setAmountOfIterations(int amountOfIterations) { this.amountOfIterations = amountOfIterations; }
-    public void increaseIterations() { amountOfIterations++; }
+    /**
+     * Methode die endNode teruggeeft
+     * @return endNode de node waar het algorithme eindigt
+     */
+    public Vertice getEndNode() 
+    { 
+        return endNode; 
+    }
     
-    public AlgorithmState getAlgorithmState()  { return algorithmState; }
-    public void setAlgorithmState(AlgorithmState algorithmState) { this.algorithmState = algorithmState; }
+    /**
+     * Methode voor het setten van de endNode
+     * @param endNode de node waar het algorithme moet eindigen
+     */
+    public void setEndNode(Vertice endNode) 
+    { 
+        this.endNode = endNode; 
+    }
     
+    /**
+     * Methode die aantal iteraties terug geeft
+     * @return amountOfIterations het aantal iteraties
+     */
+    public int getAmountOfIterations() 
+    { 
+        return amountOfIterations; 
+    }
+    
+    /**
+     * Methode die het aantal iteraties zet
+     * @param amountOfIterations de hoeveelheid van iteraties dat al gebeurd zijn
+     */
+    public void setAmountOfIterations(int amountOfIterations) 
+    { 
+        this.amountOfIterations = amountOfIterations; 
+    }
+    
+    /**
+     * Methode die het aantal iteraties met 1 verhoogd.
+     */
+    public void increaseIterations() 
+    { 
+        amountOfIterations++; 
+    }
+    
+    /**
+     * Methode die de status van het algorithme opvraagt
+     * @return algorithmState de status van het algorithme
+     * @see AlgorithmState
+     */
+    public AlgorithmState getAlgorithmState()  
+    { 
+        return algorithmState; 
+    }
+    
+    /**
+     * Methode die de status van  het algorithme kan setten
+     * @param algorithmState die nieuwe status van het algorithme
+     */
+    public void setAlgorithmState(AlgorithmState algorithmState) 
+    { 
+        this.algorithmState = algorithmState; 
+    }
+    
+    /**
+     * Methode die kijkt of currentNode gelijk is aan endNode,
+     * indien dit het geval is is het algorithm klaar en wordt AlgorithmState solved.
+     * 
+     * Indien currentNode gelijk is aan startNode dan is het algorithme vastgelopen
+     * en wordt het op unsolveable gezet.
+     */
     public void updateModelState()
     {
         if(currentNode == endNode)
@@ -315,7 +461,11 @@ public class AlgorithmModel
         }    
     }
     
-        
+    /**
+     * Teken het genomen pad door het algorithme
+     * Dit gebeurt door van elke currentNode de ouder (parent)
+     * op te vragen en zo terug naar start te gaan.
+     */
     public void drawTakenPath()
     {
         while(currentNode != startNode)
@@ -336,6 +486,11 @@ public class AlgorithmModel
         }
     }
     
+    /**
+     * Methode die Vertice (node) teruggeeft aan de hand van andere Vertice
+     * @param node de Vertice die gechecked moet worden
+     * @return node in nodes[][] die overeenkomt met de meegegeven node
+     */
     public Vertice getNodeFromOther(Vertice node)
     {
         int vX = (int) node.getPositionX();
@@ -344,6 +499,13 @@ public class AlgorithmModel
         return nodes[vX][vY];
     }
     
+    /**
+     * @deprecated
+     * Methode die kijkt of een Vertice al dan niet de VerticeType heeft vande meegegeven List
+     * @param node de node om te controleren
+     * @param typesToCheck lijst van VerticeTypes
+     * @return true indien node de VerticeType bevat
+     */
     public boolean containsVerticeType(Vertice node, List<VerticeType> typesToCheck)
     {
         //Netbeans suggested this function over for(Type t : x){}
