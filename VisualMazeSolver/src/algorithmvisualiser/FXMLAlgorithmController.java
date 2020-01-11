@@ -58,6 +58,10 @@ public class FXMLAlgorithmController implements Initializable
     private AlgorithmView view;
     private AlgorithmProgressor progressor;
     private Timer timer;
+    private boolean isClicking;
+    private Point clickLocation;
+    private Vertice previousSelectedNode;
+    private Vertice selectedNode;
     
     public void setModel(AlgorithmModel model) 
     {
@@ -66,8 +70,11 @@ public class FXMLAlgorithmController implements Initializable
         view.setFocusTraversable(true);
         anchorPane.getChildren().clear();
         anchorPane.getChildren().add(view);
-        view.setOnMouseDragged(this::handleMouseEvent);
-        view.setOnMouseClicked(this::handleMouseEvent);
+        view.setOnMouseDragged(this::handleMouseDragEvent);
+        view.setOnMouseClicked(this::handleMouseClickEvent);
+        // https://stackoverflow.com/questions/35372236/how-to-pass-paremeter-with-an-event-in-javafx
+        view.setOnMousePressed(event -> {updateClickStatus(event, true); });
+        view.setOnMouseReleased(event -> {updateClickStatus(event, false); });
         algorithmComboBox.setOnAction(this::processAlgorithmComboBox);
         progressorSpeed.setOnMouseReleased(this::handleSliderDragEvent);
 
@@ -76,6 +83,33 @@ public class FXMLAlgorithmController implements Initializable
         timer = new Timer(true);
         update();
     }
+    
+    public void updateClickStatus (MouseEvent event, boolean isClicking) 
+    {
+        clickLocation = getPointFromMouseEvent(event);
+        
+        this.isClicking = isClicking;
+        System.out.println("click " + isClicking);
+        if(!isClicking && selectedNode != null)
+        {
+            Point p = new Point( (int) selectedNode.getPositionX(), (int) selectedNode.getPositionY());
+            
+            if(selectedNode.getVerticeType() == VerticeType.START)
+            {
+                model.setStartNode(model.getNodeAtLocation(p.x, p.y)); 
+            }
+            else if(selectedNode.getVerticeType() == VerticeType.END)
+            {
+                model.setEndNode(model.getNodeAtLocation(p.x, p.y)); 
+            }       
+            model.updateSets();
+            update();
+            previousSelectedNode = null;
+            selectedNode = null;
+            clickLocation = null;
+        }
+        
+    } 
     
     public void processAlgorithmComboBox(ActionEvent event)
     {
@@ -131,8 +165,8 @@ public class FXMLAlgorithmController implements Initializable
         // Initialize own comboBox items
         // Source: https://stackoverflow.com/questions/35260061/combobox-items-via-scene-builder
         comboBox.getItems().removeAll(comboBox.getItems());
-        comboBox.getItems().addAll("Start node", "End node", "Solid node", "Basic node");
-        comboBox.getSelectionModel().select("Start node"); 
+        comboBox.getItems().addAll("Solid node", "Basic node");
+        comboBox.getSelectionModel().select(comboBox.getItems().get(0)); 
         
         algorithmComboBox.getItems().removeAll(algorithmComboBox.getItems());
         algorithmComboBox.getItems().addAll("Always right", "Always left", "A Star");
@@ -179,50 +213,91 @@ public class FXMLAlgorithmController implements Initializable
         update();
     }
     
-    private void handleMouseEvent(MouseEvent e)
+    private void handleMouseDragEvent(MouseEvent event )
     {
-        int clickedX = (int) e.getX();
-        int clickedY = (int) e.getY();
+        Point eventPoint = getPointFromMouseEvent(event);
         
+
+        if(model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC && model.getNodeAtPoint(clickLocation) != model.getStartNode() && model.getNodeAtPoint(clickLocation) != model.getEndNode())
+        {
+                handleTileComboBox(eventPoint, comboBox.getValue());     
+                update();
+        }
+
+        
+        //Drag start node
+        if(isClicking && model.getNodeAtPoint(clickLocation) == model.getStartNode())
+        {
+            System.out.println("Selected start node (handleMouseDragEvent)");
+            selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
+            if(selectedNode != previousSelectedNode)
+            {
+                System.out.println("test" + event.getX() + event.getY());
+                if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
+                {
+                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);
+                }
+                
+                if(previousSelectedNode != null && previousSelectedNode != model.getEndNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
+                {
+                    model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
+                }
+                previousSelectedNode = selectedNode;
+                update();
+            }
+        }
+        
+        //Drag end node
+        if(isClicking && model.getNodeAtPoint(clickLocation) == model.getEndNode())
+        {
+            System.out.println("Selected end node (handleMouseDragEvent)");
+            selectedNode = model.getNodeAtPoint(eventPoint);
+            if(selectedNode != previousSelectedNode)
+            {
+                System.out.println("test" + event.getX() + event.getY());
+                if(model.getNodeAtPoint(eventPoint) != model.getStartNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
+                {
+                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.END);
+                }
+                
+                if(previousSelectedNode != null && previousSelectedNode != model.getStartNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
+                {
+                    model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
+                }
+                previousSelectedNode = selectedNode;
+                update();
+            }
+        }
+    }
+    
+    
+    private void handleMouseClickEvent(MouseEvent event)
+    {
+        System.out.println("Clicked");        Point p = getPointFromMouseEvent(event);
+        handleTileComboBox(p, comboBox.getValue());     
+        model.updateSets();
+        update();
+
+    }
+
+    private void randomize() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    public Point getPointFromMouseEvent(MouseEvent event)
+    {
+        int clickedX = (int) event.getX();
+        int clickedY = (int) event.getY();
         Point p = view.getCoordPointFromClick(clickedX,clickedY);
         
-        switch(comboBox.getValue())
+        return p;
+    }
+    
+    public void handleTileComboBox(Point p, String comboBoxValue)
+    {
+        switch(comboBoxValue)
         {
-            //Todo: rewrite this to fit better (function?)
-            case "Start node":
-                if(model.getNodeAtLocation(p.x,p.y) == model.getEndNode())
-                {
-                    return;
-                }
-                Vertice previousStart = model.getStartNode();
-                
-                previousStart.setPreviousVerticeType(VerticeType.START);
-                previousStart.setVerticeType(VerticeType.BASIC);
-                
-                model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.START);
-                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                model.setStartNode(model.getNodeAtLocation(p.x,p.y));   
-
-                break;
-                
-            case "End node":
-                if(model.getNodeAtLocation(p.x,p.y) == model.getStartNode())
-                {
-                    return;
-                }
-                Vertice previousEnd = model.getEndNode();
-                
-                previousEnd.setPreviousVerticeType(VerticeType.END);
-
-                previousEnd.setVerticeType(VerticeType.BASIC);               
-                model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.END);
-                model.getNodeAtLocation(p.x,p.y).setPreviousVerticeType(VerticeType.BASIC);
-                if(model.getNodeAtLocation(p.x,p.y) != model.getStartNode())
-                {
-                    model.setEndNode(model.getNodeAtLocation(p.x,p.y));   
-                }
-                break;      
-                
             case "Solid node":
                 Vertice s = model.getNodeAtLocation(p.x,p.y);
                 //Don't overwrite start or end nodes
@@ -244,12 +319,6 @@ public class FXMLAlgorithmController implements Initializable
                     model.getNodeAtLocation(p.x,p.y).setVerticeType(VerticeType.BASIC);
                 }
                 break;                
-        }      
-        model.updateSets();
-        update();
-    }
-
-    private void randomize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }  
     }
 }

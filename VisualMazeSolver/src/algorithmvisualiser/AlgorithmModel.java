@@ -5,6 +5,7 @@
  */
 package algorithmvisualiser;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -238,7 +239,7 @@ public class AlgorithmModel
             switch(nodesList.get(i).getVerticeType())
             {
                 case START:
-                    System.out.println("Setting start node");
+                    //System.out.println("Setting start node");
                     if(startNode == null)
                     {
                         startNode = nodesList.get(i);   
@@ -246,11 +247,11 @@ public class AlgorithmModel
                     }
                     break;
                 case END:
-                    System.out.println("Setting end node");
+                    //System.out.println("Setting end node");
                     endNode = nodesList.get(i);
                     break;
                 case SOLID:
-                    System.out.println("Setting solid node");
+                    //System.out.println("Setting solid node");
                     closedSet.add(nodesList.get(i));
                 
                 default:
@@ -270,6 +271,14 @@ public class AlgorithmModel
         y = Math.min(y, ROWS_Y - 1);
         
         return nodes[x][y];
+    }
+    
+    public Vertice getNodeAtPoint(Point p)
+    {
+         int x = Math.min(p.x, ROWS_X - 1);
+         int y = Math.min(p.y, ROWS_Y - 1);
+        
+        return nodes[x][y];       
     }
     
     public Vertice getStartNode() { return startNode; }

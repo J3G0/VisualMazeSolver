@@ -39,7 +39,6 @@ public class AlwaysGoRight extends AlgorithmModel
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
-            System.out.println("Calling iterate" + getAmountOfIterations());
             increaseIterations();
             
             if(currentNode.getVerticeType() == VerticeType.BASIC)
