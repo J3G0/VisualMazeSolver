@@ -96,7 +96,6 @@ public class FXMLAlgorithmController implements Initializable
             
             if(selectedNode.getVerticeType() == VerticeType.START)
             {              
-                System.out.println(p);
                 model.setStartNode(model.getNodeAtPoint(p)); 
             }
             else if(selectedNode.getVerticeType() == VerticeType.END)
@@ -229,11 +228,10 @@ public class FXMLAlgorithmController implements Initializable
         //Drag start node
         if(isClicking && model.getNodeAtPoint(clickLocation) == model.getStartNode())
         {
-            System.out.println("Selected start node (handleMouseDragEvent)");
             selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
             if(selectedNode != previousSelectedNode)
             {
-                System.out.println("test" + event.getX() + event.getY());
+                System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
                 if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
                     model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);
@@ -251,7 +249,6 @@ public class FXMLAlgorithmController implements Initializable
         //Drag end node
         if(isClicking && model.getNodeAtPoint(clickLocation) == model.getEndNode())
         {
-            System.out.println("Selected end node (handleMouseDragEvent)");
             selectedNode = model.getNodeAtPoint(eventPoint);
             if(selectedNode != previousSelectedNode)
             {

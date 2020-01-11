@@ -244,7 +244,10 @@ public class AlgorithmModel
                         System.out.println("Setting start node");
                         startNode = nodesList.get(i);   
                     }
-                    currentNode = startNode;
+                    if(currentNode == null)
+                    {
+                        currentNode = startNode;
+                    }
                     break;
                 case END:
                     //System.out.println("Setting end node");
@@ -252,7 +255,10 @@ public class AlgorithmModel
                     break;
                 case SOLID:
                     //System.out.println("Setting solid node");
-                    closedSet.add(nodesList.get(i));
+                    if(!closedSet.contains(nodesList.get(i)))
+                    {
+                        closedSet.add(nodesList.get(i));
+                    }
                 
                 default:
                     break;
