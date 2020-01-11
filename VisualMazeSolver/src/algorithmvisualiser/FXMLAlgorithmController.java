@@ -95,20 +95,21 @@ public class FXMLAlgorithmController implements Initializable
             Point p = new Point( (int) selectedNode.getPositionX(), (int) selectedNode.getPositionY());
             
             if(selectedNode.getVerticeType() == VerticeType.START)
-            {
-                model.setStartNode(model.getNodeAtLocation(p.x, p.y)); 
+            {              
+                System.out.println(p);
+                model.setStartNode(model.getNodeAtPoint(p)); 
             }
             else if(selectedNode.getVerticeType() == VerticeType.END)
             {
                 model.setEndNode(model.getNodeAtLocation(p.x, p.y)); 
-            }       
-            model.updateSets();
-            update();
+            }    
             previousSelectedNode = null;
             selectedNode = null;
             clickLocation = null;
-        }
-        
+            
+            model.updateSets();
+            update();
+        }      
     } 
     
     public void processAlgorithmComboBox(ActionEvent event)
@@ -320,5 +321,6 @@ public class FXMLAlgorithmController implements Initializable
                 }
                 break;                
         }  
+        model.updateSets();
     }
 }

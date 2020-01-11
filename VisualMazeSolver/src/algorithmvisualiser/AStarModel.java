@@ -66,9 +66,7 @@ public class AStarModel extends AlgorithmModel
             currentNode = openSet.get(0);
             
             if(currentNode.getVerticeType() == VerticeType.BASIC)
-            {
-                currentNode.setVerticeType(VerticeType.HEAD);
-                
+            {             
                 if(currentNode.getParent() != null && currentNode.getParent() != startNode)
                 {
                    currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 

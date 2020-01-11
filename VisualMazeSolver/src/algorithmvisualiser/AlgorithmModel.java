@@ -239,12 +239,12 @@ public class AlgorithmModel
             switch(nodesList.get(i).getVerticeType())
             {
                 case START:
-                    //System.out.println("Setting start node");
                     if(startNode == null)
                     {
+                        System.out.println("Setting start node");
                         startNode = nodesList.get(i);   
-                        currentNode = startNode;
                     }
+                    currentNode = startNode;
                     break;
                 case END:
                     //System.out.println("Setting end node");
