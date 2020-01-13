@@ -151,7 +151,7 @@ public class FXMLAlgorithmController implements Initializable
     {
         if(model.getAmountOfIterations() > 1)
         {
-            speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue());
+            speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue() + " ms");
             timer.cancel();
             progressor = new AlgorithmProgressor(this.model, this);
             timer = new Timer(true);
@@ -202,7 +202,8 @@ public class FXMLAlgorithmController implements Initializable
     public void update()
     {
         view.update();
-        iterateField.setText( (model.getAlgorithmState().toString()) + ":" + model.getAmountOfIterations());
+        iterateField.setText( ("STATE: " + model.getAlgorithmState().toString()) + " - ITERATIONS: " + model.getAmountOfIterations());
+        speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue() + " ms");
     }
     
     public void changeModel()

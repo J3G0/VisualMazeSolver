@@ -297,10 +297,10 @@ public class AlgorithmModel
                         System.out.println("Setting start node");
                         startNode = nodesList.get(i);   
                     }
-                    if(currentNode == null)
-                    {
+                   // if(currentNode == null)
+                    //{
                         currentNode = startNode;
-                    }
+                    //}
                     break;
                 case END:
                     //System.out.println("Setting end node");
@@ -446,7 +446,7 @@ public class AlgorithmModel
         if(currentNode == endNode)
         {
             System.out.println("Setting state to finished");
-            algorithmState = AlgorithmState.FINISHED;
+            algorithmState = AlgorithmState.SOLVED;
         }
         
         else if(currentNode == startNode && amountOfIterations > 1)
@@ -464,9 +464,7 @@ public class AlgorithmModel
     public void drawTakenPath()
     {
         while(currentNode != startNode)
-        {
-            System.out.println(currentNode.getLocation());
-            
+        {          
             if(currentNode.getVerticeType() == VerticeType.TRAVERSED && currentNode != startNode && currentNode != endNode)
             {
                 currentNode.setVerticeType(VerticeType.PARENT);
@@ -501,6 +499,7 @@ public class AlgorithmModel
      * @param typesToCheck lijst van VerticeTypes
      * @return true indien node de VerticeType bevat
      */
+    @Deprecated
     public boolean containsVerticeType(Vertice node, List<VerticeType> typesToCheck)
     {
         //Netbeans suggested this function over for(Type t : x){}

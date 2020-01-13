@@ -15,23 +15,41 @@ import java.util.List;
 
 public class AlwaysGoRight extends AlgorithmModel
 {  
+    /**
+     * Lijst van richtingen waarneer de Vertice kan bewegen
+     */
     List<MovementDirection> possibleDirections = new ArrayList<>();
+    
+    /**
+     * De huidige richting waar de Vertice naar toe gaat
+     */
     MovementDirection currentDirection = null;
+    
+    /**
+     * AlwaysGoRight constructor
+     */
     public AlwaysGoRight()
     {
         this.algorithmName = "AlwaysGoRight";    
     }
     
+    /**
+     * AlwaysGoRight constructor met map parameter
+     * @param map 2D array van Vertice met map data
+     */
     public AlwaysGoRight(Vertice[][] map)
     {
         super(map);
         this.algorithmName = "AlwaysGoRight";  
     }    
     
+    /**
+     * Iterate functie van het model (1 iteratie van het model)
+     */
     @Override
     public void iterate()
     { 
-        if(getAlgorithmState() == AlgorithmState.FINISHED)
+        if(getAlgorithmState() == AlgorithmState.SOLVED)
         {
             drawTakenPath();
         }
@@ -80,6 +98,9 @@ public class AlwaysGoRight extends AlgorithmModel
         }
     }
     
+    /**
+     * Finish functie: roept iterate() op tot opgelost of vastgelopen
+     */
     @Override
     public void finish()
     {
@@ -90,6 +111,14 @@ public class AlwaysGoRight extends AlgorithmModel
         drawTakenPath();
     }
     
+    /**
+     * getNodeAtDirection functie die Node teruggeeft aan de meegegeven richting
+     * Als currentDirection null is betekent dit dat er geen mogelijke stappen meer
+     * zijn voor de Vertice, en moet de ouder meegegeven worden als volgende Node.
+     * Indien er wel een currentDirection mogelijk is, geeft node in die richting mee.
+     * @param currentDirection de node in de richting die meegegeven is.
+     * @return 
+     */
     public Vertice getNodeAtDirection(MovementDirection currentDirection)
     {
         Vertice nodeAtDirection = null;
@@ -136,6 +165,10 @@ public class AlwaysGoRight extends AlgorithmModel
         return nodeAtDirection;
     }
     
+    /**
+     * Kijk van de currentNode in welke richting deze kan bewegen
+     * @return List<MovementDirection> een lijst van mogelijke richtingen
+     */
     public List<MovementDirection> createDirectionList()
     {
         possibleDirections.clear();

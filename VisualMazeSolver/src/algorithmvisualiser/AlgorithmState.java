@@ -11,5 +11,5 @@ package algorithmvisualiser;
  */
 public enum AlgorithmState 
 {
-    SOLVING, FINISHED, UNSOLVABLE
+    SOLVING, SOLVED, UNSOLVABLE
 }

@@ -35,7 +35,7 @@ public class AlwaysGoLeft extends AlgorithmModel
     @Override
     public void iterate()
     { 
-        if(getAlgorithmState() == AlgorithmState.FINISHED)
+        if(getAlgorithmState() == AlgorithmState.SOLVED)
         {
             drawTakenPath();
         }
