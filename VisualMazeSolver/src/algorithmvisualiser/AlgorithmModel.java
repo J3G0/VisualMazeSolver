@@ -289,13 +289,15 @@ public class AlgorithmModel
         List <Vertice> nodesList = Arrays.stream(nodes).flatMap(Arrays::stream).collect(Collectors.toList()); 
         for(int i = 0; i < nodesList.size(); i++)
         {
-            switch(nodesList.get(i).getVerticeType())
+            Vertice vertice = nodesList.get(i);
+            VerticeType verticeType = vertice.getVerticeType();
+            switch(verticeType)
             {
                 case START:
                     if(startNode == null)
                     {
                         System.out.println("Setting start node");
-                        startNode = nodesList.get(i);   
+                        startNode = vertice;   
                     }
                    // if(currentNode == null)
                     //{
@@ -304,14 +306,21 @@ public class AlgorithmModel
                     break;
                 case END:
                     //System.out.println("Setting end node");
-                    endNode = nodesList.get(i);
+                    endNode = vertice;
                     break;
                 case SOLID:
                     //System.out.println("Setting solid node");
-                    if(!closedSet.contains(nodesList.get(i)))
+                    if(!closedSet.contains(vertice))
                     {
-                        closedSet.add(nodesList.get(i));
+                        closedSet.add(vertice);
                     }
+                //If Solid node was changed to basic it needs to be removed from closedSet!
+                case BASIC:
+                        if(closedSet.contains(vertice))
+                        {
+                            closedSet.remove(vertice);
+                        }
+                    break;
                 
                 default:
                     break;
@@ -347,8 +356,9 @@ public class AlgorithmModel
      */
     public Vertice getNodeAtPoint(Point p)
     {
-         int x = Math.min(p.x, ROWS_X - 1);
-         int y = Math.min(p.y, ROWS_Y - 1);
+         //Not lower than 0 and not bigger than ROWS - 1
+         int x = Math.min(Math.max(0, p.x), ROWS_X - 1);
+         int y = Math.min(Math.max(0, p.y), ROWS_Y - 1);
         
         return nodes[x][y];       
     }
