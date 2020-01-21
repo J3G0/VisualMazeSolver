@@ -13,8 +13,8 @@ import java.util.List;
  *
  * @author Jeffrey
  */
-public class AlwaysGoLeft extends AlgorithmModel
-{  
+public class TurnClockwise extends AlgorithmModel
+{
     /**
      * Lijst van richtingen waarneer de Vertice kan bewegen
      */
@@ -24,23 +24,20 @@ public class AlwaysGoLeft extends AlgorithmModel
      * De huidige richting waar de Vertice naar toe gaat
      */
     MovementDirection currentDirection = null;
-    
-    /**
-     * AlwaysGoLeft constructor
-     */
-    public AlwaysGoLeft()
+
+    public TurnClockwise()
     {
-        this.algorithmName = "AlwaysGoLeft";    
+        this.algorithmName = "TurnClockwise";
     }
     
     /**
      * AlwaysGoLeft constructor met map parameter
      * @param map 2D array van Vertice met map data
      */
-    public AlwaysGoLeft(Vertice[][] map)
+    public TurnClockwise(Vertice[][] map)
     {
         super(map);
-        this.algorithmName = "AlwaysGoLeft";  
+        this.algorithmName = "TurnClockwise";
     }
     
     /**
@@ -58,6 +55,7 @@ public class AlwaysGoLeft extends AlgorithmModel
         {
             updateModelState();
             increaseIterations();
+            
             if(currentNode.getVerticeType() == VerticeType.BASIC)
             {
                 currentNode.setVerticeType(VerticeType.HEAD);
@@ -66,7 +64,8 @@ public class AlwaysGoLeft extends AlgorithmModel
                 {
                    currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
                 }
-            }
+            }     
+            
             neighbours = getNeighbourVertices(currentNode, false);
 
             possibleDirections = createDirectionList();
@@ -76,6 +75,7 @@ public class AlwaysGoLeft extends AlgorithmModel
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
+                //met de clock mee / linksom
                 if(possibleDirections.contains(MovementDirection.LEFT))
                 {
                     System.out.println("Contains left!");
@@ -98,7 +98,8 @@ public class AlwaysGoLeft extends AlgorithmModel
             //If currentnode is null that means currentNode is the startnode (startnode has no parent)   
         }
     }
-    /**
+    
+        /**
      * Finish functie: roept iterate() op tot opgelost of vastgelopen
      */
     @Override
@@ -190,22 +191,90 @@ public class AlwaysGoLeft extends AlgorithmModel
             boolean bottomNeighbour =  (posX == nX) && (posY + 1 == nY);
             //Check bottom left
             boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
-
-            if(leftNeighbour)
+            
+            // X-> |
+            //    X|
+            if(currentDirection == MovementDirection.RIGHT)
             {
-                possibleDirections.add(MovementDirection.LEFT);
+                //If there is a block on your path go down (clockwise)
+                if(rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                //Cant go down? Go up
+                else if(bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                //Cant go up? Go back
+                else if(topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
             }
-            else if(bottomNeighbour)
+            
+            //      X
+            //      ||
+            //      \/
+            // X <- __
+            if(currentDirection == MovementDirection.DOWN)
             {
-                possibleDirections.add(MovementDirection.DOWN);
+                //If there is a block on your path go left (clockwise)
+                if(bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+                else if(leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                else if(rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
             }
-            else if(topNeighbour)
+            
+            //      X
+            //      /\
+            //      ||
+            //    |   <-  X
+            if(currentDirection == MovementDirection.LEFT)
             {
-                possibleDirections.add(MovementDirection.UP);
+                //If there is a block on your path go up (clockwise)
+                if(leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                else if(topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                else if(bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
             }
-            else if(rightNeighbour)
+            
+            //  __
+            //      -> X
+            //  /\
+            //  ||
+            //  X
+            if(currentDirection == MovementDirection.UP)
             {
-               possibleDirections.add(MovementDirection.RIGHT);
+                //If there is a block on your path go right(clockwise)
+                if(topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                else if(rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+                else if(leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
             }
             
         }
