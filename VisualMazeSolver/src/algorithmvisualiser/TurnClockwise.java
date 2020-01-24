@@ -58,21 +58,25 @@ public class TurnClockwise extends AlgorithmModel
         {
             updateModelState();
             increaseIterations();
-            //System.out.println("this is the turnclockwise algoritm");
-            if(currentNode.getVerticeType() == VerticeType.BASIC)
+            
+            if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
             {
                 currentNode.setVerticeType(VerticeType.HEAD);
-                
+                System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 if(currentNode.getParent() != null && currentNode.getParent() != startNode)
                 {
-                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                    switch(currentNode.getVerticeType())
+                    {
+                        case HEAD:
+                            currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                            break;
+
+                    }
+                    System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 }
             }
             neighbours = getNeighbourVertices(currentNode, false);
-            
-            //Deze crashed
-            //possibleDirections = createDirectionList();
-            
+
             possibleDirections = createDirectionList(currentNode);
 
             //System.out.println("/////");
@@ -81,13 +85,12 @@ public class TurnClockwise extends AlgorithmModel
             if(!possibleDirections.isEmpty())
             {
                 currentDirection = possibleDirections.get(0);
-                System.out.println("Chose direction: " + currentDirection);
+                //System.out.println("Chose direction: " + currentDirection);
             }
             //If possible directions is empty, set currentnode to null (so it goes to parent)
             else
             {
                 currentDirection = null;
-                System.out.println("NO DIRECTION");
             }   
             currentNode = getNodeAtDirection(currentDirection);
 
@@ -116,8 +119,6 @@ public class TurnClockwise extends AlgorithmModel
     public List<MovementDirection> createDirectionList(Vertice currentNode)
     {
         List<MovementDirection> possibleDirections = new ArrayList<>();
-        System.out.println("CREATE");
-        possibleDirections.clear();
         int posX = (int) currentNode.getPositionX();
         int posY = (int) currentNode.getPositionY();
 
@@ -161,19 +162,18 @@ public class TurnClockwise extends AlgorithmModel
             //    X|
             if(currentDirection == MovementDirection.RIGHT)
             {
-                System.out.println("Direction right");
                 //If there is a block on your path go down (clockwise)
-                if(!rightNeighbour)
+                if(rightNeighbour)
                 {
                     possibleDirections.add(MovementDirection.DOWN);
                 }
                 //Cant go down? Go up
-                else if(!bottomNeighbour)
+                else if(bottomNeighbour)
                 {
                     possibleDirections.add(MovementDirection.UP);
                 }
                 //Cant go up? Go back
-                else if(!topNeighbour)
+                else if(topNeighbour)
                 {
                     possibleDirections.add(MovementDirection.LEFT);
                 }
@@ -185,7 +185,6 @@ public class TurnClockwise extends AlgorithmModel
             // X <- __
             else if(currentDirection == MovementDirection.DOWN)
             {
-                System.out.println("Direction down");
                 //If there is a block on your path go left (clockwise)
                 if(!bottomNeighbour)
                 {
@@ -207,7 +206,6 @@ public class TurnClockwise extends AlgorithmModel
             //    |   <-  X
             else if(currentDirection == MovementDirection.LEFT)
             {
-                System.out.println("Direction left");
                 //If there is a block on your path go up (clockwise)
                 if(!leftNeighbour)
                 {
@@ -230,7 +228,6 @@ public class TurnClockwise extends AlgorithmModel
             //  X
             else if(currentDirection == MovementDirection.UP)
             {
-                System.out.println("Direction up");
                 //If there is a block on your path go right(clockwise)
                 if(!topNeighbour)
                 {
