@@ -194,18 +194,22 @@ public class AlwaysGoRight extends AlgorithmModel
             if(topNeighbour)
             {
                 possibleDirections.add(MovementDirection.UP);
+                System.out.println("Movement up added");
             }
             else if(rightNeighbour)
             {
                 possibleDirections.add(MovementDirection.RIGHT);
+                System.out.println("Movement right added");
             }
             else if(bottomNeighbour)
             {
                 possibleDirections.add(MovementDirection.DOWN);
+                System.out.println("Movement down added");
             }
             else if(leftNeighbour)
             {
                 possibleDirections.add(MovementDirection.LEFT);
+                System.out.println("Movement up added");
             }
         }
         return possibleDirections;
