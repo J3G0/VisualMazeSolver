@@ -162,19 +162,26 @@ public class TurnClockwise extends AlgorithmModel
             //    X|
             if(currentDirection == MovementDirection.RIGHT)
             {
-                //If there is a block on your path go down (clockwise)
+                //keep going if possible
                 if(rightNeighbour)
                 {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                //If there is a block on your path go down (clockwise)
+                else if(!rightNeighbour)
+                {
+                    //onder vrij? liefst naar daar
+                    if(bottomNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.DOWN);
-                }
-                //Cant go down? Go up
-                else if(bottomNeighbour)
-                {
+                    }
+                    // mja dan maar omhoog
+                    else if(topNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.UP);
-                }
-                //Cant go up? Go back
-                else if(topNeighbour)
-                {
+                    }
+                    // worst case terug waar we van komen
+                    else
                     possibleDirections.add(MovementDirection.LEFT);
                 }
             }
@@ -185,17 +192,23 @@ public class TurnClockwise extends AlgorithmModel
             // X <- __
             else if(currentDirection == MovementDirection.DOWN)
             {
-                //If there is a block on your path go left (clockwise)
-                if(!bottomNeighbour)
+                //keep going if possible
+                if(bottomNeighbour)
                 {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                //If there is a block on your path go left (clockwise) if possible
+                else if(!bottomNeighbour)
+                {
+                    if(leftNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.LEFT);
-                }
-                else if(!leftNeighbour)
-                {
+                    }
+                    else if(rightNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.RIGHT);
-                }
-                else if(!rightNeighbour)
-                {
+                    }
+                    else
                     possibleDirections.add(MovementDirection.UP);
                 }
             }
@@ -206,17 +219,23 @@ public class TurnClockwise extends AlgorithmModel
             //    |   <-  X
             else if(currentDirection == MovementDirection.LEFT)
             {
-                //If there is a block on your path go up (clockwise)
-                if(!leftNeighbour)
+                //keep going if possible
+                if(leftNeighbour)
                 {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+                //If there is a block on your path go up (clockwise) if possible
+                else if(!leftNeighbour)
+                {
+                    if(topNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.UP);
-                }
-                else if(!topNeighbour)
-                {
+                    }
+                    else if(bottomNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.DOWN);
-                }
-                else if(!bottomNeighbour)
-                {
+                    }
+                    else
                     possibleDirections.add(MovementDirection.RIGHT);
                 }
             }
@@ -228,17 +247,23 @@ public class TurnClockwise extends AlgorithmModel
             //  X
             else if(currentDirection == MovementDirection.UP)
             {
-                //If there is a block on your path go right(clockwise)
-                if(!topNeighbour)
+                //keep going if possible
+                if(topNeighbour)
                 {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                //If there is a block on your path go RIGHT (clockwise) if possible
+                else if(!topNeighbour)
+                {
+                    if(rightNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.RIGHT);
-                }
-                else if(!rightNeighbour)
-                {
+                    }
+                    else if(rightNeighbour)
+                    {
                     possibleDirections.add(MovementDirection.LEFT);
-                }
-                else if(!leftNeighbour)
-                {
+                    }
+                    else
                     possibleDirections.add(MovementDirection.DOWN);
                 }
             }
