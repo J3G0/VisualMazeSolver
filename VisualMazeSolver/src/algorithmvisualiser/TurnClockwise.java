@@ -30,7 +30,7 @@ public class TurnClockwise extends AlgorithmModel
      */
     public TurnClockwise()
     {
-        this.algorithmName = "AlwaysGoRight";    
+        this.algorithmName = "TurnClockwise";    
     }
     
     /**
@@ -40,7 +40,7 @@ public class TurnClockwise extends AlgorithmModel
     public TurnClockwise(Vertice[][] map)
     {
         super(map);
-        this.algorithmName = "AlwaysGoRight";  
+        this.algorithmName = "TurnClockwise";  
     }    
     
     /**
@@ -110,4 +110,171 @@ public class TurnClockwise extends AlgorithmModel
         }
         drawTakenPath();
     }
+    
+        /**
+     * getNodeAtDirection functie die Node teruggeeft aan de meegegeven richting
+     * Als currentDirection null is betekent dit dat er geen mogelijke stappen meer
+     * zijn voor de Vertice, en moet de ouder meegegeven worden als volgende Node.
+     * Indien er wel een currentDirection mogelijk is, geeft node in die richting mee.
+     * @param currentDirection de node in de richting die meegegeven is.
+     * @return 
+     */
+    public Vertice getNodeAtDirection(MovementDirection currentDirection)
+    {
+        Vertice nodeAtDirection = null;
+
+        if(currentDirection == null)
+        {
+            Vertice parentNode = currentNode.getParent();
+
+            if(parentNode == null)
+            {
+                return null;
+            }
+            else
+            {
+                return parentNode;
+            }
+        }
+        else
+        {
+            int posX = (int) currentNode.getPositionX();
+            int posY = (int) currentNode.getPositionY();
+
+            switch(currentDirection)
+            {
+                case UP:
+                    nodeAtDirection = getNodeAtLocation(posX, posY - 1);
+                    break;
+
+                case DOWN:
+                    nodeAtDirection = getNodeAtLocation(posX, posY + 1);
+                    break;
+
+                case RIGHT:
+                    nodeAtDirection = getNodeAtLocation(posX + 1, posY);
+                    break;
+
+                case LEFT:
+                    nodeAtDirection = getNodeAtLocation(posX - 1, posY);
+                    break;       
+            }
+        }
+        nodeAtDirection.setParent(currentNode);
+        return nodeAtDirection;
+    }
+
+    /**
+     * Kijk van de currentNode in welke richting deze kan bewegen
+     * @return List<MovementDirection> een lijst van mogelijke richtingen
+     */    
+    public List<MovementDirection> createDirectionList()
+    {
+        possibleDirections.clear();
+        int posX = (int) currentNode.getPositionX();
+        int posY = (int) currentNode.getPositionY();
+
+        for(Vertice n : neighbours)
+        {
+            int nX = (int) n.getPositionX();
+            int nY = (int) n.getPositionY();
+
+            //System.out.println("Checking neighbour at : " + n.getLocation() );
+
+            //check top left
+            boolean topNeighbour = (posX == nX) && (posY - 1 == nY);
+            //Check top right
+            boolean rightNeighbour =  (posX + 1 == nX) && (posY == nY);
+            //Check bottom right
+            boolean bottomNeighbour =  (posX == nX) && (posY + 1 == nY);
+            //Check bottom left
+            boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
+
+            // X-> |
+            //    X|
+            if(currentDirection == MovementDirection.RIGHT)
+            {
+                //If there is a block on your path go down (clockwise)
+                if(rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                //Cant go down? Go up
+                else if(bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                //Cant go up? Go back
+                else if(topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+            }
+
+            //      X
+            //      ||
+            //      \/
+            // X <- __
+            else if(currentDirection == MovementDirection.DOWN)
+            {
+                //If there is a block on your path go left (clockwise)
+                if(!bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+                else if(!leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                else if(!rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+            }
+
+            //      X
+            //      /\
+            //      ||
+            //    |   <-  X
+            else if(currentDirection == MovementDirection.LEFT)
+            {
+                //If there is a block on your path go up (clockwise)
+                if(!leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                else if(!topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                else if(!bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+            }
+
+            //  __
+            //      -> X
+            //  /\
+            //  ||
+            //  X
+            else if(currentDirection == MovementDirection.UP)
+            {
+                //If there is a block on your path go right(clockwise)
+                if(!topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                else if(!rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }
+                else if(!leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+            }
+        }
+        return possibleDirections;
+    } 
 }
