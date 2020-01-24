@@ -122,7 +122,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
                
            case "Turn clockwise":
-               setModel(new AStarModel(model.getNodes()));          
+               setModel(new TurnClockwise(model.getNodes()));          
                break;
                
            case "A Star":
@@ -145,7 +145,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
 
            case "Turn clockwise":
-               setModel(new AStarModel());          
+               setModel(new TurnClockwise());          
                break;
                
            case "A Star":

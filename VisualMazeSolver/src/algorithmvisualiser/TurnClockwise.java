@@ -6,15 +6,15 @@
 package algorithmvisualiser;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  *
  * @author Jeffrey
  */
+
 public class TurnClockwise extends AlgorithmModel
-{
+{  
     /**
      * Lijst van richtingen waarneer de Vertice kan bewegen
      */
@@ -24,24 +24,24 @@ public class TurnClockwise extends AlgorithmModel
      * De huidige richting waar de Vertice naar toe gaat
      */
     MovementDirection currentDirection = null;
-
+    
+    /**
+     * AlwaysGoRight constructor
+     */
     public TurnClockwise()
     {
-        this.algorithmName = "TurnClockwise";
-        
-        System.out.println(currentNode.getLocation());
+        this.algorithmName = "AlwaysGoRight";    
     }
     
     /**
-     * AlwaysGoLeft constructor met map parameter
+     * AlwaysGoRight constructor met map parameter
      * @param map 2D array van Vertice met map data
      */
     public TurnClockwise(Vertice[][] map)
     {
         super(map);
-        this.algorithmName = "TurnClockwise";
-        System.out.println(currentNode.getLocation());
-    }
+        this.algorithmName = "AlwaysGoRight";  
+    }    
     
     /**
      * Iterate functie van het model (1 iteratie van het model)
@@ -57,37 +57,34 @@ public class TurnClockwise extends AlgorithmModel
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
-            increaseIterations();  
-            if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.HEAD)
+            increaseIterations();
+            
+            if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
             {
-                System.out.println(getAmountOfIterations());
                 currentNode.setVerticeType(VerticeType.HEAD);
-                
+                System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 if(currentNode.getParent() != null && currentNode.getParent() != startNode)
                 {
-                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                    switch(currentNode.getVerticeType())
+                    {
+                        case HEAD:
+                            currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                            break;
+
+                    }
+                    System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 }
-            }     
-            
+            }
             neighbours = getNeighbourVertices(currentNode, false);
 
             possibleDirections = createDirectionList();
-            
-            System.out.println(Arrays.toString(possibleDirections.toArray()));
+
+            //System.out.println("/////");
 
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
-                //met de clock mee / linksom
-                if(possibleDirections.contains(MovementDirection.LEFT))
-                {
-                    System.out.println("Contains left!");
-                    currentDirection = MovementDirection.LEFT;
-                }
-                else
-                {
-                    currentDirection = possibleDirections.get(0);
-                }
+                currentDirection = possibleDirections.get(0);
                 //System.out.println("Chose direction: " + currentDirection);
             }
             //If possible directions is empty, set currentnode to null (so it goes to parent)
@@ -95,14 +92,13 @@ public class TurnClockwise extends AlgorithmModel
             {
                 currentDirection = null;
             }   
-
             currentNode = getNodeAtDirection(currentDirection);
 
             //If currentnode is null that means currentNode is the startnode (startnode has no parent)   
         }
     }
     
-        /**
+    /**
      * Finish functie: roept iterate() op tot opgelost of vastgelopen
      */
     @Override
@@ -155,13 +151,13 @@ public class TurnClockwise extends AlgorithmModel
                     nodeAtDirection = getNodeAtLocation(posX, posY + 1);
                     break;
                     
+                case LEFT:
+                    nodeAtDirection = getNodeAtLocation(posX - 1, posY);
+                    break;
+                    
                 case RIGHT:
                     nodeAtDirection = getNodeAtLocation(posX + 1, posY);
                     break;
-                    
-                case LEFT:
-                    nodeAtDirection = getNodeAtLocation(posX - 1, posY);
-                    break;       
                     
             }
         }
@@ -172,7 +168,7 @@ public class TurnClockwise extends AlgorithmModel
     /**
      * Kijk van de currentNode in welke richting deze kan bewegen
      * @return List<MovementDirection> een lijst van mogelijke richtingen
-     */    
+     */
     public List<MovementDirection> createDirectionList()
     {
         possibleDirections.clear();
@@ -194,96 +190,23 @@ public class TurnClockwise extends AlgorithmModel
             boolean bottomNeighbour =  (posX == nX) && (posY + 1 == nY);
             //Check bottom left
             boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
-            
-            // X-> |
-            //    X|
-            if(currentDirection == MovementDirection.RIGHT)
+
+            if(topNeighbour)
             {
-                //If there is a block on your path go down (clockwise)
-                if(rightNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.DOWN);
-                }
-                //Cant go down? Go up
-                else if(bottomNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.UP);
-                }
-                //Cant go up? Go back
-                else if(topNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.LEFT);
-                }
+                possibleDirections.add(MovementDirection.UP);
             }
-            
-            //      X
-            //      ||
-            //      \/
-            // X <- __
-            if(currentDirection == MovementDirection.DOWN)
+            else if(rightNeighbour)
             {
-                //If there is a block on your path go left (clockwise)
-                if(bottomNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.LEFT);
-                }
-                else if(leftNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
-                else if(rightNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.UP);
-                }
+                possibleDirections.add(MovementDirection.RIGHT);
             }
-            
-            //      X
-            //      /\
-            //      ||
-            //    |   <-  X
-            if(currentDirection == MovementDirection.LEFT)
+            else if(bottomNeighbour)
             {
-                //If there is a block on your path go up (clockwise)
-                if(leftNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.UP);
-                }
-                else if(topNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.DOWN);
-                }
-                else if(bottomNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
+                possibleDirections.add(MovementDirection.DOWN);
             }
-            
-            //  __
-            //      -> X
-            //  /\
-            //  ||
-            //  X
-            if(currentDirection == MovementDirection.UP)
+            else if(leftNeighbour)
             {
-                //If there is a block on your path go right(clockwise)
-                if(topNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
-                else if(rightNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.LEFT);
-                }
-                else if(leftNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.DOWN);
-                }
+                possibleDirections.add(MovementDirection.LEFT);
             }
-            
-        }
-        for(MovementDirection md : possibleDirections)
-        {
-            System.out.println(md);
         }
         return possibleDirections;
     }
