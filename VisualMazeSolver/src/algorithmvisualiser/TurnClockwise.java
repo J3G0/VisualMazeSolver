@@ -25,6 +25,11 @@ public class TurnClockwise extends AlgorithmModel
      */
     MovementDirection currentDirection = null;
     
+    boolean movedRight = false;
+    boolean movedDown = false;
+    boolean movedLeft = false;
+    boolean movedUp = false;
+    
     /**
      * AlwaysGoRight constructor
      */
@@ -59,10 +64,10 @@ public class TurnClockwise extends AlgorithmModel
             updateModelState();
             increaseIterations();
             
-            if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
+            if(currentNode.getVerticeType() == VerticeType.BASIC)
             {
                 currentNode.setVerticeType(VerticeType.HEAD);
-                System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+                //System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 if(currentNode.getParent() != null && currentNode.getParent() != startNode)
                 {
                     switch(currentNode.getVerticeType())
@@ -72,29 +77,23 @@ public class TurnClockwise extends AlgorithmModel
                             break;
 
                     }
-                    System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+                    //System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 }
             }
             neighbours = getNeighbourVertices(currentNode, false);
-
             possibleDirections = createDirectionList(currentNode);
-
-            //System.out.println("/////");
-
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
-                currentDirection = possibleDirections.get(0);
-                //System.out.println("Chose direction: " + currentDirection);
+                createClockMovement(possibleDirections);
             }
+            
             //If possible directions is empty, set currentnode to null (so it goes to parent)
             else
             {
                 currentDirection = null;
             }   
             currentNode = getNodeAtDirection(currentDirection);
-
-            //If currentnode is null that means currentNode is the startnode (startnode has no parent)   
         }
     }
     
@@ -111,163 +110,84 @@ public class TurnClockwise extends AlgorithmModel
         drawTakenPath();
     }
     
-     /**
-     * Kijk van de currentNode in welke richting deze kan bewegen
-     * @return List<MovementDirection> een lijst van mogelijke richtingen
-     */    
-    @Override
-    public List<MovementDirection> createDirectionList(Vertice currentNode)
+    public void createClockMovement(List<MovementDirection> possibleDirections)
     {
-        List<MovementDirection> possibleDirections = new ArrayList<>();
-        int posX = (int) currentNode.getPositionX();
-        int posY = (int) currentNode.getPositionY();
-
-        for(Vertice n : neighbours)
+        if(!movedRight)
         {
-            int nX = (int) n.getPositionX();
-            int nY = (int) n.getPositionY();
-
-            //System.out.println("Checking neighbour at : " + n.getLocation() );
-
-            //check top left
-            boolean topNeighbour = (posX == nX) && (posY - 1 == nY);
-            //Check top right
-            boolean rightNeighbour =  (posX + 1 == nX) && (posY == nY);
-            //Check bottom right
-            boolean bottomNeighbour =  (posX == nX) && (posY + 1 == nY);
-            //Check bottom left
-            boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
-
-            if(currentDirection == null)
+            //Maintain right while possible
+            if(possibleDirections.contains(MovementDirection.RIGHT))
             {
-                if(topNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.UP);
-                }
-                else if(rightNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
-                else if(bottomNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.DOWN);
-                }
-                else if(leftNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.LEFT);
-                }              
+                currentDirection = MovementDirection.RIGHT;   
             }
-            
-            // X-> |
-            //    X|
-            if(currentDirection == MovementDirection.RIGHT)
+            //Else finish the right movement step
+            else
             {
-                //keep going if possible
-                if(rightNeighbour)
+                if( currentDirection == MovementDirection.RIGHT )
                 {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
-                //If there is a block on your path go down (clockwise)
-                else if(!rightNeighbour)
-                {
-                    //onder vrij? liefst naar daar
-                    if(bottomNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.DOWN);
-                    }
-                    // mja dan maar omhoog
-                    else if(topNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.UP);
-                    }
-                    // worst case terug waar we van komen
-                    else
-                    possibleDirections.add(MovementDirection.LEFT);
-                }
-            }
-
-            //      X
-            //      ||
-            //      \/
-            // X <- __
-            else if(currentDirection == MovementDirection.DOWN)
-            {
-                //keep going if possible
-                if(bottomNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.DOWN);
-                }
-                //If there is a block on your path go left (clockwise) if possible
-                else if(!bottomNeighbour)
-                {
-                    if(leftNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.LEFT);
-                    }
-                    else if(rightNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                    }
-                    else
-                    possibleDirections.add(MovementDirection.UP);
-                }
-            }
-
-            //      X
-            //      /\
-            //      ||
-            //    |   <-  X
-            else if(currentDirection == MovementDirection.LEFT)
-            {
-                //keep going if possible
-                if(leftNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.LEFT);
-                }
-                //If there is a block on your path go up (clockwise) if possible
-                else if(!leftNeighbour)
-                {
-                    if(topNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.UP);
-                    }
-                    else if(bottomNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.DOWN);
-                    }
-                    else
-                    possibleDirections.add(MovementDirection.RIGHT);
-                }
-            }
-
-            //  __
-            //      -> X
-            //  /\
-            //  ||
-            //  X
-            else if(currentDirection == MovementDirection.UP)
-            {
-                //keep going if possible
-                if(topNeighbour)
-                {
-                    possibleDirections.add(MovementDirection.UP);
-                }
-                //If there is a block on your path go RIGHT (clockwise) if possible
-                else if(!topNeighbour)
-                {
-                    if(rightNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.RIGHT);
-                    }
-                    else if(rightNeighbour)
-                    {
-                    possibleDirections.add(MovementDirection.LEFT);
-                    }
-                    else
-                    possibleDirections.add(MovementDirection.DOWN);
+                    movedRight = true;
                 }
             }
         }
-        return possibleDirections;
-    } 
+
+        if(!movedDown && movedRight)
+        {
+            //Maintain right while possible
+            if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN;   
+            }
+            //Else finish the right movement step
+            else
+            {
+                if( currentDirection == MovementDirection.DOWN )
+                {
+                    movedDown = true;
+                }
+            }
+        }  
+
+        if(!movedLeft && movedDown)
+        {
+            //Maintain right while possible
+            if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT;   
+            }
+            //Else finish the right movement step
+            else
+            {
+                  if( currentDirection == MovementDirection.LEFT )
+                {
+                    movedLeft = true;
+                }
+            }
+        } 
+
+        if(!movedUp && movedLeft)
+        {
+            //Maintain right while possible
+            if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP;   
+            }
+            //Else finish the right movement step
+            else
+            {
+                if( currentDirection == MovementDirection.UP )
+                {
+                    movedUp = true;
+                }
+            }
+        }
+        else
+        {
+            if(movedDown && movedUp && movedLeft && movedRight)
+            {
+                movedRight = false;
+                movedDown = false;
+                movedLeft = false;
+                movedUp = false;                
+            }
+        }
+    }
 }

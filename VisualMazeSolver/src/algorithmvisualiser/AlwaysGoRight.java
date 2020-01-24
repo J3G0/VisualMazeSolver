@@ -62,7 +62,7 @@ public class AlwaysGoRight extends AlgorithmModel
             if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
             {
                 currentNode.setVerticeType(VerticeType.HEAD);
-                System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+                //System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 if(currentNode.getParent() != null && currentNode.getParent() != startNode)
                 {
                     switch(currentNode.getVerticeType())
@@ -72,7 +72,7 @@ public class AlwaysGoRight extends AlgorithmModel
                             break;
 
                     }
-                    System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+                    //System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
                 }
             }
             neighbours = getNeighbourVertices(currentNode, false);

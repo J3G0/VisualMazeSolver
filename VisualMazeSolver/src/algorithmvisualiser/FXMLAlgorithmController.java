@@ -87,7 +87,7 @@ public class FXMLAlgorithmController implements Initializable
         clickLocation = getPointFromMouseEvent(event);
         
         this.isClicking = isClicking;
-        System.out.println("click " + isClicking);
+        //System.out.println("click " + isClicking);
         if(!isClicking && selectedNode != null)
         {
             Point p = new Point( (int) selectedNode.getPositionX(), (int) selectedNode.getPositionY());
@@ -240,7 +240,7 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
             if(selectedNode != previousSelectedNode)
             {
-                System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
+                //System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
                 if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
                     model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);
@@ -280,7 +280,7 @@ public class FXMLAlgorithmController implements Initializable
     
     private void handleMouseClickEvent(MouseEvent event)
     {
-        System.out.println("Clicked");        
+        //System.out.println("Clicked");        
         Point p = getPointFromMouseEvent(event);
         handleTileComboBox(p, comboBox.getValue());     
         model.updateSets();
