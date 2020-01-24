@@ -77,8 +77,6 @@ public class FXMLAlgorithmController implements Initializable
         view.setOnMouseReleased(event -> {updateClickStatus(event, false); });
         algorithmComboBox.setOnAction(this::processAlgorithmComboBox);
         progressorSpeed.setOnMouseReleased(this::handleSliderDragEvent);
-
-        
         progressor = new AlgorithmProgressor(this.model, this);
         timer = new Timer(true);
         update();
@@ -114,18 +112,17 @@ public class FXMLAlgorithmController implements Initializable
     public void processAlgorithmComboBox(ActionEvent event)
     {
        switch(algorithmComboBox.getValue())
-       {
-            
+       {         
            case "Always right":
                setModel(new AlwaysGoRight(model.getNodes()));          
                break;
                
-           case "Always left":
-               setModel(new AlwaysGoLeft(model.getNodes()));          
+           case "Drunk":
+               setModel(new DrunkModel(model.getNodes()));          
                break;
                
            case "Turn clockwise":
-               setModel(new TurnClockwise(model.getNodes()));          
+               setModel(new AStarModel(model.getNodes()));          
                break;
                
            case "A Star":
@@ -143,12 +140,12 @@ public class FXMLAlgorithmController implements Initializable
                setModel(new AlwaysGoRight());          
                break;
                
-           case "Always left":
-               setModel(new AlwaysGoLeft());          
+           case "Drunk":
+               setModel(new DrunkModel());          
                break;
 
            case "Turn clockwise":
-               setModel(new TurnClockwise());          
+               setModel(new AStarModel());          
                break;
                
            case "A Star":
@@ -179,7 +176,7 @@ public class FXMLAlgorithmController implements Initializable
         comboBox.getSelectionModel().select(comboBox.getItems().get(0)); 
         
         algorithmComboBox.getItems().removeAll(algorithmComboBox.getItems());
-        algorithmComboBox.getItems().addAll("Always right", "Always left", "Turn clockwise", "A Star");
+        algorithmComboBox.getItems().addAll("Always right", "Drunk", "Turn clockwise", "A Star");
         algorithmComboBox.getSelectionModel().select("Always right"); 
     }
     
@@ -263,7 +260,6 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = model.getNodeAtPoint(eventPoint);
             if(selectedNode != previousSelectedNode)
             {
-                System.out.println("test" + event.getX() + event.getY());
                 if(model.getNodeAtPoint(eventPoint) != model.getStartNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
                     model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.END);
