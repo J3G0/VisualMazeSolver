@@ -111,6 +111,7 @@ public class FXMLAlgorithmController implements Initializable
     
     public void processAlgorithmComboBox(ActionEvent event)
     {
+       timer.cancel();
        switch(algorithmComboBox.getValue())
        {         
            case "Always right":
