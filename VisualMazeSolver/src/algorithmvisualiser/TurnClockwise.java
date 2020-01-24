@@ -111,66 +111,14 @@ public class TurnClockwise extends AlgorithmModel
         drawTakenPath();
     }
     
-        /**
-     * getNodeAtDirection functie die Node teruggeeft aan de meegegeven richting
-     * Als currentDirection null is betekent dit dat er geen mogelijke stappen meer
-     * zijn voor de Vertice, en moet de ouder meegegeven worden als volgende Node.
-     * Indien er wel een currentDirection mogelijk is, geeft node in die richting mee.
-     * @param currentDirection de node in de richting die meegegeven is.
-     * @return 
-     */
-    public Vertice getNodeAtDirection(MovementDirection currentDirection)
-    {
-        Vertice nodeAtDirection = null;
-
-        if(currentDirection == null)
-        {
-            Vertice parentNode = currentNode.getParent();
-
-            if(parentNode == null)
-            {
-                return null;
-            }
-            else
-            {
-                return parentNode;
-            }
-        }
-        else
-        {
-            int posX = (int) currentNode.getPositionX();
-            int posY = (int) currentNode.getPositionY();
-
-            switch(currentDirection)
-            {
-                case UP:
-                    nodeAtDirection = getNodeAtLocation(posX, posY - 1);
-                    break;
-
-                case DOWN:
-                    nodeAtDirection = getNodeAtLocation(posX, posY + 1);
-                    break;
-
-                case RIGHT:
-                    nodeAtDirection = getNodeAtLocation(posX + 1, posY);
-                    break;
-
-                case LEFT:
-                    nodeAtDirection = getNodeAtLocation(posX - 1, posY);
-                    break;       
-            }
-        }
-        nodeAtDirection.setParent(currentNode);
-        return nodeAtDirection;
-    }
-
-    /**
+     /**
      * Kijk van de currentNode in welke richting deze kan bewegen
      * @return List<MovementDirection> een lijst van mogelijke richtingen
      */    
-    public List<MovementDirection> createDirectionList()
+    @Override
+    public List<MovementDirection> createDirectionList(Vertice currentNode)
     {
-        possibleDirections.clear();
+        List<MovementDirection> possibleDirections = new ArrayList<>();
         int posX = (int) currentNode.getPositionX();
         int posY = (int) currentNode.getPositionY();
 
@@ -190,6 +138,26 @@ public class TurnClockwise extends AlgorithmModel
             //Check bottom left
             boolean leftNeighbour = (posX - 1 == nX) && (posY == nY);
 
+            if(currentDirection == null)
+            {
+                if(topNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.UP);
+                }
+                else if(rightNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.RIGHT);
+                }
+                else if(bottomNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.DOWN);
+                }
+                else if(leftNeighbour)
+                {
+                    possibleDirections.add(MovementDirection.LEFT);
+                }              
+            }
+            
             // X-> |
             //    X|
             if(currentDirection == MovementDirection.RIGHT)

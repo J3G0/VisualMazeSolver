@@ -272,6 +272,7 @@ public class FXMLAlgorithmController implements Initializable
                 }
                 previousSelectedNode = selectedNode;
                 update();
+                model.updateSets();
             }
         }
     }
@@ -279,18 +280,14 @@ public class FXMLAlgorithmController implements Initializable
     
     private void handleMouseClickEvent(MouseEvent event)
     {
-        System.out.println("Clicked");        Point p = getPointFromMouseEvent(event);
+        System.out.println("Clicked");        
+        Point p = getPointFromMouseEvent(event);
         handleTileComboBox(p, comboBox.getValue());     
         model.updateSets();
         update();
 
     }
-
-    private void randomize() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
+     
     public Point getPointFromMouseEvent(MouseEvent event)
     {
         int clickedX = (int) event.getX();
