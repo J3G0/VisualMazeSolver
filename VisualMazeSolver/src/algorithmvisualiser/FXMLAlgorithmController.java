@@ -147,8 +147,8 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = null;
             clickLocation = null;
             
-            model.updateSets();
             update();
+            model.updateSets();
         }      
     } 
     
@@ -311,10 +311,9 @@ public class FXMLAlgorithmController implements Initializable
     {
         //Punt van de mouseDrag
         Point eventPoint = getPointFromMouseEvent(event);
-        
         //Als het model BASIC of SOLID is kan deze aangepast worden
-        if (model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
-            || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID 
+        if ((model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
+            || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID)
             && model.getNodeAtPoint(clickLocation) != model.getStartNode() 
             && model.getNodeAtPoint(clickLocation) != model.getEndNode())
         {
@@ -329,16 +328,16 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
             if(selectedNode != previousSelectedNode)
             {
+                System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
                 if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
-                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);
+                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);                              
+                    if(previousSelectedNode != null && previousSelectedNode != model.getEndNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
+                    {
+                        model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
+                    }
+                    previousSelectedNode = selectedNode;
                 }
-                
-                if(previousSelectedNode != null && previousSelectedNode != model.getEndNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
-                {
-                    model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
-                }
-                previousSelectedNode = selectedNode;
                 update();
             }
         }
@@ -351,14 +350,13 @@ public class FXMLAlgorithmController implements Initializable
             {
                 if(model.getNodeAtPoint(eventPoint) != model.getStartNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
-                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.END);
+                    model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.END);                             
+                    if(previousSelectedNode != null && previousSelectedNode != model.getStartNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
+                    {
+                        model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
+                    }
+                    previousSelectedNode = selectedNode;
                 }
-                
-                if(previousSelectedNode != null && previousSelectedNode != model.getStartNode() && previousSelectedNode.getVerticeType() != VerticeType.SOLID)
-                {
-                    model.getNodeFromOther(previousSelectedNode).setVerticeType(VerticeType.BASIC);
-                }
-                previousSelectedNode = selectedNode;
                 update();
             }
         }
