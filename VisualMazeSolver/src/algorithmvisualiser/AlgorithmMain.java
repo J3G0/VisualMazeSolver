@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +30,9 @@ public class AlgorithmMain extends Application
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Algorithm Visualiser by Sebastiaan & Jeffrey");
+        // https://exceptionshub.com/javafx-application-icon.html
+        stage.getIcons().add(new Image(AlgorithmMain.class.getResourceAsStream("./resources/img/Test-icon.png")));
         stage.show();
     }
 
