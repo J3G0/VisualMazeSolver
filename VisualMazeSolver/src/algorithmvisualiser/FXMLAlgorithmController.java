@@ -147,8 +147,8 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = null;
             clickLocation = null;
             
-            model.updateSets();
             update();
+            model.updateSets();
         }      
     } 
     
@@ -311,10 +311,9 @@ public class FXMLAlgorithmController implements Initializable
     {
         //Punt van de mouseDrag
         Point eventPoint = getPointFromMouseEvent(event);
-        
         //Als het model BASIC of SOLID is kan deze aangepast worden
-        if (model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
-            || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID 
+        if ((model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
+            || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID)
             && model.getNodeAtPoint(clickLocation) != model.getStartNode() 
             && model.getNodeAtPoint(clickLocation) != model.getEndNode())
         {
