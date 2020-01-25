@@ -32,7 +32,7 @@ public class AlgorithmMain extends Application
         stage.setScene(scene);
         stage.setTitle("Algorithm Visualiser by Sebastiaan & Jeffrey");
         // https://exceptionshub.com/javafx-application-icon.html
-        stage.getIcons().add(new Image(AlgorithmMain.class.getResourceAsStream("./resources/img/Test-icon.png")));
+        stage.getIcons().add(new Image(AlgorithmMain.class.getResourceAsStream("./resources/img/AlgoIcon.png")));
         stage.show();
     }
 
