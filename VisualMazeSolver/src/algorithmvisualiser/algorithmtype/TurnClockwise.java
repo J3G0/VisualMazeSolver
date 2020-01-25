@@ -105,80 +105,42 @@ public class TurnClockwise extends AlgorithmModel
      */
     public void createClockMovement(List<MovementDirection> possibleDirections)
     {   
-        if(!movedRight)
+        //nog niet bewogen
+        if(!movedRight && !movedLeft && !movedUp && !movedDown)
         {
-            //Maintain right while possible
+            //kan ik naar rechts?
             if(possibleDirections.contains(MovementDirection.RIGHT))
             {
                 currentDirection = MovementDirection.RIGHT;   
             }
+            else if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN;
+            }
+            else if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT;
+            }
+            else if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP;
+            }
             //Else finish the right movement step
             else
             {
-                if( currentDirection == MovementDirection.RIGHT )
+                if(currentDirection == MovementDirection.RIGHT)
                 {
                     movedRight = true;
                 }
-                else
-                {
-                    currentDirection = null;
-                }
-            }
-        }
-
-        if(!movedDown && movedRight)
-        {
-            //Maintain right while possible
-            if(possibleDirections.contains(MovementDirection.DOWN))
-            {
-                currentDirection = MovementDirection.DOWN;   
-            }
-            //Else finish the right movement step
-            else
-            {
-                if( currentDirection == MovementDirection.DOWN )
+                else if(currentDirection == MovementDirection.DOWN)
                 {
                     movedDown = true;
                 }
-                else
-                {
-                    currentDirection = null;
-                }
-            }
-        }  
-
-        if(!movedLeft && movedDown && movedRight)
-        {
-            //Maintain right while possible
-            if(possibleDirections.contains(MovementDirection.LEFT))
-            {
-                currentDirection = MovementDirection.LEFT;   
-            }
-            //Else finish the right movement step
-            else
-            {
-                if( currentDirection == MovementDirection.LEFT )
+                else if(currentDirection == MovementDirection.LEFT)
                 {
                     movedLeft = true;
                 }
-                else
-                {
-                    currentDirection = null;
-                }
-            }
-        } 
-
-        if(!movedUp && movedLeft && movedRight && movedDown)
-        {
-            //Maintain right while possible
-            if(possibleDirections.contains(MovementDirection.UP))
-            {
-                currentDirection = MovementDirection.UP;   
-            }
-            //Else finish the right movement step
-            else
-            {
-                if( currentDirection == MovementDirection.UP )
+                else if(currentDirection == MovementDirection.UP)
                 {
                     movedUp = true;
                 }
@@ -188,9 +150,127 @@ public class TurnClockwise extends AlgorithmModel
                 }
             }
         }
+        
+        //beweeg ik naar rechts?
+        if(currentDirection == MovementDirection.RIGHT)
+        {
+            //Ik beweeg naar rechts, naar rechts proberen te blijven gaan
+            if(possibleDirections.contains(MovementDirection.RIGHT))
+            {
+                currentDirection = MovementDirection.RIGHT; 
+                movedRight = true;
+            }
+            //Kan niet naar rechts meer, prioriteit aan met klok mee
+            else if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN;   
+                movedDown = true;
+            }
+            //Kan niet met de klok mee, prioriteit aan da kant waar ik niet vandaan kom
+            else if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP;   
+                movedUp = true;
+            }
+            //Kan zelfs daar niet naar toe, dan maar terug waar ik van kwam.
+            else if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT;   
+                movedLeft = true;
+            }
+            //Huh ik zit vast.
+            else
+                currentDirection = null;
+        }
+        if(currentDirection == MovementDirection.DOWN)
+        {
+            //Maintain DOWN while possible
+            if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN; 
+                movedDown = true;
+            }
+
+            else if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT;   
+                movedLeft = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.RIGHT))
+            {
+                currentDirection = MovementDirection.RIGHT;   
+                movedRight = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP;   
+                movedUp = true;
+            }
+            //Else finish the right movement step
+            else
+                currentDirection = null;
+        }
+        if(currentDirection == MovementDirection.LEFT)
+        {
+            //Maintain LEFT while possible
+            if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT; 
+                movedLeft = true;
+            }
+
+            else if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP;   
+                movedUp = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN;   
+                movedDown = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.RIGHT))
+            {
+                currentDirection = MovementDirection.RIGHT;   
+                movedRight = true;
+            }
+            //Else finish the right movement step
+            else
+                currentDirection = null;
+        }
+        if(currentDirection == MovementDirection.UP)
+        {
+            //Maintain UP while possible
+            if(possibleDirections.contains(MovementDirection.UP))
+            {
+                currentDirection = MovementDirection.UP; 
+                movedUp = true;
+            }
+
+            else if(possibleDirections.contains(MovementDirection.RIGHT))
+            {
+                currentDirection = MovementDirection.RIGHT;   
+                movedRight = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.LEFT))
+            {
+                currentDirection = MovementDirection.LEFT;   
+                movedLeft = true;
+            }
+            else if(possibleDirections.contains(MovementDirection.DOWN))
+            {
+                currentDirection = MovementDirection.DOWN;   
+                movedDown = true;
+            }
+            //Else finish the right movement step
+            else
+                currentDirection = null;
+        }
+
+        
         else
         {
-            if ((movedDown && movedUp && movedLeft && movedRight) || possibleDirections.isEmpty() )
+            if ( possibleDirections.isEmpty() )
             {
                 currentDirection = null;
                 movedRight = false;
