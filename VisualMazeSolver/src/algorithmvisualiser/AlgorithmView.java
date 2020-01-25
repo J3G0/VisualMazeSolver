@@ -9,19 +9,29 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- *
+ * Klasse die zorgt voor de View van het Algorithme
  * @author Sebastiaan
  */
 public class AlgorithmView extends Region
 {
+    /**
+     * model het model van het algoritme
+     */
     private AlgorithmModel model;
     
+    /**
+     * AlgorithmView de view van het model
+     * @param model het meegegeven model van het algoritme
+     */
     public AlgorithmView(AlgorithmModel model) 
     {
         this.model = model;
         update();
     }
     
+    /**
+     * Functie die de update voorziet voor de AlgorithmView
+     */
     public void update()
     {
         getChildren().clear();
@@ -41,6 +51,14 @@ public class AlgorithmView extends Region
         getChildren().add(t);
     }
     
+    /**
+     * Functie die coordinaat terug geeft wanneer er geklikt wordt in de view
+     * Alleen de view weet de exacte coordinaten waar de Vertices staan (met OFFSET en SIZE)
+     * Het model weet alleen hoeveel Vertice in de X en Y richting zitten, dus de view moet een coordinaat terug geven
+     * @param clickedAtX coordinaat van de x klik
+     * @param clickedAtY coordinaat van de y klik
+     * @return een coordinaat binnen nodes[x][y]
+     */
     public Point getCoordPointFromClick(int clickedAtX, int clickedAtY)
     {   
             

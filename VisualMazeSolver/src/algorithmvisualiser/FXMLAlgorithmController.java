@@ -60,15 +60,43 @@ public class FXMLAlgorithmController implements Initializable
     @FXML
     private Text speedIndicator;
     
+    /**
+     * Het model van het algoritme
+     */
     private AlgorithmModel model;
+    /**
+     * De view van het algorithme
+     */
     private AlgorithmView view;
+    /**
+     * De progressor van het algorithme (timer)
+     */
     private AlgorithmProgressor progressor;
+    /**
+     * De timer van het algorithme
+     */
     private Timer timer;
+    /**
+     * Een boolean (flag) die bijhoudt of de gebruiken aan het klikken is
+     */
     private boolean isClicking;
+    /**
+     * Het punt waarop geklikt werd
+     */
     private Point clickLocation;
+    /**
+     * De vorige node die geselecteerd is
+     */
     private Vertice previousSelectedNode;
+    /**
+     * De huidige node die geselecteerd is
+     */
     private Vertice selectedNode;
     
+    /**
+     * Functie die het model update naar het nieuwe ingestelde model
+     * @param model het meegegeven model
+     */
     public void setModel(AlgorithmModel model) 
     {
         this.model = model;
@@ -88,20 +116,29 @@ public class FXMLAlgorithmController implements Initializable
         update();
     }
     
+    /**
+     * Functie die de klik status voorziet
+     * @param event de event van het klikken
+     * @param isClicking boolean die meegeeft de muis is ingedrukt of niet
+     */
     public void updateClickStatus (MouseEvent event, boolean isClicking) 
     {
-        clickLocation = getPointFromMouseEvent(event);
-        
+        //Vraag de kliklocatie op
+        clickLocation = getPointFromMouseEvent(event);  
+        //Update isClicking
         this.isClicking = isClicking;
-        //System.out.println("click " + isClicking);
+        
+        //Als er geen huidige klik bezig is en niks is geselecteerd
         if(!isClicking && selectedNode != null)
         {
             Point p = new Point( (int) selectedNode.getPositionX(), (int) selectedNode.getPositionY());
             
+            //Als startnode is geselecteerd
             if(selectedNode.getVerticeType() == VerticeType.START)
             {              
                 model.setStartNode(model.getNodeAtPoint(p)); 
             }
+            //Als endnode is geselecteerd
             else if(selectedNode.getVerticeType() == VerticeType.END)
             {
                 model.setEndNode(model.getNodeAtLocation(p.x, p.y)); 
@@ -115,6 +152,11 @@ public class FXMLAlgorithmController implements Initializable
         }      
     } 
     
+    /**
+     * Functie die wordt opgeroepen bij een RESTART klik
+     * Neemt de waarde van de comboBox en herstart het model met huidige nodes
+     * @param event ActionEvent de event van de ComboBox
+     */
     public void processAlgorithmComboBox(ActionEvent event)
     {
        timer.cancel();
@@ -138,6 +180,9 @@ public class FXMLAlgorithmController implements Initializable
        }
     }
     
+    /**
+     * Reset het huidige model (verwijder alle nodes)
+     */
     public void resetCurrentModel()
     {
        switch(algorithmComboBox.getValue())
@@ -161,6 +206,12 @@ public class FXMLAlgorithmController implements Initializable
        }
     }
     
+    /**
+     * Functie die slider snelheid aanpast
+     * Als het geslide wordt, en model is aan het lopen dan kan deze geüpdate worden
+     * Maakt ook nieuwe timer aan
+     * @param event Event van het sliden
+     */
     public void handleSliderDragEvent(MouseEvent event)
     {
         if(model.getAmountOfIterations() > 1)
@@ -174,6 +225,9 @@ public class FXMLAlgorithmController implements Initializable
         }
     }
     
+    /**
+     * Initialisatie van de comboBox waardes
+     */
     public void updateComboBox()
     {
         // Initialize own comboBox items
@@ -187,6 +241,11 @@ public class FXMLAlgorithmController implements Initializable
         algorithmComboBox.getSelectionModel().select("Always right"); 
     }
     
+    /**
+     * Functie die initialisatie van de buttons voorziet
+     * @param url
+     * @param rb 
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -197,12 +256,20 @@ public class FXMLAlgorithmController implements Initializable
         finish.setOnAction(evt -> finish());
     }    
     
+    /**
+     * Functie die wordt opgeroepen als FINISH knop wordt ingeduwd
+     * roept model.finish() op
+     */
     public void finish()
     {
         model.finish();
         update();
     }
     
+    /**
+     * Functie die wordt opgeroepen als NEXT knop wordt ingeduwd
+     * Deze roept de progessor op die dan model.iterate() op een timer uitvoert.
+     */
     public void iterate()
     {     
         if(model.getAlgorithmState() == AlgorithmState.SOLVING)
@@ -213,6 +280,9 @@ public class FXMLAlgorithmController implements Initializable
         }
     }
     
+    /**
+     * Functie die die interface update (aantal iteraties, snelheid, .. )
+     */
     public void update()
     {
         view.update();
@@ -220,6 +290,9 @@ public class FXMLAlgorithmController implements Initializable
         speedIndicator.setText("Speed: " + (int) progressorSpeed.getValue() + " ms");
     }
     
+    /**
+     * Functie die het model verandert
+     */
     public void changeModel()
     {
         //Cancel timer as a new
@@ -228,12 +301,19 @@ public class FXMLAlgorithmController implements Initializable
         update();
     }
     
+    /**
+     * Functie die het bewerken van de view behandelt.
+     * Alsook het bewegen van START en END node
+     * Hiermee kan de gebruiker SOLID of BASIC nodes tekenen in de map
+     * @param event event van muis in view
+     */
     private void handleMouseDragEvent(MouseEvent event )
     {
+        //Punt van de mouseDrag
         Point eventPoint = getPointFromMouseEvent(event);
         
-
-        if(model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
+        //Als het model BASIC of SOLID is kan deze aangepast worden
+        if (model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
             || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID 
             && model.getNodeAtPoint(clickLocation) != model.getStartNode() 
             && model.getNodeAtPoint(clickLocation) != model.getEndNode())
@@ -249,7 +329,6 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
             if(selectedNode != previousSelectedNode)
             {
-                //System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
                 if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
                     model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);
@@ -285,10 +364,12 @@ public class FXMLAlgorithmController implements Initializable
         }
     }
     
-    
+    /**
+     * Functie die het klikken in de view behandelt
+     * @param event de event van de muisklik
+     */
     private void handleMouseClickEvent(MouseEvent event)
-    {
-        //System.out.println("Clicked");        
+    {       
         Point p = getPointFromMouseEvent(event);
         handleTileComboBox(p, comboBox.getValue());     
         model.updateSets();
@@ -296,6 +377,12 @@ public class FXMLAlgorithmController implements Initializable
 
     }
      
+    /**
+     * Functie die van klikevent in reële coordinaten een x,y coordinaat terug krijgt
+     * die overeenkomt in de nodes[x][y] map
+     * @param event mouseEvent van de klik
+     * @return het punt P(x,y) dat overeenstemt met een nodes[x][y]
+     */
     public Point getPointFromMouseEvent(MouseEvent event)
     {
         int clickedX = (int) event.getX();
@@ -305,6 +392,11 @@ public class FXMLAlgorithmController implements Initializable
         return p;
     }
     
+    /**
+     * Aan de hand van comboBox kan ingesteld worden welke Vertice getekend kan worden
+     * @param p het punt van de te bewerking Vertice
+     * @param comboBoxValue het type dat getekend moet worden (SOLID of BASIC)
+     */
     public void handleTileComboBox(Point p, String comboBoxValue)
     {
         switch(comboBoxValue)

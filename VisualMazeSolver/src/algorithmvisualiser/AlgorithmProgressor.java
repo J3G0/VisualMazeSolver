@@ -8,7 +8,8 @@ import java.util.TimerTask;
 import javafx.application.Platform;
 
 /**
- *
+ * Klasse die ervoor zorgt dat iteratie per tijdsinterval opgeroepen wordt
+ * Om de x seconden 1 iteratie van het algoritme
  * @author Sebastiaan
  */
 public class AlgorithmProgressor extends TimerTask

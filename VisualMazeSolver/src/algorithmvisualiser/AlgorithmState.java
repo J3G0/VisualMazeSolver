@@ -6,7 +6,7 @@
 package algorithmvisualiser;
 
 /**
- *
+ * Enum die State van algorithme beschrijft
  * @author Sebastiaan
  */
 public enum AlgorithmState 
