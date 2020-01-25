@@ -68,7 +68,7 @@ public class Drunk extends AlgorithmModel
 
             possibleDirections = createDirectionList(currentNode);
             
-            System.out.println(Arrays.toString(possibleDirections.toArray()));
+            //System.out.println(Arrays.toString(possibleDirections.toArray()));
 
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
