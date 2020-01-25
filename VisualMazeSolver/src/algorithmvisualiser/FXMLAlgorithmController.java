@@ -272,7 +272,6 @@ public class FXMLAlgorithmController implements Initializable
                 }
                 previousSelectedNode = selectedNode;
                 update();
-                model.updateSets();
             }
         }
     }
