@@ -492,19 +492,26 @@ public class AlgorithmModel
      */
     public void drawTakenPath()
     {
-        while(currentNode != startNode)
-        {          
-            if(currentNode.getVerticeType() == VerticeType.TRAVERSED  && currentNode != startNode && currentNode != endNode)
-            {
-                currentNode.setVerticeType(VerticeType.PARENT);
-            }
-            
-            currentNode = currentNode.getParent();
-            
-            if (currentNode == null)
-            {
-                return;
-            }
+        try
+        {
+            while(currentNode != startNode)
+            {          
+                if(currentNode.getVerticeType() == VerticeType.TRAVERSED  && currentNode != startNode && currentNode != endNode)
+                {
+                    currentNode.setVerticeType(VerticeType.PARENT);
+                }
+
+                currentNode = currentNode.getParent();
+
+                if (currentNode == null)
+                {
+                    return;
+                }
+            }   
+        }
+        catch(Exception e)
+        {
+            System.out.println("Failed to backtrace path:" + e.getCause());
         }
     }
     

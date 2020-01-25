@@ -233,10 +233,13 @@ public class FXMLAlgorithmController implements Initializable
         Point eventPoint = getPointFromMouseEvent(event);
         
 
-        if(model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC && model.getNodeAtPoint(clickLocation) != model.getStartNode() && model.getNodeAtPoint(clickLocation) != model.getEndNode())
+        if(model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.BASIC 
+            || model.getNodeAtPoint(eventPoint).getVerticeType() == VerticeType.SOLID 
+            && model.getNodeAtPoint(clickLocation) != model.getStartNode() 
+            && model.getNodeAtPoint(clickLocation) != model.getEndNode())
         {
-                handleTileComboBox(eventPoint, comboBox.getValue());     
-                update();
+            handleTileComboBox(eventPoint, comboBox.getValue());     
+            update();
         }
 
         

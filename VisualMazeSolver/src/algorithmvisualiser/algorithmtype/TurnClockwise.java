@@ -58,6 +58,11 @@ public class TurnClockwise extends AlgorithmModel
     @Override
     public void iterate()
     { 
+        if(getAmountOfIterations() > 500)
+        {
+            setAlgorithmState(AlgorithmState.SOLVED);
+            updateModelState();
+        }
         if (getAlgorithmState() == AlgorithmState.SOLVED)
         {
             drawTakenPath();
