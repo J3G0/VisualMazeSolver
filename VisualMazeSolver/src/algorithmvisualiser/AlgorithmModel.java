@@ -478,7 +478,7 @@ public class AlgorithmModel
             algorithmState = AlgorithmState.SOLVED;
         }
         
-        else if(currentNode == startNode && amountOfIterations > 1)
+        else if((currentNode == startNode && amountOfIterations > 1) || amountOfIterations > 500)
         {
             System.out.println("Setting state to unsolvable");
             algorithmState = AlgorithmState.UNSOLVABLE;

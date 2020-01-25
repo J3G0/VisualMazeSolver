@@ -58,14 +58,10 @@ public class TurnClockwise extends AlgorithmModel
     @Override
     public void iterate()
     { 
-        if(getAmountOfIterations() > 500)
+        if(getAmountOfIterations() > 200)
         {
-            setAlgorithmState(AlgorithmState.SOLVED);
+            setAlgorithmState(AlgorithmState.UNSOLVABLE);
             updateModelState();
-        }
-        if (getAlgorithmState() == AlgorithmState.SOLVED)
-        {
-            drawTakenPath();
         }
         
         if (getAlgorithmState() == AlgorithmState.SOLVING)
@@ -99,7 +95,6 @@ public class TurnClockwise extends AlgorithmModel
         {
             iterate();
         }
-        drawTakenPath();
     }
     
     public void createClockMovement(List<MovementDirection> possibleDirections)
