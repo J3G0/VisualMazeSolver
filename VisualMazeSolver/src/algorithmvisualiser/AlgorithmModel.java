@@ -11,11 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
 /**
- *
+ * Base class Algorithm Model (every Algorithm extends this class)
+ * It contains all basic methods required for an algorithm.
  * @author Sebastiaan
  */
-
 public class AlgorithmModel
 {
     /**
@@ -175,11 +177,11 @@ public class AlgorithmModel
     }
     
     /**
-     * Methode die alle buren geeft van de huidige node (currentNode)
+     * Methode die alle buren geeft van de huidige node (currentNode) gegeven de diagonale en traversed voorwaarden
      * @param currentNode de huidige node
      * @param allowDiagonal al dan niet diagonaal kijken naar buren
      * @param allowTraversed mag het blokje ook door traversed gaan
-     * @return List van nodes die alle buren van currentNode bevat
+     * @return List van nodes die alle buren van currentNode bevat volgens de voorwaarden
      */
     public List<Vertice> getNeighbourVertices (Vertice currentNode, boolean allowDiagonal, boolean allowTraversed)
     {
@@ -430,7 +432,7 @@ public class AlgorithmModel
     }
     
     /**
-     * Methode die het aantal iteraties met 1 verhoogd.
+     * Methode die het aantal iteraties met 1 verhoogt.
      */
     public void increaseIterations() 
     { 
@@ -450,6 +452,7 @@ public class AlgorithmModel
     /**
      * Methode die de status van  het algorithme kan setten
      * @param algorithmState die nieuwe status van het algorithme
+     * @see AlgorithmState
      */
     public void setAlgorithmState(AlgorithmState algorithmState) 
     { 
@@ -458,10 +461,11 @@ public class AlgorithmModel
     
     /**
      * Methode die kijkt of currentNode gelijk is aan endNode,
-     * indien dit het geval is is het algorithm klaar en wordt AlgorithmState solved.
+     * indien dit het geval is is het algorithm klaar en wordt AlgorithmState naar SOLVED gezet.
      * 
      * Indien currentNode gelijk is aan startNode dan is het algorithme vastgelopen
-     * en wordt het op unsolveable gezet.
+     * en wordt het op UNSOLVABLE gezet.
+     * @see AlgorithmState
      */
     public void updateModelState()
     {
@@ -479,9 +483,9 @@ public class AlgorithmModel
     }
     
     /**
-     * Teken het genomen pad door het algorithme
+     * Teken het genomen pad door het algoritme
      * Dit gebeurt door van elke currentNode de ouder (parent)
-     * op te vragen en zo terug naar start te gaan.
+     * op te vragen en zo terug naar start te gaan. (Node list)
      */
     public void drawTakenPath()
     {
@@ -535,6 +539,7 @@ public class AlgorithmModel
         
     /**
      * Kijk van de currentNode in welke richting deze kan bewegen
+     * van de lijst van buren
      * @return List<MovementDirection> een lijst van mogelijke richtingen
      */
     public List<MovementDirection> createDirectionList(Vertice currentNode)
@@ -586,7 +591,7 @@ public class AlgorithmModel
      * zijn voor de Vertice, en moet de ouder meegegeven worden als volgende Node.
      * Indien er wel een currentDirection mogelijk is, geeft node in die richting mee.
      * @param currentDirection de node in de richting die meegegeven is.
-     * @return 
+     * @return de node die in de gepaste richting ligt.
      */
     public Vertice getNodeAtDirection(MovementDirection currentDirection)
     {
@@ -634,6 +639,10 @@ public class AlgorithmModel
         return nodeAtDirection;
     }
     
+    /**
+     * Methode die er voor zorgt dat elk algoritme hetzelfde kleur patroon aanhoudt
+     * qua movement updates, zodat dit consistent is.
+     */
     public void updateCurrentNode()
     {
         if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
