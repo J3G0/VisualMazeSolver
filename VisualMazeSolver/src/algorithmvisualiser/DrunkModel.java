@@ -59,16 +59,8 @@ public class DrunkModel extends AlgorithmModel
         {
             updateModelState();
             increaseIterations();
-            if(currentNode.getVerticeType() == VerticeType.BASIC)
-            {
-                currentNode.setVerticeType(VerticeType.HEAD);
-                
-                if(currentNode.getParent() != null && currentNode.getParent() != startNode)
-                {
-                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
-                }
-            }
-            neighbours = getNeighbourVertices(currentNode, false);
+            updateCurrentNode();
+            neighbours = getNeighbourVertices(currentNode, false, false);
 
             possibleDirections = createDirectionList(currentNode);
             

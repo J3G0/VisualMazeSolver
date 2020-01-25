@@ -67,7 +67,7 @@ public class AlwaysGoLeft extends AlgorithmModel
                    currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
                 }
             }
-            neighbours = getNeighbourVertices(currentNode, false);
+            neighbours = getNeighbourVertices(currentNode, false, false);
 
             possibleDirections = createDirectionList(currentNode);
             

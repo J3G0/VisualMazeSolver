@@ -54,7 +54,7 @@ public class TurnClockwise extends AlgorithmModel
     @Override
     public void iterate()
     { 
-        if(getAlgorithmState() == AlgorithmState.SOLVED)
+        if (getAlgorithmState() == AlgorithmState.SOLVED)
         {
             drawTakenPath();
         }
@@ -62,32 +62,15 @@ public class TurnClockwise extends AlgorithmModel
         if (getAlgorithmState() == AlgorithmState.SOLVING)
         {
             updateModelState();
-            increaseIterations();
-            
-            if(currentNode.getVerticeType() == VerticeType.BASIC)
-            {
-                currentNode.setVerticeType(VerticeType.HEAD);
-                //System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
-                if(currentNode.getParent() != null && currentNode.getParent() != startNode)
-                {
-                    switch(currentNode.getVerticeType())
-                    {
-                        case HEAD:
-                            currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
-                            break;
-
-                    }
-                    //System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
-                }
-            }
-            neighbours = getNeighbourVertices(currentNode, false);
+            increaseIterations();           
+            updateCurrentNode();
+            neighbours = getNeighbourVertices(currentNode, false, true);
             possibleDirections = createDirectionList(currentNode);
             //Get first possible direction if not empty
-            if(!possibleDirections.isEmpty())
+            if (!possibleDirections.isEmpty())
             {
                 createClockMovement(possibleDirections);
-            }
-            
+            }            
             //If possible directions is empty, set currentnode to null (so it goes to parent)
             else
             {
@@ -163,7 +146,7 @@ public class TurnClockwise extends AlgorithmModel
             }
         } 
 
-        if(!movedUp && movedLeft)
+        if(!movedUp && movedLeft && movedRight && movedDown)
         {
             //Maintain right while possible
             if(possibleDirections.contains(MovementDirection.UP))
@@ -181,8 +164,9 @@ public class TurnClockwise extends AlgorithmModel
         }
         else
         {
-            if(movedDown && movedUp && movedLeft && movedRight)
+            if ((movedDown && movedUp && movedLeft && movedRight) || possibleDirections.isEmpty() )
             {
+                currentDirection = null;
                 movedRight = false;
                 movedDown = false;
                 movedLeft = false;

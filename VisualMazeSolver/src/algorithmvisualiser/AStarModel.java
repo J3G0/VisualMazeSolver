@@ -111,7 +111,7 @@ public class AStarModel extends AlgorithmModel
             }
 
             //Get neighbours from currentNode and allow diagonal
-            neighbours = getNeighbourVertices(currentNode, true);
+            neighbours = getNeighbourVertices(currentNode, true, false);
             
             //Loop over neighbours to set each cost
             for (Vertice n : neighbours)

@@ -178,9 +178,10 @@ public class AlgorithmModel
      * Methode die alle buren geeft van de huidige node (currentNode)
      * @param currentNode de huidige node
      * @param allowDiagonal al dan niet diagonaal kijken naar buren
+     * @param allowTraversed mag het blokje ook door traversed gaan
      * @return List van nodes die alle buren van currentNode bevat
      */
-    public List<Vertice> getNeighbourVertices (Vertice currentNode, boolean allowDiagonal)
+    public List<Vertice> getNeighbourVertices (Vertice currentNode, boolean allowDiagonal, boolean allowTraversed)
     {
         List<Vertice> neighbours = new ArrayList<>();
         
@@ -210,9 +211,19 @@ public class AlgorithmModel
                         int posX = (int)neighbourNode.getPositionX();
                         int posY = (int)neighbourNode.getPositionY();
                         
-                        if ( (nodes[posX][posY].getVerticeType() == VerticeType.BASIC) || nodes[posX][posY]  == endNode)
+                        if(allowTraversed)
                         {
-                            neighbours.add(nodes[posX][posY]);
+                            if ( (nodes[posX][posY].getVerticeType() == VerticeType.BASIC) || nodes[posX][posY]  == endNode || (nodes[posX][posY].getVerticeType() == VerticeType.TRAVERSED))
+                            {
+                                neighbours.add(nodes[posX][posY]);
+                            }   
+                        }
+                        else
+                        {
+                            if ((nodes[posX][posY].getVerticeType() == VerticeType.BASIC) || nodes[posX][posY]  == endNode)
+                            {
+                                neighbours.add(nodes[posX][posY]);
+                            }   
                         }
                     }
 
@@ -342,8 +353,9 @@ public class AlgorithmModel
      */
     public Vertice getNodeAtLocation(int x, int y)
     {
-        x = Math.min(x, ROWS_X - 1);
-        y = Math.min(y, ROWS_Y - 1);
+        //System.out.println(x + " , " + y);
+        x = Math.min(Math.max(0,x), ROWS_X - 1);
+        y = Math.min(Math.max(0,y), ROWS_Y - 1);
         
         return nodes[x][y];
     }
@@ -475,7 +487,7 @@ public class AlgorithmModel
     {
         while(currentNode != startNode)
         {          
-            if(currentNode.getVerticeType() == VerticeType.TRAVERSED && currentNode != startNode && currentNode != endNode)
+            if(currentNode.getVerticeType() == VerticeType.TRAVERSED  && currentNode != startNode && currentNode != endNode)
             {
                 currentNode.setVerticeType(VerticeType.PARENT);
             }
@@ -620,5 +632,25 @@ public class AlgorithmModel
         }
         nodeAtDirection.setParent(currentNode);
         return nodeAtDirection;
+    }
+    
+    public void updateCurrentNode()
+    {
+        if(currentNode.getVerticeType() == VerticeType.BASIC || currentNode.getVerticeType() == VerticeType.TRAVERSED || currentNode.getVerticeType() == VerticeType.HEAD)
+        {
+            currentNode.setVerticeType(VerticeType.HEAD);
+            //System.out.println("Before: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+            if(currentNode.getParent() != null && currentNode.getParent() != startNode)
+            {
+                switch(currentNode.getVerticeType())
+                {
+                    case HEAD:
+                        currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                        break;
+
+                }
+                //System.out.println("After: " + currentNode.getVerticeType() + " " + currentNode.getParent().getVerticeType());
+            }
+        }
     }
 }
