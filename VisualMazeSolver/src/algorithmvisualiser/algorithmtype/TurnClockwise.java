@@ -113,6 +113,10 @@ public class TurnClockwise extends AlgorithmModel
                 {
                     movedRight = true;
                 }
+                else
+                {
+                    currentDirection = null;
+                }
             }
         }
 
@@ -130,10 +134,14 @@ public class TurnClockwise extends AlgorithmModel
                 {
                     movedDown = true;
                 }
+                else
+                {
+                    currentDirection = null;
+                }
             }
         }  
 
-        if(!movedLeft && movedDown)
+        if(!movedLeft && movedDown && movedRight)
         {
             //Maintain right while possible
             if(possibleDirections.contains(MovementDirection.LEFT))
@@ -143,9 +151,13 @@ public class TurnClockwise extends AlgorithmModel
             //Else finish the right movement step
             else
             {
-                  if( currentDirection == MovementDirection.LEFT )
+                if( currentDirection == MovementDirection.LEFT )
                 {
                     movedLeft = true;
+                }
+                else
+                {
+                    currentDirection = null;
                 }
             }
         } 
@@ -163,6 +175,10 @@ public class TurnClockwise extends AlgorithmModel
                 if( currentDirection == MovementDirection.UP )
                 {
                     movedUp = true;
+                }
+                else
+                {
+                    currentDirection = null;
                 }
             }
         }
