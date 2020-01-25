@@ -105,7 +105,7 @@ public class AlwaysGoLeft extends AlgorithmModel
         }
     }
     /**
-     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' bereikt is.
      * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override

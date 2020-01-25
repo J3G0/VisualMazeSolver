@@ -147,7 +147,7 @@ public class AStar extends AlgorithmModel
     }
     
     /**
-     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' bereikt is.
      * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override
@@ -166,8 +166,7 @@ public class AStar extends AlgorithmModel
     /**
      * Geeft de travelcost (reiskost) terug op basis van de afstand tot de startNode en de endNode.
      *  Stel nodeA ligt op (0,0) en nodeB ligt op (2,2);
-     *  NodeA moet 
-     *  NodeA moet 2 maal schuin gaan (Pythagoras) of 2 keer horizontaal and two keer vertikaal
+     *  NodeA moet 2 maal schuin gaan (Pythagoras) of 2 keer horizontaal and twee keer verticaal
      *  Neem de afstand 1, de verticale afstand zou sqtr(1^2 + 1^2) = 1.41 zijn.
      *  De laagste kost afstand is 2 * 1.41 = 2.82 of 4 * 1 = 4. (2.82)
      *  

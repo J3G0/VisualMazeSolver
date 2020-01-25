@@ -12,7 +12,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Klasse die zorgt voor de View van de Vertices (nodes
+ * Klasse die zorgt voor de View van de Vertices (nodes)
  * Erft van Region.
  */
 public class VerticeView extends Region
@@ -26,7 +26,7 @@ public class VerticeView extends Region
      */
     final protected int SIZE = 35;
     /**
-     * Offset van een Vertice.
+     * Offset tot de volgende Vertice.
      */
     final protected int OFFSET = 5;
     
@@ -99,7 +99,7 @@ public class VerticeView extends Region
     }
     
     /**
-     * Methode die de node aan de Vertice geven.
+     * Methode die huidige Vertice (node) teruggeeft
      * @return node
      */
     public Vertice getModel()
@@ -108,7 +108,7 @@ public class VerticeView extends Region
     }
     
     /**
-     * Methode die de rechthoekige Vertices aanmaken en teruggeeft
+     * Methode die de rechthoekige Vertices aanmaakt en teruggeeft
      * @param xCoord, de x positie van de Vertice
      * @param yCoord, de y positie van de Vertice
      * @param kleur, de kleur van de Vertice.

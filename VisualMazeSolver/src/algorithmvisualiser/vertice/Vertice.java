@@ -13,10 +13,25 @@ package algorithmvisualiser.vertice;
  */
 public class Vertice
 {
+    /**
+     * De x positie van de Vertice
+     */
     private double positionX;
+    /**
+     * De y positie van de Vertice
+     */
     private double positionY;
+    /**
+     * Het type van de Vertice
+     */
     protected VerticeType type;
+    /**
+     * Het vorige type van de Vertice
+     */
     protected VerticeType previousVerticeType;
+    /**
+     * De ouder van de Vertice
+     */
     protected Vertice parent;
     
     /**
@@ -74,25 +89,24 @@ public class Vertice
     public VerticeType getVerticeType() { return type; }
     
     /**
-     * Methode die het type van de vorige Vertice kan zetten
-     * Zijnde de vorige node.
+     * Methode die het vorige type van de huidige Vertice kan zetten
      * @param previousVerticeType, type vorige Vertice.
      */
     public void setPreviousVerticeType(VerticeType previousVerticeType) { this.previousVerticeType = previousVerticeType; }
     /**
-     * Methode die de vorige Vertice (node) opvraagt.
-     * @return previousVerticeType, de vorige Vertice.
+     * Methode die de vorige VerticeType opvraagt.
+     * @return previousVerticeType, de vorige VerticeType.
      */
     public VerticeType getPreviousVerticeType() { return previousVerticeType; }
     
     /**
      * Methode die de X positie opvraagt.
-     * @return positionX
+     * @return positionX de x positie van de Vertice
      */
     public double getPositionX() { return positionX; }
     /**
      * Methode die de Y positie opvraagt.
-     * @return positionY
+     * @return positionY de y positie van de Vertice
      */
     public double getPositionY() { return positionY; }
     
@@ -108,7 +122,7 @@ public class Vertice
     public void setPositionY(double positionY) {this.positionY = positionY; }
     
     /**
-     * Methode die een string met de X en Y positie van een Vertice teruggeeft.
+     * Methode die een string met de X en Y positie van een Vertice teruggeeft. (DEBUG)
      * @return String x location: X, y location: Y
      */
     public String getLocation() { return "x location: " + positionX + " y location: "  + positionY;}

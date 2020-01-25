@@ -8,7 +8,6 @@ package algorithmvisualiser.vertice;
 /**
  * Vertice types (Node types).
  * Dit zijn de types dat een Vertice kan zijn.
- * @author Jeffrey
  */
 public enum VerticeType 
 {
