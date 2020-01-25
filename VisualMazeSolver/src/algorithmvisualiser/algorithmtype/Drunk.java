@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser.algorithmtype;
 
@@ -15,8 +15,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
- * @author Jeffrey
+ * Klasse voor het Drunk algoritme.
+ * Erft van AlgoritmModel.
+ * Bevat alle methodes inherent aan Drunk.
  */
 public class Drunk extends AlgorithmModel
 {  
@@ -89,7 +90,8 @@ public class Drunk extends AlgorithmModel
         }
     }
     /**
-     * Finish functie: roept iterate() op tot opgelost of vastgelopen
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override
     public void finish()

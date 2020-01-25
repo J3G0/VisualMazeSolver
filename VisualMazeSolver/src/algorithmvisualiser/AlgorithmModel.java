@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser;
 
@@ -14,12 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-
 /**
- * Base class Algorithm Model (every Algorithm extends this class)
- * It contains all basic methods required for an algorithm.
- * @author Sebastiaan
+ * Basis klasse Algorithm Model (elk 'Algorithm' erft van deze klasse).
+ * Het bevat alle basis methodes die nodig zijn voor een algoritme.
  */
 public class AlgorithmModel
 {

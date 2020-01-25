@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser.algorithmtype;
 
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Jeffrey
+ * Klasse voor het TurnClockwise algoritme.
+ * Erft van AlgoritmModel.
+ * Bevat alle methodes inherent aan TurnClockwise.
  */
-
 public class TurnClockwise extends AlgorithmModel
 {  
     /**
@@ -86,7 +86,8 @@ public class TurnClockwise extends AlgorithmModel
     }
     
     /**
-     * Finish functie: roept iterate() op tot opgelost of vastgelopen
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override
     public void finish()
@@ -97,6 +98,11 @@ public class TurnClockwise extends AlgorithmModel
         }
     }
     
+    /**
+     * Methode die de mogelijke richtingen voor het algoritme berekend.
+     * Indien een richting voldoet aan de voorwaarden wordt deze in de lijst gestoken.
+     * @param possibleDirections, lijst met de mogelijke richtingen.
+     */
     public void createClockMovement(List<MovementDirection> possibleDirections)
     {
         if(!movedRight)

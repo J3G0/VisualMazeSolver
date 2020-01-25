@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser.algorithmtype;
 
@@ -15,8 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
- * @author Jeffrey
+ * Klasse voor het AlwaysGoLeft algoritme.
+ * Erft van AlgoritmModel.
+ * Bevat alle methodes inherent aan AlwaysGoLeft.
  */
 public class AlwaysGoLeft extends AlgorithmModel
 {  
@@ -104,7 +105,8 @@ public class AlwaysGoLeft extends AlgorithmModel
         }
     }
     /**
-     * Finish functie: roept iterate() op tot opgelost of vastgelopen
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override
     public void finish()

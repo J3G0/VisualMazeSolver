@@ -1,3 +1,8 @@
+/*
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
+ */
 package algorithmvisualiser;
 
 import algorithmvisualiser.vertice.VerticeView;
@@ -15,12 +20,12 @@ import javafx.scene.text.Text;
 public class AlgorithmView extends Region
 {
     /**
-     * model het model van het algoritme
+     * Het model van het algoritme
      */
     private AlgorithmModel model;
     
     /**
-     * AlgorithmView de view van het model
+     * AlgorithmView Constructor, de view van het model
      * @param model het meegegeven model van het algoritme
      */
     public AlgorithmView(AlgorithmModel model) 

@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser.algorithmtype;
 
@@ -15,32 +15,30 @@ import algorithmvisualiser.vertice.VerticeType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Sebastiaan
- */
-
 // Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
 // Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
 // Source: https://github.com/SebLague/Pathfinding/blob/master/Episode%2003%20-%20astar/Assets/Scripts/Pathfinding.cs
 // Source: https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=1
 
+/**
+ * Klasse voor het AStar algoritme.
+ * Erft van AlgoritmModel.
+ * Bevat alle methodes inherent aan AStar.
+ */
 public class AStar extends AlgorithmModel
 {
     /**
-     *
      * AStarModel constructor
      */
     public AStar() 
     {
         this.algorithmName = "A Star";  
         openSet.add(currentNode);
-        
     } 
   
     /**
-     * AStarModel constructor with map parameter
-     * @param map 2D Vertice map that contains the Vertice data
+     * AStarModel constructor met map parameter
+     * @param map 2D Vertice map die de Vertice data bevat.
      */
     public AStar(Vertice[][] map) 
     {
@@ -50,7 +48,7 @@ public class AStar extends AlgorithmModel
     } 
     
     /**
-     * Iterate function that iterates the algorithm once
+     * iterate Functie die één keer over het algoritme itereert.
      */
     @Override
     public void iterate()
@@ -149,8 +147,8 @@ public class AStar extends AlgorithmModel
     }
     
     /**
-     * Method that calls iterate() untill solved or unsolveable state is reached
-     * if solved it calls drawTakenPath
+     * Methode die iterate() oproept totdat de state 'solved' of 'unsolvable' berijkt is.
+     * Als hij 'solved' is dan roept deze drawTakenPath() op.
      */
     @Override
     public void finish()
@@ -166,21 +164,22 @@ public class AStar extends AlgorithmModel
     }
     
     /**
-     * Gets the travelCost based on distance from startNode and endNode
-     *  Say nodeA is at (0,0) and nodeB is at (2,2);
-     *  NodeA has to travel two diameters of distance (Pythagoras) or 2 horizontal and two vertical
-     *  let one distance be 1, a vertical distance would be sqtr(1^2 + 1^2) = 1.41
-     *  The lowest cost distance is either 2 * 1.41 = 2.82 or 4 * 1 = 4. (2.82)
-     *   
-     *  What if the endnode is on the same line as the startNode?
-     *  NodeA (1,0) , nodeB(4,0)
-     *  There is no need for Pythagoras here (no x or y difference), the cost would be 3 * 1 = 1.
+     * Geeft de travelcost (reiskost) terug op basis van de afstand tot de startNode en de endNode.
+     *  Stel nodeA ligt op (0,0) en nodeB ligt op (2,2);
+     *  NodeA moet 
+     *  NodeA moet 2 maal schuin gaan (Pythagoras) of 2 keer horizontaal and two keer vertikaal
+     *  Neem de afstand 1, de verticale afstand zou sqtr(1^2 + 1^2) = 1.41 zijn.
+     *  De laagste kost afstand is 2 * 1.41 = 2.82 of 4 * 1 = 4. (2.82)
      *  
-     *   We need to calculate the absolute difference between x,y of the two nodes (nodeA, nodeB)
+     * Wat als de endNode op dezelfde lijn ligt als de startNode?
+     *  NodeA (1,0) , nodeB(4,0)
+     *  Er is geen nood voor Pythagoras nu (geen x of y verschil), de kost is dan 3 * 1 = 1.
+     *  
+     *  We moeten het absolute verschil tussen x en y van de 2 nodes (nodeA, nodeB) berekenen.
      * 
-     * @param nodeA the first Vertice (Vertice of which the cost is calculated)
-     * @param nodeB the secone Vertice (startNode or endNode)
-     * @return travelCost the weights (cost) of the travel distance
+     * @param nodeA De eerste Vertice (Vertice van wie de kost wordt berekend)
+     * @param nodeB De tweede Vertice (startNode of endNode)
+     * @return travelCost, het gewicht of de kost van de reisafstand.
      */
     public double getTravelCost(Vertice nodeA, Vertice nodeB)
     {

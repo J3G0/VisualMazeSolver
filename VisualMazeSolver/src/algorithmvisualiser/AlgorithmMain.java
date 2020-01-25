@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author Sebastiaan Vanspauwen
+ * @author Jeffrey Gorissen
+ * @teacher Kris Aerts
  */
 package algorithmvisualiser;
 import algorithmvisualiser.algorithmtype.AlwaysGoRight;
@@ -12,8 +12,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Sebastiaan
+ * Basis klasse Algorithm Main
+ * Erft van Application
  */
 public class AlgorithmMain extends Application
 {
@@ -33,7 +33,7 @@ public class AlgorithmMain extends Application
     }
 
     /**
-     * @param args the command line arguments
+     * @param args de command line argumenten
      */
     public static void main(String[] args) 
     {
