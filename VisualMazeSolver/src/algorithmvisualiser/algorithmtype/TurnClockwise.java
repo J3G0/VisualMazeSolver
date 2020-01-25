@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.algorithmtype;
 
+import algorithmvisualiser.AlgorithmModel;
+import algorithmvisualiser.AlgorithmState;
+import algorithmvisualiser.vertice.MovementDirection;
+import algorithmvisualiser.vertice.Vertice;
 import java.util.ArrayList;
 import java.util.List;
 

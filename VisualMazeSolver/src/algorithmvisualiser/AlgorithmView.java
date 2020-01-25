@@ -1,5 +1,7 @@
 package algorithmvisualiser;
 
+import algorithmvisualiser.vertice.VerticeView;
+import algorithmvisualiser.vertice.Vertice;
 import java.awt.Point;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -48,7 +50,7 @@ public class AlgorithmView extends Region
         // Take a click on (200.0, 78.0)
         // We know each node has view.OFFSET offset from eachother, and the size is view.SIZE;
         
-        double rasterFormula = view.OFFSET + view.SIZE;
+        double rasterFormula = view.getOffset() + view.getSize();
         
         int nodeX = Math.min( (int) (clickedAtX / rasterFormula) , model.ROWS_X - 1 );
         int nodeY = Math.min( (int) (clickedAtY / rasterFormula), model.ROWS_Y - 1);

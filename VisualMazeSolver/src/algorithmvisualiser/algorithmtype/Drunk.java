@@ -3,17 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.algorithmtype;
 
+import algorithmvisualiser.AlgorithmModel;
+import algorithmvisualiser.AlgorithmState;
+import algorithmvisualiser.vertice.MovementDirection;
+import algorithmvisualiser.vertice.Vertice;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
  * @author Jeffrey
  */
-public class AlwaysGoLeft extends AlgorithmModel
+public class Drunk extends AlgorithmModel
 {  
     /**
      * Lijst van richtingen waarneer de Vertice kan bewegen
@@ -28,19 +33,19 @@ public class AlwaysGoLeft extends AlgorithmModel
     /**
      * AlwaysGoLeft constructor
      */
-    public AlwaysGoLeft()
+    public Drunk()
     {
-        this.algorithmName = "AlwaysGoLeft";    
+        this.algorithmName = "Drunk";    
     }
     
     /**
      * AlwaysGoLeft constructor met map parameter
      * @param map 2D array van Vertice met map data
      */
-    public AlwaysGoLeft(Vertice[][] map)
+    public Drunk(Vertice[][] map)
     {
         super(map);
-        this.algorithmName = "AlwaysGoLeft";  
+        this.algorithmName = "Drunk";  
     }
     
     /**
@@ -58,15 +63,7 @@ public class AlwaysGoLeft extends AlgorithmModel
         {
             updateModelState();
             increaseIterations();
-            if(currentNode.getVerticeType() == VerticeType.BASIC)
-            {
-                currentNode.setVerticeType(VerticeType.HEAD);
-                
-                if(currentNode.getParent() != null && currentNode.getParent() != startNode)
-                {
-                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
-                }
-            }
+            updateCurrentNode();
             neighbours = getNeighbourVertices(currentNode, false, false);
 
             possibleDirections = createDirectionList(currentNode);
@@ -76,15 +73,8 @@ public class AlwaysGoLeft extends AlgorithmModel
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
-                if(possibleDirections.contains(MovementDirection.LEFT))
-                {
-                    System.out.println("Contains left!");
-                    currentDirection = MovementDirection.LEFT;
-                }
-                else
-                {
-                    currentDirection = possibleDirections.get(0);
-                }
+                Random r = new Random();
+                currentDirection = possibleDirections.get(r.nextInt(possibleDirections.size()));
                 //System.out.println("Chose direction: " + currentDirection);
             }
             //If possible directions is empty, set currentnode to null (so it goes to parent)

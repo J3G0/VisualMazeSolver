@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.vertice;
 
+import algorithmvisualiser.vertice.Vertice;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -91,4 +92,7 @@ public class VerticeView extends Region
         
         return r;
     }
+    
+    public int getSize() { return SIZE; }
+    public int getOffset() { return OFFSET; }
 }

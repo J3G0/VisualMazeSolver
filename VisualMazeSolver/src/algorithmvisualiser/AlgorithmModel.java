@@ -5,6 +5,9 @@
  */
 package algorithmvisualiser;
 
+import algorithmvisualiser.vertice.MovementDirection;
+import algorithmvisualiser.vertice.VerticeType;
+import algorithmvisualiser.vertice.Vertice;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;

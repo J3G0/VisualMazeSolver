@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package algorithmvisualiser;
+import algorithmvisualiser.algorithmtype.AlwaysGoRight;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

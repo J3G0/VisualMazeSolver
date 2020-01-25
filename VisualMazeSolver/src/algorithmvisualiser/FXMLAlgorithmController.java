@@ -1,5 +1,11 @@
 package algorithmvisualiser;
 
+import algorithmvisualiser.vertice.VerticeType;
+import algorithmvisualiser.vertice.Vertice;
+import algorithmvisualiser.algorithmtype.TurnClockwise;
+import algorithmvisualiser.algorithmtype.AlwaysGoRight;
+import algorithmvisualiser.algorithmtype.Drunk;
+import algorithmvisualiser.algorithmtype.AStar;
 import java.awt.Point;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -119,7 +125,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
                
            case "Drunk":
-               setModel(new DrunkModel(model.getNodes()));          
+               setModel(new Drunk(model.getNodes()));          
                break;
                
            case "Turn clockwise":
@@ -127,7 +133,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
                
            case "A Star":
-               setModel(new AStarModel(model.getNodes()));
+               setModel(new AStar(model.getNodes()));
                break;
        }
     }
@@ -142,7 +148,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
                
            case "Drunk":
-               setModel(new DrunkModel());          
+               setModel(new Drunk());          
                break;
 
            case "Turn clockwise":
@@ -150,7 +156,7 @@ public class FXMLAlgorithmController implements Initializable
                break;
                
            case "A Star":
-               setModel(new AStarModel());
+               setModel(new AStar());
                break;
        }
     }

@@ -3,10 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.algorithmtype;
 
 import algorithmvisualiser.AlgorithmModel;
-import algorithmvisualiser.VerticeType;
+import algorithmvisualiser.AlgorithmModel;
+import algorithmvisualiser.AlgorithmState;
+import algorithmvisualiser.vertice.MovementDirection;
+import algorithmvisualiser.vertice.Vertice;
+import algorithmvisualiser.vertice.VerticeType;
+import algorithmvisualiser.vertice.VerticeType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +23,15 @@ import java.util.List;
 // Pseudo code from "https://en.wikipedia.org/wiki/A*_search_algorithm#Pseudocode" was used for thinking purposes
 // Also the tutorial from Sebastian Lague helped me understand the basic concept of A*
 // Source: https://github.com/SebLague/Pathfinding/blob/master/Episode%2003%20-%20astar/Assets/Scripts/Pathfinding.cs
+// Source: https://www.youtube.com/watch?v=-L-WgKMFuhE&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=1
 
-public class AStarModel extends AlgorithmModel
+public class AStar extends AlgorithmModel
 {
     /**
      *
      * AStarModel constructor
      */
-    public AStarModel() 
+    public AStar() 
     {
         this.algorithmName = "A Star";  
         openSet.add(currentNode);
@@ -36,7 +42,7 @@ public class AStarModel extends AlgorithmModel
      * AStarModel constructor with map parameter
      * @param map 2D Vertice map that contains the Vertice data
      */
-    public AStarModel(Vertice[][] map) 
+    public AStar(Vertice[][] map) 
     {
         super(map);
         this.algorithmName = "A Star";  

@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package algorithmvisualiser;
+package algorithmvisualiser.algorithmtype;
 
+import algorithmvisualiser.AlgorithmModel;
+import algorithmvisualiser.AlgorithmState;
+import algorithmvisualiser.vertice.MovementDirection;
+import algorithmvisualiser.vertice.Vertice;
+import algorithmvisualiser.vertice.VerticeType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
  * @author Jeffrey
  */
-public class DrunkModel extends AlgorithmModel
+public class AlwaysGoLeft extends AlgorithmModel
 {  
     /**
      * Lijst van richtingen waarneer de Vertice kan bewegen
@@ -29,19 +33,19 @@ public class DrunkModel extends AlgorithmModel
     /**
      * AlwaysGoLeft constructor
      */
-    public DrunkModel()
+    public AlwaysGoLeft()
     {
-        this.algorithmName = "Drunk";    
+        this.algorithmName = "AlwaysGoLeft";    
     }
     
     /**
      * AlwaysGoLeft constructor met map parameter
      * @param map 2D array van Vertice met map data
      */
-    public DrunkModel(Vertice[][] map)
+    public AlwaysGoLeft(Vertice[][] map)
     {
         super(map);
-        this.algorithmName = "Drunk";  
+        this.algorithmName = "AlwaysGoLeft";  
     }
     
     /**
@@ -59,7 +63,15 @@ public class DrunkModel extends AlgorithmModel
         {
             updateModelState();
             increaseIterations();
-            updateCurrentNode();
+            if(currentNode.getVerticeType() == VerticeType.BASIC)
+            {
+                currentNode.setVerticeType(VerticeType.HEAD);
+                
+                if(currentNode.getParent() != null && currentNode.getParent() != startNode)
+                {
+                   currentNode.getParent().setVerticeType(VerticeType.TRAVERSED); 
+                }
+            }
             neighbours = getNeighbourVertices(currentNode, false, false);
 
             possibleDirections = createDirectionList(currentNode);
@@ -69,8 +81,15 @@ public class DrunkModel extends AlgorithmModel
             //Get first possible direction if not empty
             if(!possibleDirections.isEmpty())
             {
-                Random r = new Random();
-                currentDirection = possibleDirections.get(r.nextInt(possibleDirections.size()));
+                if(possibleDirections.contains(MovementDirection.LEFT))
+                {
+                    System.out.println("Contains left!");
+                    currentDirection = MovementDirection.LEFT;
+                }
+                else
+                {
+                    currentDirection = possibleDirections.get(0);
+                }
                 //System.out.println("Chose direction: " + currentDirection);
             }
             //If possible directions is empty, set currentnode to null (so it goes to parent)
