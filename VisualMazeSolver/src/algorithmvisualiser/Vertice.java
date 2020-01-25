@@ -49,7 +49,7 @@ public class Vertice
     public void setVerticeType(VerticeType type) { this.type = type; }
     public VerticeType getVerticeType() { return type; }
     
-    public void setPreviousVerticeType(VerticeType type) { this.previousVerticeType = previousVerticeType; }
+    public void setPreviousVerticeType(VerticeType previousVerticeType) { this.previousVerticeType = previousVerticeType; }
     public VerticeType getPreviousVerticeType() { return previousVerticeType; }
     
     public double getPositionX() { return positionX; }
