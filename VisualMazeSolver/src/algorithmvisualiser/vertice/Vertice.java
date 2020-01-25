@@ -8,8 +8,8 @@ package algorithmvisualiser.vertice;
 /**
  * Basis klasse Vertice.
  * Het bevat alle methodes die nodig zijn voor de Vertices in de visualizer.
- * Deze klasse is een node, maar die name is reeds in gebruik door JavaFX.
- * Daarom de naam Vertice.
+ * Deze klasse is een node, maar die naam is reeds in gebruik door JavaFX.
+ * Daarom is gekozen voor de naam Vertice.
  */
 public class Vertice
 {

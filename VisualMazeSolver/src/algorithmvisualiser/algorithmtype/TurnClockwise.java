@@ -104,7 +104,7 @@ public class TurnClockwise extends AlgorithmModel
      * @param possibleDirections, lijst met de mogelijke richtingen.
      */
     public void createClockMovement(List<MovementDirection> possibleDirections)
-    {
+    {   
         if(!movedRight)
         {
             //Maintain right while possible
