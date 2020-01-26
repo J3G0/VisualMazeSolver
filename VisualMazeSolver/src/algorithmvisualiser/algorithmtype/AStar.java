@@ -32,7 +32,8 @@ public class AStar extends AlgorithmModel
      */
     public AStar() 
     {
-        this.algorithmName = "A Star";  
+        this.algorithmName = "A Star";
+        openSet.clear();
         openSet.add(currentNode);
     } 
   
@@ -44,6 +45,7 @@ public class AStar extends AlgorithmModel
     {
         super(map);
         this.algorithmName = "A Star";  
+        openSet.clear();
         openSet.add(currentNode);     
     } 
     

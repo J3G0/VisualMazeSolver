@@ -312,12 +312,9 @@ public class AlgorithmModel
                         System.out.println("Setting start node");
                         startNode = vertice;  
                     }
-                    openSet.clear();
+                    openSet.clear();    
                     openSet.add(startNode);
-                   // if(currentNode == null)
-                    //{
-                        currentNode = startNode;
-                    //}
+                    currentNode = startNode;
                     break;
                 case END:
                     //System.out.println("Setting end node");
