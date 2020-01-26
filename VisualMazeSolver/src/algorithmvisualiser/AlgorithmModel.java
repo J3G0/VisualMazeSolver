@@ -326,6 +326,7 @@ public class AlgorithmModel
                     {
                         closedSet.add(vertice);
                     }
+                    break;
                 //If Solid node was changed to basic it needs to be removed from closedSet!
                 case BASIC:
                         if(closedSet.contains(vertice))
