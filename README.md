@@ -1,12 +1,5 @@
 # VisualMazeSolver (by Sebastiaan and Jeffrey)
 
-<details>
-<summary>Click to see the ICON</summary>
-
-![ICON](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ICON.png)
-
-</details>
-
 ## Assignment for Graphical applications in Java
 
 This This project is part of the Graphical applications in Java class.
