@@ -310,8 +310,10 @@ public class AlgorithmModel
                     if(startNode == null)
                     {
                         System.out.println("Setting start node");
-                        startNode = vertice;   
+                        startNode = vertice;  
                     }
+                    openSet.clear();
+                    openSet.add(startNode);
                    // if(currentNode == null)
                     //{
                         currentNode = startNode;

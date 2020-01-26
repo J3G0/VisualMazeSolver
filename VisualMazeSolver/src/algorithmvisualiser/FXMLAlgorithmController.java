@@ -146,9 +146,8 @@ public class FXMLAlgorithmController implements Initializable
             previousSelectedNode = null;
             selectedNode = null;
             clickLocation = null;
-            
-            update();
             model.updateSets();
+            update();
         }      
     } 
     
@@ -328,7 +327,7 @@ public class FXMLAlgorithmController implements Initializable
             selectedNode = model.getNodeAtLocation(eventPoint.x, eventPoint.y);
             if(selectedNode != previousSelectedNode)
             {
-                System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
+                //System.out.println(model.getNodeAtPoint(eventPoint).getVerticeType());
                 if(model.getNodeAtPoint(eventPoint) != model.getEndNode() && model.getNodeAtPoint(eventPoint).getVerticeType() != VerticeType.SOLID)
                 {
                     model.getNodeAtPoint(eventPoint).setVerticeType(VerticeType.START);                              
