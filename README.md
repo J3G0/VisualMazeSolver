@@ -50,14 +50,14 @@ just press finish. It will do all the calculations and draw the path instead of 
 
 </details>
 
-## Different algorithmes
+## Different algorithms
 
 * Always right
 	- Always tries to go to the right.
-	- <details>
-	  <summary>Click to see the "Always right" algorithm</summary>
-	  ![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
-	  </details>
+	<details>
+	<summary>Click to see the "Always right" algorithm</summary>
+	![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
+	</details>
 * Drunk
 	- Uses a randomized direction each iteration.
 	- <details>
