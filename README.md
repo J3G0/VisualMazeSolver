@@ -43,14 +43,7 @@ just press finish. It will do all the calculations and draw the path instead of 
 </details>
 
 <details>
-<summary>Click to see start and end node in the view</summary>
-
-![view1](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/View1.png)
-
-</details>
-
-<details>
-<summary>Click to see maze buiding</summary>
+<summary>Click to see maze buiding and node location placement</summary>
 
 ![Maze buiding](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/MapBuilding.gif)
 
