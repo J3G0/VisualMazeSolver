@@ -1,5 +1,11 @@
 # VisualMazeSolver (by Sebastiaan and Jeffrey)
 
+<details>
+<summary>Click to see the ICON</summary>
+
+![ICON](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ICON.png)
+
+</details>
 
 ## Assignment for Graphical applications in Java
 
@@ -50,18 +56,18 @@ just press finish. It will do all the calculations and draw the path instead of 
 
 </details>
 
+<details>
+<summary>Click to see maze buiding</summary>
+
+![Maze buiding](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/MapBuilding.gif)
+
+</details>
+
 ## Different algorithms
 
-* Always right
-	- Always tries to go to the right.
-* Drunk
-	- Uses a randomized direction each iteration.	
-* Turn clockwise
-	- Always takes a clockwise turn if possible.	
-* A Star
-	- The star of them all, takes the shortest path possible.
-	
-## Working of the algorithms
+### Always right
+Always tries to go to the right.
+
 <details>
 <summary>Click to see the "Always right" algorithm</summary>
 
@@ -69,13 +75,17 @@ just press finish. It will do all the calculations and draw the path instead of 
 
 </details>
 	
+### Drunk
+Uses a randomized direction each iteration.
 <details>
 <summary>Click to see the "Drunk" algorithm</summary>
 
 ![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
 
-</details>
-	
+</details>	
+
+### Turn clockwise
+Always takes a clockwise turn if possible.
 <details>
 <summary>Click to see the "Turn Clockwise" algorithm</summary>
 
@@ -83,6 +93,9 @@ just press finish. It will do all the calculations and draw the path instead of 
 
 </details>
 
+### A Star
+The star of them all, takes the shortest path possible.
+	
 <details>
 <summary>Click to see the "A Star" algorithm</summary>
 
@@ -108,3 +121,11 @@ just press finish. It will do all the calculations and draw the path instead of 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
+* Hat tip to anyone whose code was used for inspiration
+	- Sources are in the code
+
+* Wikipedia
+	- For having so much information about everything
+	
+* Sebastian Lague for helping understand A*
+	- See links in {AStar.java](https://github.com/J3G0/VisualMazeSolver/blob/master/VisualMazeSolver/src/algorithmvisualiser/algorithmtype/AStar.java)
