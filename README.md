@@ -56,30 +56,31 @@ just press finish. It will do all the calculations and draw the path instead of 
 	- Always tries to go to the right.
 	- <details>
 	  <summary>Click to see the "Always right" algorithm</summary>
-	  ![AlwaysRightGif](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
+	  ![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
 	  </details>
 * Drunk
 	- Uses a randomized direction each iteration.
 	- <details>
 	  <summary>Click to see the "Drunk" algorithm</summary>
-	  ![AlwaysRightGif](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
+	  ![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
 	  </details>	
 * Turn clockwise
 	- Always takes a clockwise turn if possible.
 	- <details>
 	  <summary>Click to see the "Turn Clockwise" algorithm</summary>
-	  ![AlwaysRightGif](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
+	  ![ClockWise](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
 	  </details>		
 * A Star
 	- The star of them all, takes the shortest path possible.
 	- <details>
 	  <summary>Click to see the "A Star" algorithm</summary>
-	  ![AlwaysRightGif](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
+	  ![AStar](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
 	  </details>		
 
 ## Future work
 
 * Maps; Load a maze from pre-defined mazes, save a drawn maze for later use.
+* Synchronous execution; Split screen to see each algoritm execute simultaneously.
 * UI improvements; E.G. make solid with left mouse button, make basic (delete solid) with right mouse button
 
 
