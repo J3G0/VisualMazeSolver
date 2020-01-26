@@ -62,25 +62,25 @@ just press finish. It will do all the calculations and draw the path instead of 
 	- The star of them all, takes the shortest path possible.
 	
 ## Working of the algorithms
-	<details>
-	<summary>Click to see the "Always right" algorithm</summary>
-	![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
-	</details>
+<details>
+<summary>Click to see the "Always right" algorithm</summary>
+![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
+</details>
 	
-	<details>
-	<summary>Click to see the "Drunk" algorithm</summary>
-	![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
-	</details>
+<details>
+<summary>Click to see the "Drunk" algorithm</summary>
+![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
+</details>
 	
-	<details>
-	<summary>Click to see the "Turn Clockwise" algorithm</summary>
-	![ClockWise](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
-	</details>
+<details>
+<summary>Click to see the "Turn Clockwise" algorithm</summary>
+![ClockWise](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
+</details>
 
-	<details>
-	<summary>Click to see the "A Star" algorithm</summary>
-	![AStar](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
-	</details>	
+<details>
+<summary>Click to see the "A Star" algorithm</summary>
+![AStar](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
+</details>	
 
 ## Future work
 
