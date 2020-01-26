@@ -274,8 +274,15 @@ public class FXMLAlgorithmController implements Initializable
         if(model.getAlgorithmState() == AlgorithmState.SOLVING)
         {
             //Fixed timertask that calls model.iterate()
-            timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
-            update();
+            try
+            {
+                timer.scheduleAtFixedRate(progressor, (int) progressorSpeed.getValue(), (int) progressorSpeed.getValue());
+                update();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Timer error: " + e.getCause());
+            }
         }
     }
     
