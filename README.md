@@ -54,28 +54,33 @@ just press finish. It will do all the calculations and draw the path instead of 
 
 * Always right
 	- Always tries to go to the right.
+* Drunk
+	- Uses a randomized direction each iteration.	
+* Turn clockwise
+	- Always takes a clockwise turn if possible.	
+* A Star
+	- The star of them all, takes the shortest path possible.
+	
+## Working of the algorithms
 	<details>
 	<summary>Click to see the "Always right" algorithm</summary>
 	![AlwaysRight](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AlwaysRight.gif)
 	</details>
-* Drunk
-	- Uses a randomized direction each iteration.
-	- <details>
-	  <summary>Click to see the "Drunk" algorithm</summary>
-	  ![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
-	  </details>	
-* Turn clockwise
-	- Always takes a clockwise turn if possible.
-	- <details>
-	  <summary>Click to see the "Turn Clockwise" algorithm</summary>
-	  ![ClockWise](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
-	  </details>		
-* A Star
-	- The star of them all, takes the shortest path possible.
-	- <details>
-	  <summary>Click to see the "A Star" algorithm</summary>
-	  ![AStar](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
-	  </details>		
+	
+	<details>
+	<summary>Click to see the "Drunk" algorithm</summary>
+	![Drunk](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/Drunk.gif)
+	</details>
+	
+	<details>
+	<summary>Click to see the "Turn Clockwise" algorithm</summary>
+	![ClockWise](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/ClockWise.gif)
+	</details>
+
+	<details>
+	<summary>Click to see the "A Star" algorithm</summary>
+	![AStar](https://github.com/J3G0/VisualMazeSolver/blob/master/msc/AStar.gif)
+	</details>	
 
 ## Future work
 
