@@ -107,6 +107,8 @@ The star of them all, takes the shortest path possible.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
+* Thank you [Kris Aerts](https://github.com/krisaerts) for the tip on starting with an always right algorithm.
+
 * Hat tip to anyone whose code was used for inspiration (Sources are in the code)
 
 * Wikipedia; For having so much information about everything
