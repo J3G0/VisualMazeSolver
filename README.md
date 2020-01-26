@@ -107,11 +107,8 @@ The star of them all, takes the shortest path possible.
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-* Hat tip to anyone whose code was used for inspiration
-	- Sources are in the code
+* Hat tip to anyone whose code was used for inspiration (Sources are in the code)
 
-* Wikipedia
-	- For having so much information about everything
+* Wikipedia; For having so much information about everything
 	
-* Sebastian Lague for helping understand A*
-	- See links in {AStar.java](https://github.com/J3G0/VisualMazeSolver/blob/master/VisualMazeSolver/src/algorithmvisualiser/algorithmtype/AStar.java)
+* Sebastian Lague for helping understand A* (See links in [AStar.java](https://github.com/J3G0/VisualMazeSolver/blob/master/VisualMazeSolver/src/algorithmvisualiser/algorithmtype/AStar.java) )
