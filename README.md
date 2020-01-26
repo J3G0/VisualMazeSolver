@@ -26,8 +26,12 @@ A game is allowed but is not required. Simulations, procesvisualisations,... are
 
 ## VisualMazeSolver
 
-This application allows the user to select a start node and an end node. Futhermore, it is possible to select a solid node, creating a Maze.
-When pressing iterate it is possible to see the selected algorithm work its way to the endpoint (keep clicking). For a fast way of seeing the result, just press finish.
+This application allows the user to select a start node and an end node. You can change the location of the start and end node by dragging then over to the desired spot with your mouse.After selecting these nodes it is possible to place 
+solid nodes. These solid nodes are not traversable by the algorithmes. This enables the user to draw a maze to see how each algoritm solves
+the task at hand. This task is reaching the end node.
+
+When you press iterate it is possible to see the selected algorithm work its way to the endpoint. For a fast way of seeing the result, 
+just press finish. It will do all the calculations and draw the path insted of showing each iteration.
  
 <details>
 <summary>Click to see tile selection</summary>
